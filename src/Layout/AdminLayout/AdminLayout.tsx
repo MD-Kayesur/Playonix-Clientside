@@ -45,7 +45,7 @@ export default function AdminLayout() {
         {/* Mobile Overlay backdrop */}
         {isMobile && sidebarOpen && (
           <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md md:hidden pointer-events-auto"
+            className="fixed inset-0 bg-black/60 md:hidden pointer-events-auto"
             onClick={() => setSidebarOpen(false)}
           />
         )}
@@ -54,7 +54,7 @@ export default function AdminLayout() {
         <div className={`relative h-full transition-all duration-300 
           ${isMobile ? (sidebarOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"}
         `}>
-          <div className={`h-full bg-white/80 dark:bg-black/10 backdrop-blur-lg border-r border-black/10 dark:border-white/5 shadow-2xl pointer-events-auto transition-all duration-300 ${isCollapsed ? "w-20" : "w-70"}`}>
+          <div className={`h-full bg-white dark:bg-black border-r border-black/10 dark:border-white/5 shadow-2xl pointer-events-auto transition-all duration-300 ${isCollapsed ? "w-20" : "w-70"}`}>
             <AdminSidebar
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}

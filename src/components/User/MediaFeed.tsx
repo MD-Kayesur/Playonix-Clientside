@@ -479,8 +479,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             />
 
             {showNameSetup && (
-                <div className="fixed inset-0 bg-black/70 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
-                    <div className="bg-[#121212]/80 backdrop-blur-2xl rounded-[2.5rem] p-10 max-w-sm w-full text-center border border-white/10 relative shadow-2xl">
+                <div className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4">
+                    <div className="bg-[#121212] rounded-[2.5rem] p-10 max-w-sm w-full text-center border border-white/10 relative shadow-2xl">
                         <button onClick={() => setShowNameSetup(false)} className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-white transition-colors border border-white/5">
                             <X size={20} />
                         </button>

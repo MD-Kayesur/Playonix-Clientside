@@ -11,8 +11,8 @@ interface ShareModalProps {
     title?: string;
 }
 
-const ShareModal: React.FC<ShareModalProps> = ({ 
-    showShareModal, 
+const ShareModal: React.FC<ShareModalProps> = ({
+    showShareModal,
     setShowShareModal,
     url = window.location.href,
     title = 'Check this out!'
@@ -46,8 +46,8 @@ const ShareModal: React.FC<ShareModalProps> = ({
     return (
         <AnimatePresence>
             {showShareModal && (
-                <div className="fixed inset-0 backdrop-blur-sm z-[11000] flex items-center justify-center p-4" onClick={() => setShowShareModal(false)}>
-                    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-background md:bg-background/40 backdrop-blur-lg rounded-3xl p-6 w-full max-w-[450px] relative border border-border transition-colors duration-300" onClick={(e) => e.stopPropagation()}>
+                <div className="fixed inset-0 z-[11000] flex items-center justify-center p-4" onClick={() => setShowShareModal(false)}>
+                    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-background rounded-3xl p-6 w-full max-w-[450px] relative border border-border transition-colors duration-300" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center justify-center mb-8">
                             <h3 className="text-foreground text-lg font-semibold">Share to</h3>
                             <button onClick={() => setShowShareModal(false)} className="absolute top-5 right-5 text-foreground/60 transition-colors hover:text-foreground">

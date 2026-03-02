@@ -182,7 +182,7 @@ const Favorites = () => {
                     }
                   });
                 }}
-                className="group relative bg-card rounded-xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-xl"
+                className="group relative bg-card rounded-xl overflow-hidden border border-border lg:border-none hover:border-primary/50 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-xl"
               >
                 {/* Image Container */}
                 <div className="relative aspect-[3/4] overflow-hidden bg-gray-800">

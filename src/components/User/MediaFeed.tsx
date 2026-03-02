@@ -294,7 +294,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
         // In "photo" mode, we only show images
         if (type === 'photo' || !offer.video_url) {
-            return <img src={offer.image_url} alt={offer.title} className="w-full h-full object-cover" />;
+            return (
+                <div className="w-full h-full flex items-center justify-center bg-transparent">
+                    <img src={offer.image_url} alt={offer.title} className="w-full h-auto max-h-full object-contain" />
+                </div>
+            );
         }
 
         // In "video" or "all" mode, show video if available
@@ -303,43 +307,41 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
         return (
             <div
-                className="absolute inset-0 w-full h-full overflow-hidden bg-black"
+                className="absolute inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center"
                 onClick={() => {
                     if (window.innerWidth >= 640) {
                         setIsPlaying(!isPlaying);
                     }
                 }}
             >
-                <div className="absolute inset-0 flex items-end justify-center">
-                    <div className="absolute min-w-full min-h-full w-[177.77vh] h-[100dvh] md:w-[177.77vh] md:h-[85vh]">
-                        {ytId ? (
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src={`https://www.youtube.com/embed/${ytId}?autoplay=${isCurrent ? 1 : 0}&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${ytId}&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1&origin=${window.location.origin}`}
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                className="w-full h-full pointer-events-none"
-                                onLoad={() => isCurrent && setVideoReady(true)}
-                            />
-                        ) : (
-                            <Player
-                                url={offer.video_url}
-                                playing={isCurrent && isPlaying}
-                                loop
-                                muted={isMuted}
-                                playsinline={true}
-                                width="100%"
-                                height="100%"
-                                onReady={() => isCurrent && setVideoReady(true)}
-                                onProgress={(state: any) => isCurrent && setProgress(state.played * 100)}
-                                className="pointer-events-none"
-                                style={{ position: 'absolute', top: 0, left: 0 }}
-                                config={{ file: { attributes: { style: { width: '100%', height: '100%', objectFit: 'cover' } } } }}
-                            />
-                        )}
-                    </div>
+                <div className="relative w-full h-full flex items-center justify-center">
+                    {ytId ? (
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube.com/embed/${ytId}?autoplay=${isCurrent ? 1 : 0}&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${ytId}&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1&origin=${window.location.origin}`}
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            className="w-full h-full pointer-events-none"
+                            onLoad={() => isCurrent && setVideoReady(true)}
+                        />
+                    ) : (
+                        <Player
+                            url={offer.video_url}
+                            playing={isCurrent && isPlaying}
+                            loop
+                            muted={isMuted}
+                            playsinline={true}
+                            width="100%"
+                            height="100%"
+                            onReady={() => isCurrent && setVideoReady(true)}
+                            onProgress={(state: any) => isCurrent && setProgress(state.played * 100)}
+                            className="pointer-events-none"
+                            style={{ position: 'absolute', top: 0, left: 0 }}
+                            config={{ file: { attributes: { style: { width: '100%', height: '100%', objectFit: 'contain' } } } }}
+                        />
+                    )}
                 </div>
                 {isCurrent && (
                     <>

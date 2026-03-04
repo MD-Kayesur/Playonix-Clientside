@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LANGUAGES } from "@/components/LanguageToggle/GoogleTranslate";
 import { Check } from "lucide-react";
 
@@ -6,7 +6,7 @@ const LanguagesPage = () => {
     const [currentLang, setCurrentLang] = useState("en");
 
     useEffect(() => {
-        const match = document.cookie.match(/googtrans=\/en\/(\w+)/);
+        const match = document.cookie.match(/googtrans=\/en\/([\w-]+)/);
         const lang = match ? match[1] : "en";
         setCurrentLang(lang);
     }, []);
@@ -31,8 +31,8 @@ const LanguagesPage = () => {
                             key={lang.code}
                             onClick={() => handleLanguageChange(lang.code)}
                             className={`flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 group ${currentLang === lang.code
-                                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20 scale-[1.02]"
-                                    : "bg-card border-border hover:border-primary/50 hover:bg-primary/5 hover:scale-[1.01]"
+                                ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20 scale-[1.02]"
+                                : "bg-card border-border hover:border-primary/50 hover:bg-primary/5 hover:scale-[1.01]"
                                 }`}
                         >
                             <div className="flex items-center gap-4">

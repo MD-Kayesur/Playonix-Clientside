@@ -4,7 +4,7 @@ import CommonWrapper from "@/common/CommonWrapper";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/bgremovelogo.png";
 import bgImage from "@/assets/home.jpg";
-import { X } from 'lucide-react';
+// import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Home = () => {
@@ -78,7 +78,7 @@ const Home = () => {
                   onClick={() => setShowWelcome(false)}
                   className="absolute top-5 right-5 text-muted-foreground hover:text-foreground transition-colors p-1 rounded-full hover:bg-foreground/10"
                 >
-                  <X className="h-5 w-5" />
+                  {/* <X className="h-5 w-5" /> */}
                 </button>
 
                 {/* Title */}

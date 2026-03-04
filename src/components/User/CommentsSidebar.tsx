@@ -75,7 +75,7 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                         animate={window.innerWidth < 768 ? { y: 0 } : { x: 0 }}
                         exit={window.innerWidth < 768 ? { y: '100%' } : { x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed bottom-0 right-0 w-full h-[75vh] md:h-full md:w-[400px] lg:w-[500px] bg-background md:bg-background/40 md:backdrop-blur-lg z-[9999] flex flex-col border-t md:border-t-0 md:border-l border-border rounded-t-[16px] md:rounded-none overflow-hidden transition-colors duration-300"
+                        className="fixed bottom-0 right-0 w-full h-[75vh] md:h-full md:w-[400px] lg:w-[500px] bg-background z-[9999] flex flex-col border-t md:border-t-0 md:border-l border-border rounded-t-[16px] md:rounded-none overflow-hidden transition-colors duration-300"
                     >
                         {/* Header */}
                         <div className="px-5 py-4 flex items-center justify-between border-b border-white/5 sticky top-0 z-20 bg-transparent">
@@ -184,7 +184,7 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                         </div>
 
                         {/* Input Container */}
-                        <div className="p-3 bg-black/40 backdrop-blur-md border-t border-white/5 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+                        <div className="p-3 bg-black/90 border-t border-white/5 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
                             <div className="flex flex-col gap-2">
                                 {selectedImage && (
                                     <div className="relative inline-block w-20 h-20 ml-12 mb-1 group mt-2">

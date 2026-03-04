@@ -10,7 +10,7 @@ import UserLayout from "@/Layout/UserLayout/UserLayout";
 import Videos from "@/pages/User/Videos";
 import Photos from "@/pages/User/Photos";
 import Favorites from "@/pages/User/Favorites";
-import Categories from "@/pages/User/TopCasinos";
+import Categories from "@/pages/User/Categories";
 import AdminLayout from "@/Layout/AdminLayout/AdminLayout";
 import Overview from "@/pages/Admin/Overview";
 import FeedOrdering from "@/pages/Admin/FeedOrdering";
@@ -18,6 +18,7 @@ import Analytics from "@/pages/Admin/Analytics";
 import Settings from "@/pages/Admin/Settings";
 import AllMedia from "@/pages/User/AllMedia";
 import Sittings from "@/pages/User/Sittings";
+import Languages from "@/pages/User/Languages";
 import UserManagement from "@/pages/Admin/UserManagement";
 
 import About from "@/pages/About";
@@ -53,6 +54,10 @@ const routes = createBrowserRouter([
           {
             path: "cookies",
             element: <CookiePolicy />,
+          },
+          {
+            path: "languages",
+            element: <Languages />,
           },
         ]
       },

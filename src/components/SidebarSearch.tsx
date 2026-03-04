@@ -162,7 +162,7 @@ export const SidebarSearch: React.FC<SidebarSearchProps> = ({
                             initial="hidden"
                             animate="visible"
                             exit="exit"
-                            className={`fixed inset-0 ${isMobile ? 'z-[99999]' : 'z-[9999]'} flex flex-col backdrop-blur-[20px] bg-background/80 text-foreground overflow-hidden transition-colors duration-300`}
+                            className={`fixed inset-0 ${isMobile ? 'z-[99999]' : 'z-[9999]'} flex flex-col bg-background text-foreground overflow-hidden transition-colors duration-300`}
                             style={{ pointerEvents: 'auto' }}
                             onClick={!isMobile ? closeSearch : undefined}
                         >

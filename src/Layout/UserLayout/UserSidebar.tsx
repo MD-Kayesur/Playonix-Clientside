@@ -18,7 +18,7 @@ import {
   Cookie,
   ChevronDown,
   ChevronUp,
- 
+  Languages
 } from "lucide-react";
 import { SidebarSearch } from "@/components/SidebarSearch";
 
@@ -111,8 +111,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
     { path: "/user/photos", label: "Photos", icon: Image },
     { path: "/user/favorites", label: "Favorites", icon: Bookmark },
     { path: "/user/categories", label: "Categories", icon: Trophy },
-    // { path: "/user/settings", label: "Settings", icon: Settings },
-    // { path: "/user/support", label: "Support", icon: LifeBuoy },
+    { path: "/languages", label: "Languages", icon: Languages },
   ];
 
   return (

@@ -53,7 +53,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                 mass: 1
             }}
             style={{ transformStyle: "preserve-3d" }}
-            className="w-full h-full sm:flex-1 bg-card sm:rounded-[1rem] shadow-2xl sm:border border-border relative group transition-colors duration-300"
+            className="w-full h-full sm:flex-1 bg-card sm:rounded-[1rem] shadow-2xl sm:border border-border lg:border-none relative group transition-colors duration-300"
         >
             {/* Front Side */}
             <div

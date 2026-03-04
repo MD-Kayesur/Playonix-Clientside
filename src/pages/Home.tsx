@@ -38,7 +38,7 @@ const Home = () => {
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       {/* Overlay for better text readability if needed */}
-      <div className="absolute inset-0 backdrop-blur-lg bg-opacity-30"></div>
+      <div className="absolute inset-0 bg-black/30"></div>
       <div className="relative z-10 w-full flex justify-center">
         <AnimatePresence mode="wait">
           {!showWelcome ? (
@@ -65,7 +65,7 @@ const Home = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xl p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}

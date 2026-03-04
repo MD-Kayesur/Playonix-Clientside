@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { FiShare2 } from "react-icons/fi";
 // import { motion } from 'framer-motion';
 import {
     Heart,
@@ -294,7 +295,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
         // In "photo" mode, we only show images
         if (type === 'photo' || !offer.video_url) {
-            return <img src={offer.image_url} alt={offer.title} className="w-full h-full object-cover" />;
+            return (
+                <div className="w-full h-full flex items-center justify-center bg-transparent">
+                    <img src={offer.image_url} alt={offer.title} className="w-full h-auto max-h-full object-contain" />
+                </div>
+            );
         }
 
         // In "video" or "all" mode, show video if available
@@ -303,43 +308,41 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
         return (
             <div
-                className="absolute inset-0 w-full h-full overflow-hidden bg-black"
+                className="absolute inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center"
                 onClick={() => {
                     if (window.innerWidth >= 640) {
                         setIsPlaying(!isPlaying);
                     }
                 }}
             >
-                <div className="absolute inset-0 flex items-end justify-center">
-                    <div className="absolute min-w-full min-h-full w-[177.77vh] h-[100dvh] md:w-[177.77vh] md:h-[85vh]">
-                        {ytId ? (
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src={`https://www.youtube.com/embed/${ytId}?autoplay=${isCurrent ? 1 : 0}&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${ytId}&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1&origin=${window.location.origin}`}
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                className="w-full h-full pointer-events-none"
-                                onLoad={() => isCurrent && setVideoReady(true)}
-                            />
-                        ) : (
-                            <Player
-                                url={offer.video_url}
-                                playing={isCurrent && isPlaying}
-                                loop
-                                muted={isMuted}
-                                playsinline={true}
-                                width="100%"
-                                height="100%"
-                                onReady={() => isCurrent && setVideoReady(true)}
-                                onProgress={(state: any) => isCurrent && setProgress(state.played * 100)}
-                                className="pointer-events-none"
-                                style={{ position: 'absolute', top: 0, left: 0 }}
-                                config={{ file: { attributes: { style: { width: '100%', height: '100%', objectFit: 'cover' } } } }}
-                            />
-                        )}
-                    </div>
+                <div className="relative w-full h-full flex items-center justify-center">
+                    {ytId ? (
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube.com/embed/${ytId}?autoplay=${isCurrent ? 1 : 0}&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${ytId}&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1&origin=${window.location.origin}`}
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            className="w-full h-full pointer-events-none"
+                            onLoad={() => isCurrent && setVideoReady(true)}
+                        />
+                    ) : (
+                        <Player
+                            url={offer.video_url}
+                            playing={isCurrent && isPlaying}
+                            loop
+                            muted={isMuted}
+                            playsinline={true}
+                            width="100%"
+                            height="100%"
+                            onReady={() => isCurrent && setVideoReady(true)}
+                            onProgress={(state: any) => isCurrent && setProgress(state.played * 100)}
+                            className="pointer-events-none"
+                            style={{ position: 'absolute', top: 0, left: 0 }}
+                            config={{ file: { attributes: { style: { width: '100%', height: '100%', objectFit: 'contain' } } } }}
+                        />
+                    )}
                 </div>
                 {isCurrent && (
                     <>
@@ -404,9 +407,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={(e) => { e.stopPropagation(); setShowShareModal(true); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
-                                            </svg>
+                                            <FiShare2 size={22} />
                                         </button>
                                     </div>
 
@@ -477,8 +478,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             />
 
             {showNameSetup && (
-                <div className="fixed inset-0 bg-black/70 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
-                    <div className="bg-[#121212]/80 backdrop-blur-2xl rounded-[2.5rem] p-10 max-w-sm w-full text-center border border-white/10 relative shadow-2xl">
+                <div className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4">
+                    <div className="bg-[#121212] rounded-[2.5rem] p-10 max-w-sm w-full text-center border border-white/10 relative shadow-2xl">
                         <button onClick={() => setShowNameSetup(false)} className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-white transition-colors border border-white/5">
                             <X size={20} />
                         </button>

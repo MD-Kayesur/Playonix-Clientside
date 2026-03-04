@@ -12,6 +12,7 @@ const LanguagesPage = () => {
     }, []);
 
     const handleLanguageChange = (lang: string) => {
+        localStorage.setItem("app_language", lang);
         document.cookie = `googtrans=/en/${lang};path=/;domain=${window.location.hostname}`;
         document.cookie = `googtrans=/en/${lang};path=/;`;
         window.location.reload();

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { FiShare2 } from "react-icons/fi";
 import {
   Select,
   SelectContent,
@@ -742,9 +743,7 @@ const Overview = () => {
                         <Bookmark className="h-6 w-6 group-hover:text-yellow-500 transition-colors" />
                       </button>
                       <button onClick={() => setShowShareModal(true)} className="flex flex-col items-center gap-1 group">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="group-hover:text-green-500 transition-colors">
-                            <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
-                        </svg>
+                        <FiShare2 className="h-6 w-6 group-hover:text-green-500 transition-colors" />
                       </button>
                     </div>
 

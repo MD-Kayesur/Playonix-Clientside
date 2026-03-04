@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { FiShare2 } from "react-icons/fi";
 // import { motion } from 'framer-motion';
 import {
     Heart,
@@ -406,9 +407,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={(e) => { e.stopPropagation(); setShowShareModal(true); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
-                                            </svg>
+                                            <FiShare2 size={22} />
                                         </button>
                                     </div>
 

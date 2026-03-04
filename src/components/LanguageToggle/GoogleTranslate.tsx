@@ -11,6 +11,25 @@ export const LANGUAGES = [
   { code: "pt", label: "Portuguese", flag: "pt" },
   { code: "bn", label: "Bangla", flag: "bd" },
   { code: "hi", label: "Hindi", flag: "in" },
+  { code: "de", label: "Deutsch (German)", flag: "de" },
+  { code: "es", label: "Español (Spanish)", flag: "es" },
+  { code: "he", label: "עברית (Hebrew)", flag: "il" },
+  { code: "id", label: "Bahasa Indonesia (Indonesian)", flag: "id" },
+  { code: "it", label: "Italiano (Italian)", flag: "it" },
+  { code: "ja", label: "日本語 (Japanese)", flag: "jp" },
+  { code: "ko", label: "한국어 (Korean)", flag: "kr" },
+  { code: "pl", label: "Polski (Polish)", flag: "pl" },
+  { code: "pt", label: "Português (Portuguese)", flag: "pt" },
+  { code: "pt-BR", label: "Português Brasileiro", flag: "br" },
+  { code: "ro", label: "Română (Romanian)", flag: "ro" },
+  { code: "ru", label: "русский (Russian)", flag: "ru" },
+  { code: "sv", label: "Svenska (Swedish)", flag: "se" },
+  { code: "th", label: "ภาษาไทย (Thai)", flag: "th" },
+  { code: "tr", label: "Türkçe (Turkish)", flag: "tr" },
+  { code: "uk", label: "українська (Ukrainian)", flag: "ua" },
+  { code: "vi", label: "Tiếng Việt (Vietnamese)", flag: "vi" },
+  { code: "zh-CN", label: "汉语 (Chinese – Simplified)", flag: "cn" },
+  { code: "fi", label: "Suomi (Finland)", flag: "fi" },
 ];
 
 
@@ -76,10 +95,10 @@ const GoogleTranslate: React.FC = () => {
   }, []);
 
   // ✅ Handle language switch
-  const handleChange = (lang: string,e:any) => {
+  const handleChange = (lang: string, e: any) => {
     if (e) {
-        e.preventDefault();
-      }
+      e.preventDefault();
+    }
     setCurrentLang(lang);
     setOpen(false);
 
@@ -99,12 +118,12 @@ const GoogleTranslate: React.FC = () => {
       >
         {selectedLang && (
           <img
-          src={`https://flagcdn.com/w20/${selectedLang.flag}.png`}
-          width={20}
-          height={15}
-          alt={selectedLang.label}
-          className="rounded-sm"
-        />
+            src={`https://flagcdn.com/w20/${selectedLang.flag}.png`}
+            width={20}
+            height={15}
+            alt={selectedLang.label}
+            className="rounded-sm"
+          />
         )}
         <span className="md:hidden uppercase">{selectedLang?.code}</span>
         <span className="hidden md:inline">{selectedLang?.label}</span>
@@ -116,7 +135,7 @@ const GoogleTranslate: React.FC = () => {
       {/* Dropdown Menu */}
       {open && (
         <>
-          <div 
+          <div
             className="fixed inset-0 z-40"
             onClick={() => setOpen(false)}
           />
@@ -124,7 +143,7 @@ const GoogleTranslate: React.FC = () => {
             {LANGUAGES.map((lang) => (
               <button
                 key={lang.code}
-                onClick={(e) => handleChange(lang.code,e)}
+                onClick={(e) => handleChange(lang.code, e)}
                 className="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm transition hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white"
               >
                 <img

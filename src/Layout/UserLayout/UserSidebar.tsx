@@ -21,7 +21,6 @@ import {
   Languages
 } from "lucide-react";
 import { SidebarSearch } from "@/components/SidebarSearch";
-import { LANGUAGES } from "@/components/LanguageToggle/GoogleTranslate";
 
 import {
   MdKeyboardDoubleArrowLeft,
@@ -53,20 +52,6 @@ export const UserSidebar: React.FC<SidebarProps> = ({
   const { theme } = useTheme();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
-  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("en");
-
-  useEffect(() => {
-    const match = document.cookie.match(/googtrans=\/en\/(\w+)/);
-    const lang = match ? match[1] : "en";
-    setCurrentLang(lang);
-  }, []);
-
-  const handleLanguageChange = (lang: string) => {
-    document.cookie = `googtrans=/en/${lang};path=/;domain=${window.location.hostname}`;
-    document.cookie = `googtrans=/en/${lang};path=/;`;
-    window.location.reload();
-  };
 
   useEffect(() => {
     if (theme === "dark") {
@@ -126,7 +111,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
     { path: "/user/photos", label: "Photos", icon: Image },
     { path: "/user/favorites", label: "Favorites", icon: Bookmark },
     { path: "/user/categories", label: "Categories", icon: Trophy },
-    { path: "/user/languages", label: "Languages", icon: Languages },
+    { path: "/languages", label: "Languages", icon: Languages },
   ];
 
   return (

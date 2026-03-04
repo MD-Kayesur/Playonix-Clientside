@@ -55,6 +55,10 @@ const routes = createBrowserRouter([
             path: "cookies",
             element: <CookiePolicy />,
           },
+          {
+            path: "languages",
+            element: <Languages />,
+          },
         ]
       },
 
@@ -77,7 +81,6 @@ const routes = createBrowserRouter([
           { path: "favorites", element: <Favorites /> },
           { path: "settings", element: <Sittings /> },
           { path: "categories", element: <Categories /> },
-          { path: "languages", element: <Languages /> },
         ],
       },
       {

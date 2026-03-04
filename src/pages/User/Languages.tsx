@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { LANGUAGES } from "@/components/LanguageToggle/GoogleTranslate";
 import { Check } from "lucide-react";
 

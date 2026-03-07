@@ -22,11 +22,11 @@ import {
 } from "lucide-react";
 import { SidebarSearch } from "@/components/SidebarSearch";
 
-import {
-  MdKeyboardDoubleArrowLeft,
-  MdOutlineKeyboardDoubleArrowRight,
-  // MdLogout,
-} from "react-icons/md";
+// import {
+//   MdKeyboardDoubleArrowLeft,
+//   MdOutlineKeyboardDoubleArrowRight,
+//   // MdLogout,
+// } from "react-icons/md";
 
 // import { useGetMySubscriptionQuery } from "@/redux/features/subscriptions/subscriptionsApi";
 import { useTheme } from "@/components/ThemeToggle/theme-provider";
@@ -283,25 +283,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
         </div>
       )} */}
 
-      {/* Collapse Button - Desktop only */}
-      {sidebarOpen && (
-        <div className="hidden md:block p-3">
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="flex items-center justify-center w-full gap-2 px-3 py-2 rounded-lg bg-card text-foreground border border-border hover:bg-muted transition-colors cursor-pointer"
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {isCollapsed ? (
-              <MdOutlineKeyboardDoubleArrowRight className="text-2xl sm:text-3xl" />
-            ) : (
-              <div className="flex items-center gap-3">
-                <MdKeyboardDoubleArrowLeft className="text-2xl sm:text-3xl" />
-                <span className="text-sm sm:text-base">Collapse</span>
-              </div>
-            )}
-          </button>
-        </div>
-      )}
+
     </div>
   );
 };

@@ -371,7 +371,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             >
                 {offers.map((offer, index) => (
                     <div key={offer.id} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-end sm:items-center justify-center relative">
-                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-[100dvh] md:h-[85vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
+                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-[100dvh] md:h-[85vh] lg:h-full ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
                             <div className="absolute inset-0 h-full w-full block sm:flex sm:flex-row sm:items-end sm:gap-5" style={{ perspective: "1200px" }}>
                                 <MediaCard
                                     offer={offer}

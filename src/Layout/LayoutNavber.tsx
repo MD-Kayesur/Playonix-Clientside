@@ -1,8 +1,8 @@
 "use client"
 // import { ModeToggle } from "@/components/ThemeToggle/mode-toggle"
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import GoogleTranslate from "@/components/LanguageToggle/GoogleTranslate"
+
 
 
 // Helper function to get initials from name
@@ -70,7 +70,6 @@ export const LayoutNavber: React.FC = () => {
       </div>
       <div className="flex-1" />
       <div className="flex items-center gap-2 mt-1.5 md:mt-2">
-        <GoogleTranslate />
         {/* <ModeToggle /> */}
       </div>
       {showLogout && (

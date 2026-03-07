@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/store/Slices/AuthSlice/authSlice";
+import { useTranslation } from "react-i18next";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -13,6 +14,7 @@ const loginSchema = z.object({
 type LoginFormInputs = z.infer<typeof loginSchema>;
 
 const Login = () => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -49,12 +51,14 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-950">
       <div className="w-full max-w-md bg-white dark:bg-[#1A1C1D] dark:border dark:border-gray-800 p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold text-center text-gray-900 dark:text-white">Login</h2>
+        <h2 className="text-2xl font-semibold text-center text-gray-900 dark:text-white">
+          {t('common.login', 'Login')}
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
           {/* Email Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Email
+              {t('auth.email', 'Email')}
             </label>
             <input
               type="email"
@@ -69,7 +73,7 @@ const Login = () => {
           {/* Password Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Password
+              {t('auth.password', 'Password')}
             </label>
             <input
               type="password"
@@ -83,9 +87,9 @@ const Login = () => {
 
           <div className="mb-3">
             <p className="text-gray-600 dark:text-gray-400">
-              Already have an account?{" "}
+              {t('auth.dont_have_account', "Don't have an account?")}{" "}
               <Link to="/signup" className="text-blue-500 hover:text-blue-600 dark:text-blue-400">
-                Sign up here
+                {t('auth.sign_up_here', 'Sign up here')}
               </Link>
             </p>
           </div>
@@ -95,12 +99,13 @@ const Login = () => {
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors"
           >
-            Login
+            {t('common.login', 'Login')}
           </button>
         </form>
       </div>
     </div>
   );
 };
+
 
 export default Login;

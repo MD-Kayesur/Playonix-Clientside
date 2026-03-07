@@ -366,13 +366,13 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         <>
             <div
                 ref={containerRef}
-                className="h-[100dvh] sm:h-[calc(100dvh-84px)] w-full overflow-y-auto snap-y snap-mandatory no-scrollbar scroll-smooth flex flex-col items-center shadow-2xl"
+                className="h-[100dvh] w-full overflow-y-auto snap-y snap-mandatory no-scrollbar scroll-smooth flex flex-col items-center shadow-2xl"
                 onScroll={handleOnScroll}
             >
                 {offers.map((offer, index) => (
-                    <div key={offer.id} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-end sm:items-center justify-center relative">
-                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-[100dvh] md:h-[85vh] lg:h-full ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
-                            <div className="absolute inset-0 h-full w-full block sm:flex sm:flex-row sm:items-end sm:gap-5" style={{ perspective: "1200px" }}>
+                    <div key={offer.id} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-center justify-center relative">
+                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-[90vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
+                            <div className="absolute inset-0 h-full w-full flex items-center justify-center sm:gap-5" style={{ perspective: "1200px" }}>
                                 <MediaCard
                                     offer={offer}
                                     index={index}
@@ -386,7 +386,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                 />
 
                                 {/* Sidebar Icons */}
-                                <div className="absolute right-2 bottom-20 sm:static w-14 flex flex-col items-center gap-4 sm:gap-6 sm:mb-8 flex-shrink-0 z-[120]">
+                                <div className="absolute right-2 bottom-20 sm:static w-14 flex flex-col items-center gap-4 sm:gap-6 sm:self-end sm:mb-14 flex-shrink-0 z-[120]">
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={(e) => { e.stopPropagation(); toggleLike(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
                                             <Heart size={22} className={`${likedOffers.has(offer.id) ? 'fill-[#FF2D55] text-[#FF2D55]' : 'text-foreground'}`} />

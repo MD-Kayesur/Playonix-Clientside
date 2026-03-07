@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { UserSidebar } from "./UserSidebar";
 import { Outlet } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
-import { LayoutNavber } from "@/Layout/LayoutNavber";
+
 import { SidebarSearch } from "@/components/SidebarSearch";
 
 export default function UserLayout() {
@@ -81,10 +81,7 @@ export default function UserLayout() {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden relative w-full">
-        {/* Layout Navbar - only semi-visible or hidden if needed */}
-        <div className="sticky top-0 z-30 hidden md:block border-b border-white/5">
-          <LayoutNavber />
-        </div>
+
 
         {/* Main Content */}
         <div className="flex-1 overflow-auto no-scrollbar">

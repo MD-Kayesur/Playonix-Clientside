@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { AdminSidebar } from "./AdminSidebar";
 import { Outlet } from "react-router-dom";
 import { AiOutlineMenuFold } from "react-icons/ai";
-import { LayoutNavber } from "@/Layout/LayoutNavber";
+
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -78,10 +78,7 @@ export default function AdminLayout() {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden relative w-full transition-all duration-300">
-        {/* Layout Navbar */}
-        <div className="sticky top-0 z-30 hidden md:block border-b border-white/5">
-          <LayoutNavber />
-        </div>
+
 
         {/* Main Content */}
         <div className="flex-1 overflow-auto no-scrollbar">

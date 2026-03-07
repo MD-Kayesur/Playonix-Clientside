@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/store/Slices/AuthSlice/authSlice";
+import { useTranslation } from "react-i18next";
 
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -21,6 +22,7 @@ const signupSchema = z.object({
 type SignupFormInputs = z.infer<typeof signupSchema>;
 
 const Signup = () => {
+  const { t } = useTranslation();
   const [preview] = useState<string | null>(null);
   const dispatch = useDispatch();
 
@@ -60,23 +62,17 @@ const Signup = () => {
     }
   };
 
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-  //   if (file) {
-  //     setPreview(URL.createObjectURL(file));
-  //     setValue("image", file, { shouldValidate: true });
-  //   }
-  // };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-200 dark:bg-gray-950">
       <div className="w-full max-w-md bg-white dark:bg-[#1A1C1D] dark:border dark:border-gray-800 p-6 rounded-lg shadow-md my-10">
-        <h2 className="text-2xl font-semibold text-center text-gray-900 dark:text-white">Signup</h2>
+        <h2 className="text-2xl font-semibold text-center text-gray-900 dark:text-white">
+          {t('common.signup', 'Signup')}
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
           {/* Name Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Name
+              {t('auth.name', 'Name')}
             </label>
             <input
               type="text"
@@ -91,7 +87,7 @@ const Signup = () => {
           {/* Email Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Email
+              {t('auth.email', 'Email')}
             </label>
             <input
               type="email"
@@ -106,7 +102,7 @@ const Signup = () => {
           {/* Password Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Password
+              {t('auth.password', 'Password')}
             </label>
             <input
               type="password"
@@ -121,64 +117,30 @@ const Signup = () => {
           {/* Role Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Role
+              {t('auth.role', 'Role')}
             </label>
             <select
               {...register("role")}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white"
             >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
+              <option value="user">{t('auth.user', 'User')}</option>
+              <option value="admin">{t('auth.admin', 'Admin')}</option>
             </select>
             {errors.role && (
               <p className="text-red-500 text-sm">{errors.role.message}</p>
             )}
           </div>
-          {/* <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Profile Picture
-            </label>
-             <div
-              className="relative w-full h-36 border-2 border-dashed border-gray-400 dark:border-gray-600 rounded-lg flex items-center justify-center cursor-pointer hover:border-blue-500 dark:hover:border-blue-400 transition bg-gray-50 dark:bg-gray-800"
-              onClick={() => document.getElementById("fileInput")?.click()}
-            >
-              {preview ? (
-                <img
-                  src={preview}
-                  alt="Preview"
-                  className="absolute inset-0 w-full h-full object-cover rounded-lg"
-                />
-              ) : (
-                <div className="flex flex-col items-center text-gray-500 dark:text-gray-400">
-                  <CiSquarePlus className="h-12 w-12" />
-                  <p className="text-sm">Click to upload</p>
-                </div>
-              )}
-            </div>
-            <input
-              type="file"
-              accept="image/*"
-              id="fileInput"
-              className="hidden"
-              onChange={handleImageChange}
-            />
-            {errors.image?.message &&
-              typeof errors.image.message === "string" && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.image.message}
-                </p>
-              )}
-          </div> */}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors"
           >
-            Signup
+            {t('common.signup', 'Signup')}
           </button>
         </form>
       </div>
     </div>
   );
 };
+
 
 export default Signup;

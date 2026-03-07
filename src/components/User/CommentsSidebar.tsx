@@ -34,6 +34,7 @@ interface CommentsSidebarProps {
     logo: string;
     showEmojiPicker: boolean;
     setShowEmojiPicker: (show: boolean) => void;
+    isPostingComment?: boolean;
 }
 
 const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
@@ -52,9 +53,10 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
     toggleReplies,
     replyTo,
     setReplyTo,
-    // logo,
+     
     showEmojiPicker,
-    setShowEmojiPicker
+    setShowEmojiPicker,
+    isPostingComment
 }) => {
     const commentInputRef = useRef<HTMLInputElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -273,9 +275,10 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                     {(commentText.trim() || selectedImage) && (
                                         <button
                                             onClick={handleCommentSubmit}
-                                            className="text-[#000000] font-bold text-[13px] sm:text-[14px] px-3 py-2 bg-[#FACC15] rounded-full hover:bg-[#EAB308] transition-all active:scale-95 uppercase tracking-wide flex-shrink-0"
+                                            disabled={isPostingComment}
+                                            className={`text-[#000000] font-bold text-[13px] sm:text-[14px] px-3 py-2 bg-[#FACC15] rounded-full hover:bg-[#EAB308] transition-all active:scale-95 uppercase tracking-wide flex-shrink-0 ${isPostingComment ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
-                                            Post
+                                            {isPostingComment ? 'Posting...' : 'Post'}
                                         </button>
                                     )}
                                 </div>

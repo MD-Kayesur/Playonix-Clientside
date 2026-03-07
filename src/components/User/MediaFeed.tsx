@@ -43,6 +43,8 @@ export interface Offer {
     cta: string;
     likes: number;
     comments: number;
+    saves?: number;
+    shares?: number;
     image_url: string;
     video_url: string;
     website_url: string;
@@ -96,6 +98,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
 
     const [comments, setComments] = useState<Comment[]>([]);
+    const [commentsMap, setCommentsMap] = useState<Record<number, Comment[]>>(() => {
+        const saved = localStorage.getItem('media_comments');
+        return saved ? JSON.parse(saved) : {};
+    });
+    const [isPostingComment, setIsPostingComment] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const isFirstLoad = useRef(true);
@@ -160,11 +167,23 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         setIsDescriptionExpanded(false);
         setFlippedCardId(null);
 
-        if (offers[currentIndex]) {
-            setComments([
-                { id: 1, user: 'User_' + currentIndex, avatar: '👤', text: `Great content for ${offers[currentIndex]?.title}!`, likes: Math.floor(Math.random() * 50), timestamp: '2h ago' },
-                { id: 2, user: 'Fan_' + (currentIndex + 1), avatar: '👤', text: 'Love this vibe!', likes: Math.floor(Math.random() * 30), timestamp: '1h ago' }
-            ]);
+        const currentOfferId = offers[currentIndex]?.id;
+        if (currentOfferId) {
+            // Check if we have comments in map, if not, create initial ones
+            if (!commentsMap[currentOfferId]) {
+                const initialComments = [
+                    { id: Date.now() - 7200000, user: 'User_' + currentIndex, avatar: '👤', text: `Great content for ${offers[currentIndex]?.title}!`, likes: Math.floor(Math.random() * 50), timestamp: '2h ago' },
+                    { id: Date.now() - 3600000, user: 'Fan_' + (currentIndex + 1), avatar: '👤', text: 'Love this vibe!', likes: Math.floor(Math.random() * 30), timestamp: '1h ago' }
+                ];
+                setCommentsMap(prev => {
+                    const newMap = { ...prev, [currentOfferId]: initialComments };
+                    localStorage.setItem('media_comments', JSON.stringify(newMap));
+                    return newMap;
+                });
+                setComments(initialComments);
+            } else {
+                setComments(commentsMap[currentOfferId]);
+            }
         }
         setCommentText('');
     }, [currentIndex, offers]);
@@ -222,10 +241,19 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         });
     };
 
-    const handleCommentSubmit = () => {
+    const handleCommentSubmit = async () => {
         const savedUsername = localStorage.getItem('username');
         if (!savedUsername && !username) { setShowNameSetup(true); return; }
+
+        const currentOffer = offers[currentIndex];
+        if (!currentOffer) return;
+
         if (commentText.trim() || selectedImage) {
+            setIsPostingComment(true);
+
+            // Simulate "real" network delay
+            await new Promise(resolve => setTimeout(resolve, 800));
+
             const newComment: Comment = {
                 id: Date.now(),
                 user: username || savedUsername || 'Anonymous',
@@ -236,31 +264,66 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 replies: [],
                 commentImage: selectedImage || undefined
             };
-            if (replyTo) {
-                setComments(prev => prev.map(c => {
-                    if (c.id === replyTo.id) return { ...c, replies: [...(c.replies || []), newComment], showReplies: true };
-                    return c;
-                }));
-                setReplyTo(null);
-            } else {
-                setComments([newComment, ...comments]);
+
+            setCommentsMap(prev => {
+                const offerId = currentOffer.id;
+                let updatedComments = [];
+
+                if (replyTo) {
+                    updatedComments = (prev[offerId] || []).map(c => {
+                        if (c.id === replyTo.id) return { ...c, replies: [...(c.replies || []), newComment], showReplies: true };
+                        return c;
+                    });
+                } else {
+                    updatedComments = [newComment, ...(prev[offerId] || [])];
+                }
+
+                const newMap = { ...prev, [offerId]: updatedComments };
+                localStorage.setItem('media_comments', JSON.stringify(newMap));
+                setComments(updatedComments);
+                return newMap;
+            });
+
+            if (!replyTo) {
+                setOffers(prev => prev.map(o => o.id === currentOffer.id ? { ...o, comments: (o.comments || 0) + 1 } : o));
             }
+
             setCommentText('');
             setSelectedImage(null);
+            setReplyTo(null);
+            setIsPostingComment(false);
         }
     };
 
     const toggleCommentLike = (commentId: number, isReply: boolean = false, parentId?: number) => {
-        if (isReply && parentId) {
-            setComments(prev => prev.map(c => {
-                if (c.id === parentId) {
-                    return { ...c, replies: c.replies?.map(r => r.id === commentId ? { ...r, likes: r.isLiked ? r.likes - 1 : r.likes + 1, isLiked: !r.isLiked } : r) };
-                }
-                return c;
-            }));
-        } else {
-            setComments(prev => prev.map(c => c.id === commentId ? { ...c, likes: c.isLiked ? c.likes - 1 : c.likes + 1, isLiked: !c.isLiked } : c));
-        }
+        const currentOfferId = offers[currentIndex]?.id;
+        if (!currentOfferId) return;
+
+        setCommentsMap(prev => {
+            const offerComments = prev[currentOfferId] || [];
+            let updatedComments = [];
+
+            if (isReply && parentId) {
+                updatedComments = offerComments.map(c => {
+                    if (c.id === parentId) {
+                        return {
+                            ...c,
+                            replies: c.replies?.map(r => r.id === commentId ? { ...r, likes: r.isLiked ? r.likes - 1 : r.likes + 1, isLiked: !r.isLiked } : r)
+                        };
+                    }
+                    return c;
+                });
+            } else {
+                updatedComments = offerComments.map(c =>
+                    c.id === commentId ? { ...c, likes: c.isLiked ? c.likes - 1 : c.likes + 1, isLiked: !c.isLiked } : c
+                );
+            }
+
+            const newMap = { ...prev, [currentOfferId]: updatedComments };
+            localStorage.setItem('media_comments', JSON.stringify(newMap));
+            setComments(updatedComments);
+            return newMap;
+        });
     };
 
     const handleReplyClick = (commentId: number, user: string) => {
@@ -279,10 +342,21 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         }
     };
 
+    const handleShareClick = (offerId: number) => {
+        setOffers(prev => prev.map(o => o.id === offerId ? { ...o, shares: (o.shares || 0) + 1 } : o));
+        setShowShareModal(true);
+    };
+
     const getYouTubeId = (url: string) => {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
+    };
+
+    const formatCount = (num: number = 0) => {
+        if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+        if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+        return num.toString();
     };
 
     const handleExpandAndComment = (e: React.MouseEvent) => {
@@ -366,13 +440,13 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         <>
             <div
                 ref={containerRef}
-                className="h-[100dvh] sm:h-[calc(100dvh-84px)] w-full overflow-y-auto snap-y snap-mandatory no-scrollbar scroll-smooth flex flex-col items-center shadow-2xl"
+                className="h-[100dvh] w-full overflow-y-auto snap-y snap-mandatory no-scrollbar scroll-smooth flex flex-col items-center shadow-2xl"
                 onScroll={handleOnScroll}
             >
                 {offers.map((offer, index) => (
-                    <div key={offer.id} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-end sm:items-center justify-center relative">
-                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-[100dvh] md:h-[85vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
-                            <div className="absolute inset-0 h-full w-full block sm:flex sm:flex-row sm:items-end sm:gap-5" style={{ perspective: "1200px" }}>
+                    <div key={offer.id} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-center justify-center relative">
+                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-[90vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
+                            <div className="absolute inset-0 h-full w-full flex items-center justify-center sm:gap-5" style={{ perspective: "1200px" }}>
                                 <MediaCard
                                     offer={offer}
                                     index={index}
@@ -386,35 +460,39 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                 />
 
                                 {/* Sidebar Icons */}
-                                <div className="absolute right-2 bottom-20 sm:static w-14 flex flex-col items-center gap-4 sm:gap-6 sm:mb-8 flex-shrink-0 z-[120]">
+                                <div className="absolute right-2 bottom-2 sm:static w-14 lg:w-20 flex flex-col items-center gap-4 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); toggleLike(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
-                                            <Heart size={22} className={`${likedOffers.has(offer.id) ? 'fill-[#FF2D55] text-[#FF2D55]' : 'text-foreground'}`} />
+                                        <button onClick={(e) => { e.stopPropagation(); toggleLike(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
+                                            <Heart className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${likedOffers.has(offer.id) ? 'fill-[#FF2D55] text-[#FF2D55]' : 'text-foreground'}`} />
                                         </button>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.likes + (likedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={handleExpandAndComment} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
-                                            <MessageCircle size={22} />
+                                        <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
+                                            <MessageCircle className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
                                         </button>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.comments)}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
-                                            <Bookmark size={22} className={`${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-foreground'}`} />
+                                        <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
+                                            <Bookmark className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-foreground'}`} />
                                         </button>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); setShowShareModal(true); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
-                                            <FiShare2 size={22} />
+                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
+                                            <FiShare2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
                                         </button>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
                                     </div>
 
                                     {(type === 'video' || (type === 'all' && offer.video_url)) && (
                                         <div className="flex flex-col items-center gap-1.5">
-                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
-                                                {isMuted ? <VolumeX size={22} /> : <Volume2 size={22} />}
+                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
+                                                {isMuted ? <VolumeX className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" /> : <Volume2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />}
                                             </button>
                                         </div>
                                     )}
@@ -468,6 +546,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 logo={logo}
                 showEmojiPicker={showEmojiPicker}
                 setShowEmojiPicker={setShowEmojiPicker}
+                isPostingComment={isPostingComment}
             />
 
             <ShareModal
@@ -487,7 +566,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             <img src={logo} alt="Logo" className="h-12 object-contain" />
                         </div>
                         <h2 className="text-2xl font-bold text-white mb-2">Wait! What's your name?</h2>
-                        <p className="text-white/50 mb-8 text-sm">Join the conversation by picking a username.</p>
+                        <p className="text-white/50 mb-8 text-sm">Before commenting you need to provide a name for your comment.</p>
                         <input
                             type="text"
                             value={username}
@@ -500,8 +579,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             onClick={handleNameSetup}
                             className="w-full bg-[#FACC15] text-black font-bold py-4 rounded-2xl hover:bg-[#EAB308] transition-all transform active:scale-95"
                         >
-                            Let's Go
-                        </button>
+                            Continue                </button>
                     </div>
                 </div>
             )}

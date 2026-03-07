@@ -1,8 +1,8 @@
 "use client"
 // import { ModeToggle } from "@/components/ThemeToggle/mode-toggle"
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import GoogleTranslate from "@/components/LanguageToggle/GoogleTranslate"
+
 
 
 // Helper function to get initials from name
@@ -16,7 +16,10 @@ import GoogleTranslate from "@/components/LanguageToggle/GoogleTranslate"
 //     .slice(0, 2);
 // };
 
+import { useTranslation } from "react-i18next";
+
 export const LayoutNavber: React.FC = () => {
+  const { t } = useTranslation();
   const [showLogout] = useState(false)
   const navigate = useNavigate()
   const [_user, setUser] = useState<{ name: string, role: string, avatar: string } | null>(null);
@@ -37,41 +40,13 @@ export const LayoutNavber: React.FC = () => {
     navigate("/")
   }
 
-
-
-  // Determine settings route based on role
-  // const settingsRoute = user?.role === 'Admin' || user?.role === 'SUPER_ADMIN' ? '/admin/settings' : '/user/settings';
-
-  // const userNameToShow = user?.name || "Guest";
-  // const userRoleToShow = user?.role || "User";
-  // const userImageToShow = user?.avatar || "";
-
   return (
     <div className="md:px-10 px-5 relative z-[9999] py-5 flex items-center justify-between  ">
-      {/* <Link to={settingsRoute} className="flex items-center gap-3 cursor-pointer">
-        {userImageToShow ? (
-          <img
-            src={userImageToShow}
-            alt={userNameToShow}
-            className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700"
-          />
-        ) : (
-          <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 flex items-center justify-center text-sm font-bold border-2 border-gray-200 dark:border-gray-700">
-            {getInitials(userNameToShow)}
-          </div>
-        )}
-        <div className="flex flex-col">
-          <div className="font-semibold text-sm text-gray-900 dark:text-white">{userNameToShow}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-300">{userRoleToShow}</div>
-        </div>
-      </Link> */}
       <div>
 
       </div>
       <div className="flex-1" />
       <div className="flex items-center gap-2 mt-1.5 md:mt-2">
-        <GoogleTranslate />
-        {/* <ModeToggle /> */}
       </div>
       {showLogout && (
         <div className="absolute top-5 left-70 transform -translate-x-1/2 w-full flex justify-center">
@@ -79,7 +54,7 @@ export const LayoutNavber: React.FC = () => {
             onClick={handleLogout}
             className="text-sm bg-[#FACC15] text-black font-semibold px-4 py-2 rounded-md"
           >
-            Logout
+            {t('common.logout', 'Logout')}
           </button>
         </div>
       )}

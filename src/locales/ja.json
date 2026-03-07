@@ -1,0 +1,32 @@
+{
+    "common": {
+        "logout": "ログアウト",
+        "settings": "設定",
+        "home": "ホーム",
+        "login": "ログイン",
+        "signup": "サインアップ",
+        "language": "言語",
+        "search": "検索",
+        "notifications": "通知",
+        "profile": "プロフィール"
+    },
+    "auth": {
+        "login_title": "アカウントにログイン",
+        "signup_title": "アカウントを作成",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "confirm_password": "パスワードを認める",
+        "forgot_password": "パスワードをお忘れですか？",
+        "dont_have_account": "アカウントをお持ちではありませんか？",
+        "already_have_account": "すでにアカウントをお持ちですか？",
+        "sign_in": "サインイン",
+        "sign_up": "サインアップ"
+    },
+    "media": {
+        "feed": "メディアフィード",
+        "comments": "コメント",
+        "share": "共有",
+        "like": "いいね",
+        "upload": "アップロード"
+    }
+}

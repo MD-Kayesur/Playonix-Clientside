@@ -6,8 +6,10 @@ import logo from "@/assets/bgremovelogo.png";
 import bgImage from "@/assets/home.jpg";
 // import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
   const [showWelcome, setShowWelcome] = useState(false);
   const navigate = useNavigate();
 
@@ -83,12 +85,12 @@ const Home = () => {
 
                 {/* Title */}
                 <h2 className="text-3xl font-bold text-foreground text-center mb-6">
-                  18+ Disclosure
+                  {t('auth.disclosure_title', '18+ Disclosure')}
                 </h2>
 
                 {/* Description */}
                 <p className="text-sm md:text-base text-muted-foreground text-center leading-relaxed mb-8">
-                  This platform promotes casino offers via affiliate links only; no real-money gambling occurs on-site. All outbound links redirect to third-party operators. The following disclosure combines the required elements from your spec (section 6: Compliance & Legal Page)—clear 18+ warning, responsible play messaging, affiliate disclosure, and redirection notice.
+                  {t('auth.disclosure_desc', 'This platform promotes casino offers via affiliate links only; no real-money gambling occurs on-site. All outbound links redirect to third-party operators. The following disclosure combines the required elements from your spec (section 6: Compliance & Legal Page)—clear 18+ warning, responsible play messaging, affiliate disclosure, and redirection notice.')}
                 </p>
 
                 {/* Continue Button */}
@@ -96,7 +98,7 @@ const Home = () => {
                   onClick={handleContinue}
                   className="w-full h-14 cursor-pointer bg-[#FACC15] hover:bg-[#EAB308] text-black font-bold text-lg rounded-xl transition-all active:scale-95 shadow-lg shadow-[#FACC15]/20"
                 >
-                  Continue
+                  {t('common.continue', 'Continue')}
                 </Button>
               </motion.div>
             </motion.div>

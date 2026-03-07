@@ -3,10 +3,12 @@
     "id": 31,
     "title": "Fortune Ox",
     "subtitle": "Fortune Ox Gameplay",
-"description": "Watch the Fortune Ox slot gameplay...\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Eum facilis, consectetur, alias blanditiis necessitatibus quas explicabo reprehenderit quaerat debitis quod odit magnam deleniti mollitia in provident iusto cumque consequatur, aut totam natus temporibus non fugit?\n\nVoluptate explicabo optio labore ut, adipisci inventore qui aperiam rem iure dolore. Beatae, consequuntur ipsam. Porro sit sunt ipsum, eius molestias, repellendus rem quia natus rerum blanditiis explicabo itaque minus cum harum dicta voluptatum voluptas neque deleniti sed eligendi libero.\n\nQuam, itaque minus similique repellendus distinctio dolorem, rem beatae, officiis expedita omnis veniam atque velit.",
+    "description": "Watch the Fortune Ox slot gameplay...\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Eum facilis, consectetur, alias blanditiis necessitatibus quas explicabo reprehenderit quaerat debitis quod odit magnam deleniti mollitia in provident iusto cumque consequatur, aut totam natus temporibus non fugit?\n\nVoluptate explicabo optio labore ut, adipisci inventore qui aperiam rem iure dolore. Beatae, consequuntur ipsam. Porro sit sunt ipsum, eius molestias, repellendus rem quia natus rerum blanditiis explicabo itaque minus cum harum dicta voluptatum voluptas neque deleniti sed eligendi libero.\n\nQuam, itaque minus similique repellendus distinctio dolorem, rem beatae, officiis expedita omnis veniam atque velit.",
     "cta": "Watch Now",
     "likes": 500,
     "comments": 100,
+    "saves": 45,
+    "shares": 12,
     "image_url": "https://i.ibb.co.com/Cs14WsFt/Screenshot-2026-02-16-at-10-43-26-AM.png",
     "video_url": "/assets/vedio/Gane%20con%20FORTUNE%20OX%20%23juegos%20%23slot%20%23casino%20%23casinoonline%20%23fortuneox.mp4",
     "website_url": "",
@@ -17,7 +19,7 @@
       "FortuneOx",
       "Slot"
     ],
-       "terms_highlights": [
+    "terms_highlights": [
       "Bonus valid for new users",
       "Bonus valid for new users",
       "Bonus valid for new users",
@@ -34,6 +36,8 @@
     "cta": "Watch Now",
     "likes": 600,
     "comments": 150,
+    "saves": 58,
+    "shares": 24,
     "image_url": "https://i.ibb.co.com/fVWjhSh7/Screenshot-2026-02-16-at-10-43-46-AM.png",
     "video_url": "/assets/vedio/%F0%9F%8E%B0%20Golden%20Treasure%20Spin%20Gameplay%20_%20HUGE%20Win%20or%20Epic%20Fail_%20%F0%9F%92%B8%F0%9F%8E%AF.mp4",
     "website_url": "",
@@ -44,7 +48,7 @@
       "GoldenTreasure",
       "Spin"
     ],
-      "terms_highlights": [
+    "terms_highlights": [
       "Bonus valid for new users",
       "Bonus valid for new users",
       "Bonus valid for new users",
@@ -61,6 +65,8 @@
     "cta": "Claim Offer",
     "likes": 1400,
     "comments": 1000,
+    "saves": 450,
+    "shares": 120,
     "image_url": "https://i.ibb.co.com/Cs14WsFt/Screenshot-2026-02-16-at-10-43-26-AM.png",
     "video_url": "https://www.youtube.com/shorts/QK3va5ev_Gw",
     "website_url": "https://clubfortunecasino.com/",
@@ -89,6 +95,8 @@
     "cta": "Claim Offer",
     "likes": 980,
     "comments": 430,
+    "saves": 89,
+    "shares": 35,
     "image_url": "https://i.ibb.co.com/fVWjhSh7/Screenshot-2026-02-16-at-10-43-46-AM.png",
     "video_url": "https://www.youtube.com/shorts/WszylianzB4",
     "website_url": "https://goldenspin.com/",
@@ -108,7 +116,6 @@
     ],
     "disclaimer": "18+ only. Terms apply."
   },
-  
   {
     "id": 3,
     "title": "Royal Jackpot Arena",
@@ -117,6 +124,8 @@
     "cta": "Claim Offer",
     "likes": 2300,
     "comments": 780,
+    "saves": 320,
+    "shares": 95,
     "image_url": "  https://i.ibb.co.com/B28PgVwr/Screenshot-2026-02-16-at-10-44-01-AM.png",
     "video_url": "https://www.youtube.com/shorts/sEb2Jju7G4I",
     "website_url": "https://royal-jackpot.en.aptoide.com/app",
@@ -138,6 +147,8 @@
     "cta": "Claim Offer",
     "likes": 1500,
     "comments": 620,
+    "saves": 210,
+    "shares": 64,
     "image_url": "https://i.ibb.co.com/DPDMthPc/Screenshot-2026-02-16-at-10-44-16-AM.png",
     "video_url": "https://www.youtube.com/watch?v=dAigQy1Pjes",
     "website_url": "https://www.askgamblers.com/online-casinos/reviews/lucky-ace-casino-casino",
@@ -159,6 +170,8 @@
     "cta": "Claim Offer",
     "likes": 3100,
     "comments": 1200,
+    "saves": 890,
+    "shares": 340,
     "image_url": "https://i.ibb.co.com/WWJpYkcv/Screenshot-2026-02-16-at-10-44-26-AM.png",
     "video_url": "https://www.youtube.com/watch?v=HdAt1dG7EE8",
     "website_url": "https://www.spinpalace.com/",

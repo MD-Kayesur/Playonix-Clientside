@@ -98,6 +98,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
 
     const [comments, setComments] = useState<Comment[]>([]);
+    const [commentsMap, setCommentsMap] = useState<Record<number, Comment[]>>(() => {
+        const saved = localStorage.getItem('media_comments');
+        return saved ? JSON.parse(saved) : {};
+    });
+    const [isPostingComment, setIsPostingComment] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const isFirstLoad = useRef(true);
@@ -162,11 +167,23 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         setIsDescriptionExpanded(false);
         setFlippedCardId(null);
 
-        if (offers[currentIndex]) {
-            setComments([
-                { id: 1, user: 'User_' + currentIndex, avatar: '👤', text: `Great content for ${offers[currentIndex]?.title}!`, likes: Math.floor(Math.random() * 50), timestamp: '2h ago' },
-                { id: 2, user: 'Fan_' + (currentIndex + 1), avatar: '👤', text: 'Love this vibe!', likes: Math.floor(Math.random() * 30), timestamp: '1h ago' }
-            ]);
+        const currentOfferId = offers[currentIndex]?.id;
+        if (currentOfferId) {
+            // Check if we have comments in map, if not, create initial ones
+            if (!commentsMap[currentOfferId]) {
+                const initialComments = [
+                    { id: Date.now() - 7200000, user: 'User_' + currentIndex, avatar: '👤', text: `Great content for ${offers[currentIndex]?.title}!`, likes: Math.floor(Math.random() * 50), timestamp: '2h ago' },
+                    { id: Date.now() - 3600000, user: 'Fan_' + (currentIndex + 1), avatar: '👤', text: 'Love this vibe!', likes: Math.floor(Math.random() * 30), timestamp: '1h ago' }
+                ];
+                setCommentsMap(prev => {
+                    const newMap = { ...prev, [currentOfferId]: initialComments };
+                    localStorage.setItem('media_comments', JSON.stringify(newMap));
+                    return newMap;
+                });
+                setComments(initialComments);
+            } else {
+                setComments(commentsMap[currentOfferId]);
+            }
         }
         setCommentText('');
     }, [currentIndex, offers]);
@@ -224,10 +241,19 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         });
     };
 
-    const handleCommentSubmit = () => {
+    const handleCommentSubmit = async () => {
         const savedUsername = localStorage.getItem('username');
         if (!savedUsername && !username) { setShowNameSetup(true); return; }
+
+        const currentOffer = offers[currentIndex];
+        if (!currentOffer) return;
+
         if (commentText.trim() || selectedImage) {
+            setIsPostingComment(true);
+
+            // Simulate "real" network delay
+            await new Promise(resolve => setTimeout(resolve, 800));
+
             const newComment: Comment = {
                 id: Date.now(),
                 user: username || savedUsername || 'Anonymous',
@@ -238,32 +264,66 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 replies: [],
                 commentImage: selectedImage || undefined
             };
-            if (replyTo) {
-                setComments(prev => prev.map(c => {
-                    if (c.id === replyTo.id) return { ...c, replies: [...(c.replies || []), newComment], showReplies: true };
-                    return c;
-                }));
-                setReplyTo(null);
-            } else {
-                setComments([newComment, ...comments]);
-                setOffers(prev => prev.map(o => o.id === offers[currentIndex].id ? { ...o, comments: o.comments + 1 } : o));
+
+            setCommentsMap(prev => {
+                const offerId = currentOffer.id;
+                let updatedComments = [];
+
+                if (replyTo) {
+                    updatedComments = (prev[offerId] || []).map(c => {
+                        if (c.id === replyTo.id) return { ...c, replies: [...(c.replies || []), newComment], showReplies: true };
+                        return c;
+                    });
+                } else {
+                    updatedComments = [newComment, ...(prev[offerId] || [])];
+                }
+
+                const newMap = { ...prev, [offerId]: updatedComments };
+                localStorage.setItem('media_comments', JSON.stringify(newMap));
+                setComments(updatedComments);
+                return newMap;
+            });
+
+            if (!replyTo) {
+                setOffers(prev => prev.map(o => o.id === currentOffer.id ? { ...o, comments: (o.comments || 0) + 1 } : o));
             }
+
             setCommentText('');
             setSelectedImage(null);
+            setReplyTo(null);
+            setIsPostingComment(false);
         }
     };
 
     const toggleCommentLike = (commentId: number, isReply: boolean = false, parentId?: number) => {
-        if (isReply && parentId) {
-            setComments(prev => prev.map(c => {
-                if (c.id === parentId) {
-                    return { ...c, replies: c.replies?.map(r => r.id === commentId ? { ...r, likes: r.isLiked ? r.likes - 1 : r.likes + 1, isLiked: !r.isLiked } : r) };
-                }
-                return c;
-            }));
-        } else {
-            setComments(prev => prev.map(c => c.id === commentId ? { ...c, likes: c.isLiked ? c.likes - 1 : c.likes + 1, isLiked: !c.isLiked } : c));
-        }
+        const currentOfferId = offers[currentIndex]?.id;
+        if (!currentOfferId) return;
+
+        setCommentsMap(prev => {
+            const offerComments = prev[currentOfferId] || [];
+            let updatedComments = [];
+
+            if (isReply && parentId) {
+                updatedComments = offerComments.map(c => {
+                    if (c.id === parentId) {
+                        return {
+                            ...c,
+                            replies: c.replies?.map(r => r.id === commentId ? { ...r, likes: r.isLiked ? r.likes - 1 : r.likes + 1, isLiked: !r.isLiked } : r)
+                        };
+                    }
+                    return c;
+                });
+            } else {
+                updatedComments = offerComments.map(c =>
+                    c.id === commentId ? { ...c, likes: c.isLiked ? c.likes - 1 : c.likes + 1, isLiked: !c.isLiked } : c
+                );
+            }
+
+            const newMap = { ...prev, [currentOfferId]: updatedComments };
+            localStorage.setItem('media_comments', JSON.stringify(newMap));
+            setComments(updatedComments);
+            return newMap;
+        });
     };
 
     const handleReplyClick = (commentId: number, user: string) => {
@@ -486,6 +546,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 logo={logo}
                 showEmojiPicker={showEmojiPicker}
                 setShowEmojiPicker={setShowEmojiPicker}
+                isPostingComment={isPostingComment}
             />
 
             <ShareModal
@@ -505,7 +566,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             <img src={logo} alt="Logo" className="h-12 object-contain" />
                         </div>
                         <h2 className="text-2xl font-bold text-white mb-2">Wait! What's your name?</h2>
-                        <p className="text-white/50 mb-8 text-sm">Join the conversation by picking a username.</p>
+                        <p className="text-white/50 mb-8 text-sm">Before commenting you need to provide a name for your comment.</p>
                         <input
                             type="text"
                             value={username}
@@ -518,8 +579,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             onClick={handleNameSetup}
                             className="w-full bg-[#FACC15] text-black font-bold py-4 rounded-2xl hover:bg-[#EAB308] transition-all transform active:scale-95"
                         >
-                            Let's Go
-                        </button>
+                            Continue                </button>
                     </div>
                 </div>
             )}

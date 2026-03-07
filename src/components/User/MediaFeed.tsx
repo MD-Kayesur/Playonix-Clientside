@@ -460,39 +460,39 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                 />
 
                                 {/* Sidebar Icons */}
-                                <div className="absolute right-2 bottom-20 sm:static w-14 flex flex-col items-center gap-4 sm:gap-6 sm:self-end sm:mb-14 flex-shrink-0 z-[120]">
+                                <div className="absolute right-2 bottom-2 sm:static w-14 lg:w-20 flex flex-col items-center gap-4 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); toggleLike(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
-                                            <Heart size={22} className={`${likedOffers.has(offer.id) ? 'fill-[#FF2D55] text-[#FF2D55]' : 'text-foreground'}`} />
+                                        <button onClick={(e) => { e.stopPropagation(); toggleLike(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
+                                            <Heart className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${likedOffers.has(offer.id) ? 'fill-[#FF2D55] text-[#FF2D55]' : 'text-foreground'}`} />
                                         </button>
-                                        <span className="text-[13px] font-semibold text-white -mt-2 drop-shadow-md">{formatCount(offer.likes + (likedOffers.has(offer.id) ? 1 : 0))}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.likes + (likedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={handleExpandAndComment} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
-                                            <MessageCircle size={22} />
+                                        <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
+                                            <MessageCircle className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
                                         </button>
-                                        <span className="text-[13px] font-semibold text-white -mt-2 drop-shadow-md">{formatCount(offer.comments)}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.comments)}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
-                                            <Bookmark size={22} className={`${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-foreground'}`} />
+                                        <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
+                                            <Bookmark className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-foreground'}`} />
                                         </button>
-                                        <span className="text-[13px] font-semibold text-white -mt-2 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
-                                            <FiShare2 size={22} />
+                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
+                                            <FiShare2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
                                         </button>
-                                        <span className="text-[13px] font-semibold text-white -mt-2 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
                                     </div>
 
                                     {(type === 'video' || (type === 'all' && offer.video_url)) && (
                                         <div className="flex flex-col items-center gap-1.5">
-                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
-                                                {isMuted ? <VolumeX size={22} /> : <Volume2 size={22} />}
+                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
+                                                {isMuted ? <VolumeX className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" /> : <Volume2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />}
                                             </button>
                                         </div>
                                     )}

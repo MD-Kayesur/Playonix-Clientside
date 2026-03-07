@@ -53,7 +53,7 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
     toggleReplies,
     replyTo,
     setReplyTo,
-    logo,
+     
     showEmojiPicker,
     setShowEmojiPicker,
     isPostingComment

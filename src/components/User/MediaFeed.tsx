@@ -43,6 +43,8 @@ export interface Offer {
     cta: string;
     likes: number;
     comments: number;
+    saves?: number;
+    shares?: number;
     image_url: string;
     video_url: string;
     website_url: string;
@@ -244,6 +246,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 setReplyTo(null);
             } else {
                 setComments([newComment, ...comments]);
+                setOffers(prev => prev.map(o => o.id === offers[currentIndex].id ? { ...o, comments: o.comments + 1 } : o));
             }
             setCommentText('');
             setSelectedImage(null);
@@ -279,10 +282,21 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         }
     };
 
+    const handleShareClick = (offerId: number) => {
+        setOffers(prev => prev.map(o => o.id === offerId ? { ...o, shares: (o.shares || 0) + 1 } : o));
+        setShowShareModal(true);
+    };
+
     const getYouTubeId = (url: string) => {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
+    };
+
+    const formatCount = (num: number = 0) => {
+        if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+        if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+        return num.toString();
     };
 
     const handleExpandAndComment = (e: React.MouseEvent) => {
@@ -391,24 +405,28 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                         <button onClick={(e) => { e.stopPropagation(); toggleLike(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
                                             <Heart size={22} className={`${likedOffers.has(offer.id) ? 'fill-[#FF2D55] text-[#FF2D55]' : 'text-foreground'}`} />
                                         </button>
+                                        <span className="text-[13px] font-semibold text-white -mt-2 drop-shadow-md">{formatCount(offer.likes + (likedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={handleExpandAndComment} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
                                             <MessageCircle size={22} />
                                         </button>
+                                        <span className="text-[13px] font-semibold text-white -mt-2 drop-shadow-md">{formatCount(offer.comments)}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
                                             <Bookmark size={22} className={`${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-foreground'}`} />
                                         </button>
+                                        <span className="text-[13px] font-semibold text-white -mt-2 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); setShowShareModal(true); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
+                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
                                             <FiShare2 size={22} />
                                         </button>
+                                        <span className="text-[13px] font-semibold text-white -mt-2 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
                                     </div>
 
                                     {(type === 'video' || (type === 'all' && offer.video_url)) && (

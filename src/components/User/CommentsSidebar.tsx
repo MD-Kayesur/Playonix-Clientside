@@ -45,15 +45,14 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
     setCommentText,
     selectedImage,
     setSelectedImage,
-    username,
-    setShowNameSetup,
+
     handleCommentSubmit,
     toggleCommentLike,
     handleReplyClick,
     toggleReplies,
     replyTo,
     setReplyTo,
-     
+
     showEmojiPicker,
     setShowEmojiPicker,
     isPostingComment
@@ -224,8 +223,6 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                             type="text"
                                             value={commentText}
                                             onChange={(e) => setCommentText(e.target.value)}
-                                            onFocus={() => { if (!username) setShowNameSetup(true); }}
-                                            onClick={() => { if (!username) setShowNameSetup(true); }}
                                             placeholder="Add comment..."
                                             className="flex-1 bg-transparent py-2.5 text-[15px] text-foreground outline-none placeholder:text-foreground/30 min-w-0"
                                             onKeyPress={(e) => e.key === 'Enter' && handleCommentSubmit()}

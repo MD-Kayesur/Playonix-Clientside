@@ -89,7 +89,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     </button>
 
                     <div
-                        className="flex items-center gap-1.5 mb-1 cursor-pointer pointer-events-auto hover:opacity-80 transition-opacity"
+                        className="flex items-center gap-1.5 mb-1 cursor-pointer pointer-events-auto hover:opacity-80 transition-opacity discover-underline"
                         onClick={(e) => {
                             e.stopPropagation();
                             onRatingClick?.(offer.id);

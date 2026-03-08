@@ -389,13 +389,13 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             ));
         }
 
-        // Add comment if provided
-        if (comment?.trim()) {
+        // Add review if provided or if it's a rating
+        if (comment?.trim() || rating > 0) {
             const newComment: Comment = {
                 id: Date.now(),
                 user: username || savedUsername || 'Anonymous',
                 avatar: '👤',
-                text: comment,
+                text: comment || '',
                 likes: 0,
                 timestamp: 'Just now',
                 replies: [],
@@ -422,7 +422,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
         // Show success toast
         const isMobile = window.innerWidth < 768;
-        toast.success("Thanks for rating!", {
+        toast.success("Thanks for your review!", {
             position: isMobile ? 'top-center' : 'top-right',
             style: {
                 minWidth: isMobile ? '200px' : '240px',
@@ -757,7 +757,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             <textarea
                                 value={ratingComment}
                                 onChange={(e) => setRatingComment(e.target.value)}
-                                placeholder="Add a comment..."
+                                placeholder="Add a review..."
                                 className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white text-xs outline-none focus:border-[#FACC15] transition-all resize-none h-20 custom-scrollbar"
                             />
                         </div>

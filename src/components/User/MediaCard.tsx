@@ -81,7 +81,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             if (offer.website_url) window.open(offer.website_url, '_blank');
                         }}
                         type="button"
-                        className="w-full px-6 py-3 rounded-xl bg-gray-600/50 backdrop-blur-md text-white border border-white font-bold transition-all duration-300 ease-in-out hover:bg-white hover:text-black hover:shadow-xl hover:scale-105 active:scale-95 pointer-events-auto"
+                        className="w-full px-6 py-3 font-normal rounded-xl bg-white text-black border border-white font-bold transition-all duration-300 ease-in-out hover:bg-white hover:text-black hover:shadow-xl hover:scale-105 active:scale-95 pointer-events-auto"
                     >
                         {ctaText}
                     </button>
@@ -95,12 +95,12 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <h2 className="text-white font-bold text-[20px] tracking-tight cursor-pointer hover:underline pointer-events-auto" onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}>{offer.title}</h2>
+                        <h2 className="text-white font-normal text-[20px] tracking-tight cursor-pointer hover:underline pointer-events-auto" onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}>{offer.title}</h2>
                     </div>
 
                     <div className="space-y-1">
                         <div className={`text-white/90 text-[14px] leading-relaxed drop-shadow-lg ${isDescriptionExpanded ? '' : 'line-clamp-2'}`}>
-                            <span className="font-semibold block mb-0.5 text-white">{offer.subtitle}</span>
+                            {/* <span className="font-semibold block mb-0.5 text-white">{offer.subtitle}</span> */}
                             {offer.description}
                         </div>
                         <div className="flex justify-end">

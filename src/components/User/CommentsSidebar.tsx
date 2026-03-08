@@ -87,7 +87,7 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                 <Repeat2 size={24} />
                             </button>
                             <h3 className="text-white font-bold text-[15px] sm:text-lg text-center flex-1">
-                                Comments
+                                Reviews
                             </h3>
                             <div className="flex items-center gap-3">
                                 {/* <button className="p-1 text-white/80 sm:hidden">
@@ -136,7 +136,7 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
 
                                             {comment.commentImage && (
                                                 <div className="mt-3 rounded-xl overflow-hidden border border-white/10 max-w-[200px]">
-                                                    <img src={comment.commentImage} alt="Comment attachment" className="w-full h-auto object-cover" />
+                                                    <img src={comment.commentImage} alt="Review attachment" className="w-full h-auto object-cover" />
                                                 </div>
                                             )}
                                         </div>
@@ -236,7 +236,7 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                                     handleTopLevelCommentClick();
                                                 }
                                             }}
-                                            placeholder="Add comment..."
+                                            placeholder="Add review..."
                                             className="flex-1 bg-transparent py-2.5 text-[15px] text-foreground outline-none placeholder:text-foreground/30 min-w-0"
                                             onKeyPress={(e) => e.key === 'Enter' && handleCommentSubmit()}
                                         />

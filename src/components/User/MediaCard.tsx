@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Star } from 'lucide-react';
 
 interface Offer {
     id: number;
@@ -15,6 +16,8 @@ interface Offer {
     tags: string[];
     terms_highlights: string[];
     disclaimer: string;
+    rating?: number;
+    ratingCount?: number;
 }
 
 interface MediaCardProps {
@@ -82,6 +85,14 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     >
                         {ctaText}
                     </button>
+
+                    <div className="flex items-center gap-1.5 mb-1">
+                        <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
+                        <span className="text-white text-[14px] font-bold">{(offer.rating || 0).toFixed(1)}</span>
+                        {offer.ratingCount !== undefined && (
+                            <span className="text-white/60 text-[14px]">({offer.ratingCount.toLocaleString()})</span>
+                        )}
+                    </div>
 
                     <div className="flex items-center gap-3">
                         <h2 className="text-white font-bold text-[20px] tracking-tight cursor-pointer hover:underline pointer-events-auto" onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}>{offer.title}</h2>

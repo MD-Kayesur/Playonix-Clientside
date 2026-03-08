@@ -5,7 +5,6 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { FiShare2 } from "react-icons/fi";
 // import { motion } from 'framer-motion';
 import {
-    Heart,
     MessageCircle,
     Bookmark,
     ChevronUp,
@@ -14,7 +13,9 @@ import {
     Play,
     Volume2,
     VolumeX,
-    X
+    X,
+    Star,
+    StarHalf
 } from 'lucide-react';
 import PageLoader from '@/Layout/PageLoader';
 import logo from "../../assets/bgremovelogo.png";
@@ -51,6 +52,8 @@ export interface Offer {
     tags: string[];
     terms_highlights: string[];
     disclaimer: string;
+    rating?: number;
+    ratingCount?: number;
 }
 
 interface MediaFeedProps {
@@ -79,7 +82,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [showNameSetup, setShowNameSetup] = useState(false);
     const [username, setUsername] = useState('');
     const [commentText, setCommentText] = useState('');
-    const [likedOffers, setLikedOffers] = useState<Set<number>>(new Set());
     const [savedOffers, setSavedOffers] = useState<Set<number>>(() => {
         const saved = sessionStorage.getItem('favorites');
         return new Set(saved ? JSON.parse(saved) : []);
@@ -96,6 +98,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [isLoading, setIsLoading] = useState(true);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
+    const [showRatingPopup, setShowRatingPopup] = useState<number | null>(null);
+    const [userRatings, setUserRatings] = useState<Record<number, number>>(() => {
+        const saved = localStorage.getItem('user_ratings');
+        return saved ? JSON.parse(saved) : {};
+    });
 
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentsMap, setCommentsMap] = useState<Record<number, Comment[]>>(() => {
@@ -132,6 +139,13 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 if (initialCategory && initialCategory !== 'All') {
                     loadedOffers = loadedOffers.filter(o => o.tags.includes(initialCategory));
                 }
+
+                // Add default ratings if missing
+                loadedOffers = loadedOffers.map(o => ({
+                    ...o,
+                    rating: o.rating || (4.0 + Math.random()),
+                    ratingCount: o.ratingCount || Math.floor(Math.random() * 20000)
+                }));
 
                 setAllOffers(loadedOffers);
                 setOffers(loadedOffers);
@@ -222,14 +236,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             setCurrentIndex(newIndex);
             setFlippedCardId(null);
         }
-    };
-
-    const toggleLike = (offerId: number) => {
-        setLikedOffers(prev => {
-            const newSet = new Set(prev);
-            if (newSet.has(offerId)) newSet.delete(offerId); else newSet.add(offerId);
-            return newSet;
-        });
     };
 
     const toggleSave = (offerId: number) => {
@@ -347,6 +353,15 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         setShowShareModal(true);
     };
 
+    const handleRate = (offerId: number, rating: number) => {
+        setUserRatings(prev => {
+            const newRatings = { ...prev, [offerId]: rating };
+            localStorage.setItem('user_ratings', JSON.stringify(newRatings));
+            return newRatings;
+        });
+        setShowRatingPopup(null);
+    };
+
     const getYouTubeId = (url: string) => {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
         const match = url.match(regExp);
@@ -461,11 +476,56 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
                                 {/* Sidebar Icons */}
                                 <div className="absolute right-2 bottom-2 sm:static w-14 lg:w-20 flex flex-col items-center gap-4 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
-                                    <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); toggleLike(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
-                                            <Heart className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${likedOffers.has(offer.id) ? 'fill-[#FF2D55] text-[#FF2D55]' : 'text-foreground'}`} />
+                                    {/* Rating Icon */}
+                                    <div className="flex flex-col items-center gap-0 relative">
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setShowRatingPopup(showRatingPopup === offer.id ? null : offer.id);
+                                            }}
+                                            className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all"
+                                        >
+                                            <Star className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${userRatings[offer.id] ? 'fill-[#FACC15] text-[#FACC15]' : 'text-foreground'}`} />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.likes + (likedOffers.has(offer.id) ? 1 : 0))}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">
+                                            {userRatings[offer.id] ? userRatings[offer.id].toFixed(1) : (offer.rating || 0).toFixed(1)}
+                                        </span>
+
+                                        {showRatingPopup === offer.id && (
+                                            <div className="absolute right-full mr-4 bottom-0 mb-4 bg-[#121212] rounded-2xl p-4 border border-white/10 shadow-2xl z-[200] min-w-[180px]">
+                                                <div className="flex justify-end items-center mb-1">
+                                                    <span className="text-white font-medium text-xs">{(userRatings[offer.id] || offer.rating || 0).toFixed(1)}</span>
+                                                </div>
+                                                <div className="flex gap-1 mb-3">
+                                                    {[1, 2, 3, 4, 5].map((star) => {
+                                                        const currentRating = userRatings[offer.id] || offer.rating || 0;
+                                                        const isFilled = star <= currentRating;
+                                                        const isHalf = !isFilled && star - 0.5 <= currentRating;
+                                                        return (
+                                                            <button
+                                                                key={star}
+                                                                onClick={(e) => { e.stopPropagation(); handleRate(offer.id, star); }}
+                                                                className="transition-transform hover:scale-110"
+                                                            >
+                                                                {isFilled ? (
+                                                                    <Star size={20} className="fill-[#FACC15] text-[#FACC15]" />
+                                                                ) : isHalf ? (
+                                                                    <StarHalf size={20} className="fill-[#FACC15] text-[#FACC15]" />
+                                                                ) : (
+                                                                    <Star size={20} className="text-white/20" />
+                                                                )}
+                                                            </button>
+                                                        );
+                                                    })}
+                                                </div>
+                                                <div className="h-[2px] w-full bg-white/10 rounded-full overflow-hidden">
+                                                    <div
+                                                        className="h-full bg-[#FACC15]"
+                                                        style={{ width: `${((userRatings[offer.id] || offer.rating || 0) / 5) * 100}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">

@@ -548,8 +548,9 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                         setFlippedCardId={setFlippedCardId}
                                         renderMedia={renderMedia}
                                         isDescriptionExpanded={isDescriptionExpanded}
-                                        ctaText={offer.cta || 'CLAIM OFFER'}
+                                        ctaText={offer.cta || 'CLAIM BONUS'}
                                         mediaLabel={offer.video_url && type !== 'photo' ? 'Video' : 'Photo'}
+                                        onRatingClick={(id) => setShowRatingPopup(showRatingPopup === id ? null : id)}
                                     />
 
                                     {/* Rating Overlay - Appears only over the video card */}
@@ -783,6 +784,15 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
                 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
                 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+                @keyframes golden-glow {
+                    0% { box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+                    50% { box-shadow: 0 0 30px rgba(250, 204, 21, 0.7); }
+                    100% { box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+                }
+                .animate-golden-glow {
+                    animation: golden-glow 2s infinite ease-in-out;
+                }
             `}</style>
         </>
     );

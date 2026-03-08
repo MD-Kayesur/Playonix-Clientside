@@ -30,6 +30,7 @@ interface MediaCardProps {
     isDescriptionExpanded: boolean;
     ctaText?: string;
     mediaLabel?: string;
+    onRatingClick?: (id: number) => void;
 }
 
 const MediaCard: React.FC<MediaCardProps> = ({
@@ -40,8 +41,9 @@ const MediaCard: React.FC<MediaCardProps> = ({
     setFlippedCardId,
     renderMedia,
     isDescriptionExpanded,
-    ctaText = 'CLAIM OFFER',
-    mediaLabel = 'Photo'
+    ctaText = 'CLAIM BONUS',
+    mediaLabel = 'Photo',
+    onRatingClick
 }) => {
     return (
         <motion.div
@@ -81,16 +83,22 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             if (offer.website_url) window.open(offer.website_url, '_blank');
                         }}
                         type="button"
-                        className="w-full px-6 py-3 font-normal rounded-xl bg-white text-black border border-white font-bold transition-all duration-300 ease-in-out hover:bg-white hover:text-black hover:shadow-xl hover:scale-105 active:scale-95 pointer-events-auto"
+                        className="w-full px-6 py-4 font-black rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-[0_0_20px_rgba(250,204,21,0.5)] animate-golden-glow"
                     >
                         {ctaText}
                     </button>
 
-                    <div className="flex items-center gap-1.5 mb-1">
+                    <div
+                        className="flex items-center gap-1.5 mb-1 cursor-pointer pointer-events-auto hover:opacity-80 transition-opacity"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onRatingClick?.(offer.id);
+                        }}
+                    >
                         <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
                         <span className="text-white text-[14px] font-bold">{(offer.rating || 0).toFixed(1)}</span>
                         {offer.ratingCount !== undefined && (
-                            <span className="text-white/60 text-[14px]">{offer.ratingCount.toLocaleString()} reviews</span>
+                            <span className="text-white/60 text-[14px]"> • {offer.ratingCount.toLocaleString()} reviews</span>
                         )}
                     </div>
 

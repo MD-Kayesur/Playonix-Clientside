@@ -539,17 +539,99 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     <div key={offer.id} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-center justify-center relative">
                         <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-full md:h-[90vh] lg:h-[95vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
                             <div className="absolute inset-0 h-full w-full flex items-center justify-center sm:gap-5" style={{ perspective: "1200px" }}>
-                                <MediaCard
-                                    offer={offer}
-                                    index={index}
-                                    currentIndex={currentIndex}
-                                    flippedCardId={flippedCardId}
-                                    setFlippedCardId={setFlippedCardId}
-                                    renderMedia={renderMedia}
-                                    isDescriptionExpanded={isDescriptionExpanded}
-                                    ctaText={offer.cta || 'CLAIM OFFER'}
-                                    mediaLabel={offer.video_url && type !== 'photo' ? 'Video' : 'Photo'}
-                                />
+                                <div className="relative h-full w-full sm:flex-1 flex items-center justify-center">
+                                    <MediaCard
+                                        offer={offer}
+                                        index={index}
+                                        currentIndex={currentIndex}
+                                        flippedCardId={flippedCardId}
+                                        setFlippedCardId={setFlippedCardId}
+                                        renderMedia={renderMedia}
+                                        isDescriptionExpanded={isDescriptionExpanded}
+                                        ctaText={offer.cta || 'CLAIM OFFER'}
+                                        mediaLabel={offer.video_url && type !== 'photo' ? 'Video' : 'Photo'}
+                                    />
+
+                                    {/* Rating Overlay - Appears only over the video card */}
+                                    {showRatingPopup === offer.id && (
+                                        <div
+                                            className="absolute inset-0 bg-black/40 backdrop-blur-[4px] z-[130] flex items-center justify-center p-4 sm:rounded-[1rem] animate-in fade-in zoom-in duration-300 overflow-hidden"
+                                            onClick={(e) => { e.stopPropagation(); setShowRatingPopup(null); setRatingComment(''); }}
+                                        >
+                                            <div
+                                                className="bg-black/60 backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-8 max-w-[280px] w-full text-center relative shadow-2xl border border-white/10 flex flex-col items-center gap-5 transition-transform"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                <button
+                                                    onClick={() => { setShowRatingPopup(null); setRatingComment(''); }}
+                                                    className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors border border-white/5"
+                                                >
+                                                    <X size={16} />
+                                                </button>
+
+                                                <div className="flex flex-col items-center gap-3 w-full mt-2">
+                                                    <div className="text-white font-black text-2xl drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]">
+                                                        {(hoveredRating || userRatings[offer.id] || 0).toFixed(1)} / 5
+                                                    </div>
+                                                    <div
+                                                        className="flex gap-1.5 relative cursor-pointer select-none py-3 px-4 bg-white/5 rounded-2xl border border-white/5"
+                                                        onMouseMove={(e) => {
+                                                            const rect = e.currentTarget.getBoundingClientRect();
+                                                            const x = e.clientX - rect.left;
+                                                            const val = (x / rect.width) * 5;
+                                                            const target = Math.round(val * 10) / 10;
+                                                            setHoveredRating(Math.max(0.1, Math.min(5, target)));
+                                                        }}
+                                                        onMouseLeave={() => setHoveredRating(null)}
+                                                        onTouchMove={(e) => {
+                                                            const rect = e.currentTarget.getBoundingClientRect();
+                                                            const touch = e.touches[0];
+                                                            const x = touch.clientX - rect.left;
+                                                            const val = (x / rect.width) * 5;
+                                                            const target = Math.round(val * 10) / 10;
+                                                            setHoveredRating(Math.max(0.1, Math.min(5, target)));
+                                                        }}
+                                                        onClick={(e) => {
+                                                            const rect = e.currentTarget.getBoundingClientRect();
+                                                            const x = e.clientX - rect.left;
+                                                            const val = (x / rect.width) * 5;
+                                                            const target = Math.round(val * 10) / 10;
+                                                            const finalVal = Math.max(0.1, Math.min(5, target));
+                                                            setUserRatings(prev => ({ ...prev, [offer.id]: finalVal }));
+                                                        }}
+                                                    >
+                                                        {[1, 2, 3, 4, 5].map((star) => {
+                                                            const currentRating = userRatings[offer.id] || 0;
+                                                            const activeRating = hoveredRating !== null ? hoveredRating : currentRating;
+                                                            const filled = star <= activeRating;
+                                                            return (
+                                                                <div key={star} className="transition-transform duration-200" style={{ transform: star <= activeRating ? 'scale(1.15)' : 'scale(1)' }}>
+                                                                    <Star size={24} className={`${filled ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white/20'} drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]`} />
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+
+                                                <div className="w-full">
+                                                    <textarea
+                                                        value={ratingComment}
+                                                        onChange={(e) => setRatingComment(e.target.value)}
+                                                        placeholder="Add a review..."
+                                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20"
+                                                    />
+                                                </div>
+
+                                                <button
+                                                    onClick={() => handleRate(offer.id, userRatings[offer.id] || hoveredRating || 0, ratingComment)}
+                                                    className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-white/90 transition-all transform active:scale-[0.96] text-base shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
+                                                >
+                                                    Submit Review
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
 
                                 {/* Sidebar Icons */}
                                 <div className="absolute right-2 bottom-5 sm:static w-14 lg:w-20 flex flex-col items-center gap-1 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
@@ -690,87 +772,9 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 </div>
             )}
 
-            {/* Rating Modal */}
-            {showRatingPopup !== null && (
-                <div
-                    className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center p-4 backdrop-blur-md transition-all duration-300 animate-in fade-in"
-                    onClick={() => { setShowRatingPopup(null); setRatingComment(''); }}
-                >
-                    <div
-                        className="bg-[#121212] rounded-[2rem] p-5 md:p-6 max-w-[260px] w-full text-center relative shadow-2xl flex flex-col items-center gap-5"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <button
-                            onClick={() => { setShowRatingPopup(null); setRatingComment(''); }}
-                            className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-white transition-colors border border-white/5"
-                        >
-                            <X size={14} />
-                        </button>
 
-                        {/* Swipeable Stars */}
-                        <div className="flex flex-col items-center gap-2 w-full mt-1">
-                            <div className="text-[#FACC15] font-black text-xl mb-1">
-                                {(hoveredRating || userRatings[showRatingPopup!] || 0).toFixed(1)} / 5
-                            </div>
-                            <div
-                                className="flex gap-1.5 relative cursor-pointer select-none py-2 px-3 bg-white/5 rounded-2xl"
-                                onMouseMove={(e) => {
-                                    const rect = e.currentTarget.getBoundingClientRect();
-                                    const x = e.clientX - rect.left;
-                                    const val = (x / rect.width) * 5;
-                                    const target = Math.round(val * 10) / 10;
-                                    setHoveredRating(Math.max(0.1, Math.min(5, target)));
-                                }}
-                                onMouseLeave={() => setHoveredRating(null)}
-                                onTouchMove={(e) => {
-                                    const rect = e.currentTarget.getBoundingClientRect();
-                                    const touch = e.touches[0];
-                                    const x = touch.clientX - rect.left;
-                                    const val = (x / rect.width) * 5;
-                                    const target = Math.round(val * 10) / 10;
-                                    setHoveredRating(Math.max(0.1, Math.min(5, target)));
-                                }}
-                                onClick={(e) => {
-                                    const rect = e.currentTarget.getBoundingClientRect();
-                                    const x = e.clientX - rect.left;
-                                    const val = (x / rect.width) * 5;
-                                    const target = Math.round(val * 10) / 10;
-                                    const finalVal = Math.max(0.1, Math.min(5, target));
-                                    setUserRatings(prev => ({ ...prev, [showRatingPopup!]: finalVal }));
-                                }}
-                            >
-                                {[1, 2, 3, 4, 5].map((star) => {
-                                    const currentRating = userRatings[showRatingPopup!] || offers.find(o => o.id === showRatingPopup)?.rating || 0;
-                                    const activeRating = hoveredRating !== null ? hoveredRating : currentRating;
-                                    const filled = star <= activeRating;
-                                    return (
-                                        <div key={star} className="transition-transform duration-200" style={{ transform: star <= activeRating ? 'scale(1.1)' : 'scale(1)' }}>
-                                            <Star size={22} className={`${filled ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white/20'} drop-shadow-[0_0_6px_rgba(250,204,21,0.2)]`} />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
 
-                        {/* Comment Input */}
-                        <div className="w-full">
-                            <textarea
-                                value={ratingComment}
-                                onChange={(e) => setRatingComment(e.target.value)}
-                                placeholder="Add a review..."
-                                className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white text-xs outline-none focus:border-[#FACC15] transition-all resize-none h-20 custom-scrollbar"
-                            />
-                        </div>
 
-                        <button
-                            onClick={() => handleRate(showRatingPopup!, userRatings[showRatingPopup!] || hoveredRating || 0, ratingComment)}
-                            className="w-full bg-[#FACC15] text-black font-bold py-2.5 rounded-lg hover:bg-[#EAB308] transition-all transform active:scale-[0.98] text-sm"
-                        >
-                            Submit
-                        </button>
-                    </div>
-                </div>
-            )}
 
             <style>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }

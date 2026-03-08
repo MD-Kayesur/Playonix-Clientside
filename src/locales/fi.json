@@ -1,0 +1,32 @@
+{
+    "common": {
+        "logout": "Kirjaudu ulos",
+        "settings": "Asetukset",
+        "home": "Koti",
+        "login": "Kirjaudu sisään",
+        "signup": "Rekisteröidy",
+        "language": "Kieli",
+        "search": "Haku",
+        "notifications": "Ilmoitukset",
+        "profile": "Profiili"
+    },
+    "auth": {
+        "login_title": "Kirjaudu tilillesi",
+        "signup_title": "Luo tili",
+        "email": "Sähköpostiosoite",
+        "password": "Salasana",
+        "confirm_password": "Vahvista salasana",
+        "forgot_password": "Unohditko salasanan?",
+        "dont_have_account": "Eikö sinulla ole tiliä?",
+        "already_have_account": "Onko sinulla jo tili?",
+        "sign_in": "Kirjaudu sisään",
+        "sign_up": "Rekisteröidy"
+    },
+    "media": {
+        "feed": "Mediasyöte",
+        "comments": "Kommentit",
+        "share": "Jaa",
+        "like": "Tykkää",
+        "upload": "Lataa"
+    }
+}

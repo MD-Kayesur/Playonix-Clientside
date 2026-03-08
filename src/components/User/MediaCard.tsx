@@ -90,7 +90,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                         <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
                         <span className="text-white text-[14px] font-bold">{(offer.rating || 0).toFixed(1)}</span>
                         {offer.ratingCount !== undefined && (
-                            <span className="text-white/60 text-[14px]">({offer.ratingCount.toLocaleString()})</span>
+                            <span className="text-white/60 text-[14px]">{offer.ratingCount.toLocaleString()} reviews</span>
                         )}
                     </div>
 

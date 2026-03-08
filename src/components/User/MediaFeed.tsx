@@ -34,6 +34,7 @@ export interface Comment {
     replies?: Comment[];
     showReplies?: boolean;
     commentImage?: string;
+    rating?: number;
 }
 
 export interface Offer {
@@ -101,6 +102,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [showRatingPopup, setShowRatingPopup] = useState<number | null>(null);
     const [hoveredRating, setHoveredRating] = useState<number | null>(null);
     const [ratingComment, setRatingComment] = useState('');
+    const [pendingRate, setPendingRate] = useState<{ offerId: number; rating: number; comment: string } | null>(null);
     const [userRatings, setUserRatings] = useState<Record<number, number>>(() => {
         const saved = localStorage.getItem('user_ratings');
         return saved ? JSON.parse(saved) : {};
@@ -346,6 +348,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         if (username.trim()) {
             localStorage.setItem('username', username);
             setShowNameSetup(false);
+
+            // If we have a pending rate/comment, show the rating modal again for final submission
+            if (pendingRate) {
+                setShowRatingPopup(pendingRate.offerId);
+            }
         }
     };
 
@@ -355,6 +362,16 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     };
 
     const handleRate = async (offerId: number, rating: number, comment?: string) => {
+        const savedUsername = localStorage.getItem('username');
+
+        // If they are writing a review (with comment) and don't have a name, ask for it
+        if (comment?.trim() && !savedUsername && !username) {
+            setPendingRate({ offerId, rating, comment });
+            setShowRatingPopup(null); // Hide rating modal to show name modal
+            setShowNameSetup(true);
+            return;
+        }
+
         const alreadyRated = userRatings[offerId] !== undefined;
 
         setUserRatings(prev => {
@@ -374,8 +391,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
         // Add comment if provided
         if (comment?.trim()) {
-            const savedUsername = localStorage.getItem('username');
-
             const newComment: Comment = {
                 id: Date.now(),
                 user: username || savedUsername || 'Anonymous',
@@ -383,7 +398,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 text: comment,
                 likes: 0,
                 timestamp: 'Just now',
-                replies: []
+                replies: [],
+                rating: rating
             };
 
             setCommentsMap(prev => {
@@ -402,10 +418,24 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         setShowRatingPopup(null);
         setHoveredRating(null);
         setRatingComment('');
+        setPendingRate(null);
 
         // Show success toast
+        const isMobile = window.innerWidth < 768;
         toast.success("Thanks for rating!", {
-            position: 'top-right'
+            position: isMobile ? 'top-center' : 'top-right',
+            style: {
+                minWidth: isMobile ? '200px' : '240px',
+                width: 'fit-content',
+                backgroundColor: '#000000',
+                color: '#ffffff',
+                border: '1px solid rgba(255,255,255,0.1)',
+                padding: '12px 24px',
+                fontSize: '13px',
+                fontWeight: '600',
+                marginTop: isMobile ? '12px' : '0',
+                marginLeft: isMobile ? '82px' : '0'
+            }
         });
     };
 
@@ -522,7 +552,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                 />
 
                                 {/* Sidebar Icons */}
-                                <div className="absolute right-2 bottom-2 sm:static w-14 lg:w-20 flex flex-col items-center gap-4 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
+                                <div className="absolute right-2 bottom-5 sm:static w-14 lg:w-20 flex flex-col items-center gap-1 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
                                     {/* Rating Icon */}
                                     <div className="flex flex-col items-center gap-0 relative">
                                         <button
@@ -534,7 +564,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                         >
                                             <Star className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${userRatings[offer.id] ? 'fill-[#FACC15] text-[#FACC15]' : 'text-foreground'}`} />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">
                                             {userRatings[offer.id] ? userRatings[offer.id].toFixed(1) : (offer.rating || 0).toFixed(1)}
                                         </span>
                                     </div>
@@ -543,21 +573,21 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                         <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
                                             <MessageCircle className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.comments)}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount(offer.comments)}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
                                             <Bookmark className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-foreground'}`} />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
                                             <FiShare2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
                                     </div>
 
                                     {(type === 'video' || (type === 'all' && offer.video_url)) && (
@@ -583,7 +613,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     }}
                     className="w-12 h-12 rounded-full flex items-center justify-center text-foreground active:scale-95 transition-all hover:bg-foreground/10"
                 >
-                    <Search size={20} />
+                    <Search size={22} className="text-white drop-shadow-md" />
                 </button>
             </div>
 
@@ -618,6 +648,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 showEmojiPicker={showEmojiPicker}
                 setShowEmojiPicker={setShowEmojiPicker}
                 isPostingComment={isPostingComment}
+                handleTopLevelCommentClick={() => {
+                    setShowComments(false);
+                    setRatingComment(commentText);
+                    setShowRatingPopup(offers[currentIndex]?.id);
+                }}
             />
 
             <ShareModal
@@ -674,37 +709,43 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
                         {/* Swipeable Stars */}
                         <div className="flex flex-col items-center gap-2 w-full mt-1">
+                            <div className="text-[#FACC15] font-black text-xl mb-1">
+                                {(hoveredRating || userRatings[showRatingPopup!] || 0).toFixed(1)} / 5
+                            </div>
                             <div
                                 className="flex gap-1.5 relative cursor-pointer select-none py-2 px-3 bg-white/5 rounded-2xl"
                                 onMouseMove={(e) => {
                                     const rect = e.currentTarget.getBoundingClientRect();
                                     const x = e.clientX - rect.left;
-                                    const val = Math.ceil((x / rect.width) * 5);
-                                    setHoveredRating(Math.max(1, Math.min(5, val)));
+                                    const val = (x / rect.width) * 5;
+                                    const target = Math.round(val * 10) / 10;
+                                    setHoveredRating(Math.max(0.1, Math.min(5, target)));
                                 }}
                                 onMouseLeave={() => setHoveredRating(null)}
                                 onTouchMove={(e) => {
                                     const rect = e.currentTarget.getBoundingClientRect();
                                     const touch = e.touches[0];
                                     const x = touch.clientX - rect.left;
-                                    const val = Math.ceil((x / rect.width) * 5);
-                                    setHoveredRating(Math.max(1, Math.min(5, val)));
+                                    const val = (x / rect.width) * 5;
+                                    const target = Math.round(val * 10) / 10;
+                                    setHoveredRating(Math.max(0.1, Math.min(5, target)));
                                 }}
                                 onClick={(e) => {
                                     const rect = e.currentTarget.getBoundingClientRect();
                                     const x = e.clientX - rect.left;
-                                    const val = Math.ceil((x / rect.width) * 5);
-                                    const target = Math.max(1, Math.min(5, val));
-                                    setUserRatings(prev => ({ ...prev, [showRatingPopup!]: target }));
+                                    const val = (x / rect.width) * 5;
+                                    const target = Math.round(val * 10) / 10;
+                                    const finalVal = Math.max(0.1, Math.min(5, target));
+                                    setUserRatings(prev => ({ ...prev, [showRatingPopup!]: finalVal }));
                                 }}
                             >
                                 {[1, 2, 3, 4, 5].map((star) => {
                                     const currentRating = userRatings[showRatingPopup!] || offers.find(o => o.id === showRatingPopup)?.rating || 0;
                                     const activeRating = hoveredRating !== null ? hoveredRating : currentRating;
-                                    const isFilled = star <= activeRating;
+                                    const filled = star <= activeRating;
                                     return (
                                         <div key={star} className="transition-transform duration-200" style={{ transform: star <= activeRating ? 'scale(1.1)' : 'scale(1)' }}>
-                                            <Star size={22} className={`${isFilled ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white/20'} drop-shadow-[0_0_6px_rgba(250,204,21,0.2)]`} />
+                                            <Star size={22} className={`${filled ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white/20'} drop-shadow-[0_0_6px_rgba(250,204,21,0.2)]`} />
                                         </div>
                                     );
                                 })}

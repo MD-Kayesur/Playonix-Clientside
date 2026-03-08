@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronDown, Heart, Repeat2 } from 'lucide-react';
+import { X, ChevronDown, Heart, Repeat2, Star } from 'lucide-react';
 
 interface Comment {
     id: number;
@@ -13,6 +13,7 @@ interface Comment {
     replies?: Comment[];
     showReplies?: boolean;
     commentImage?: string;
+    rating?: number;
 }
 
 interface CommentsSidebarProps {
@@ -35,6 +36,7 @@ interface CommentsSidebarProps {
     showEmojiPicker: boolean;
     setShowEmojiPicker: (show: boolean) => void;
     isPostingComment?: boolean;
+    handleTopLevelCommentClick: () => void;
 }
 
 const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
@@ -55,7 +57,8 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
 
     showEmojiPicker,
     setShowEmojiPicker,
-    isPostingComment
+    isPostingComment,
+    handleTopLevelCommentClick
 }) => {
     const commentInputRef = useRef<HTMLInputElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -117,67 +120,73 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                                 {comment.user === 'Creator' && (
                                                     <span className="text-[#FACC15] font-bold text-[11px]">· Creator</span>
                                                 )}
+                                                {comment.rating !== undefined && (
+                                                    <div className="flex items-center gap-1.5 mb-1.5 px-2 py-0.5 bg-[#FACC15]/10 rounded-full w-fit border border-[#FACC15]/20">
+                                                        <span className="text-[#FACC15] font-black text-[13px]">{comment.rating.toFixed(1)} / 5</span>
+                                                        <Star size={12} className="fill-[#FACC15] text-[#FACC15]" />
+                                                    </div>
+                                                )}
+                                                <p className="text-foreground text-[15px] leading-snug break-words">
+                                                    {comment.text}
+                                                </p>
+                                                {comment.commentImage && (
+                                                    <div className="mt-3 rounded-xl overflow-hidden border border-white/10 max-w-[200px]">
+                                                        <img src={comment.commentImage} alt="Comment attachment" className="w-full h-auto object-cover" />
+                                                    </div>
+                                                )}
                                             </div>
-                                            <p className="text-foreground text-[15px] leading-snug break-words">
-                                                {comment.text}
-                                            </p>
-                                            {comment.commentImage && (
-                                                <div className="mt-3 rounded-xl overflow-hidden border border-white/10 max-w-[200px]">
-                                                    <img src={comment.commentImage} alt="Comment attachment" className="w-full h-auto object-cover" />
-                                                </div>
+
+                                            <div className="flex items-center gap-4 mt-2">
+                                                <span className="text-white/40 text-[12px]">{comment.timestamp}</span>
+                                                <button onClick={() => handleReplyClick(comment.id, comment.user)} className="text-white/50 text-[12px] font-bold hover:text-white transition-colors">Reply</button>
+                                            </div>
+
+                                            {/* Replies Toggle */}
+                                            {comment.replies && comment.replies.length > 0 && (
+                                                <button onClick={() => toggleReplies(comment.id)} className="flex items-center gap-2 text-foreground/40 text-[13px] font-bold mt-4">
+                                                    <div className="w-6 h-[1px] bg-foreground/10" />
+                                                    View {comment.replies.length} replies
+                                                    <ChevronDown size={14} className={`transition-transform duration-300 ${comment.showReplies ? 'rotate-180' : ''}`} />
+                                                </button>
                                             )}
-                                        </div>
 
-                                        <div className="flex items-center gap-4 mt-2">
-                                            <span className="text-white/40 text-[12px]">{comment.timestamp}</span>
-                                            <button onClick={() => handleReplyClick(comment.id, comment.user)} className="text-white/50 text-[12px] font-bold hover:text-white transition-colors">Reply</button>
-                                        </div>
-
-                                        {/* Replies Toggle */}
-                                        {comment.replies && comment.replies.length > 0 && (
-                                            <button onClick={() => toggleReplies(comment.id)} className="flex items-center gap-2 text-foreground/40 text-[13px] font-bold mt-4">
-                                                <div className="w-6 h-[1px] bg-foreground/10" />
-                                                View {comment.replies.length} replies
-                                                <ChevronDown size={14} className={`transition-transform duration-300 ${comment.showReplies ? 'rotate-180' : ''}`} />
-                                            </button>
-                                        )}
-
-                                        <AnimatePresence>
-                                            {comment.showReplies && comment.replies?.map(reply => (
-                                                <div key={reply.id} className="flex gap-3 mt-4">
-                                                    <div className="flex-1">
-                                                        <div className="flex items-center gap-1.5 mb-0.5">
-                                                            <span className="text-white/50 text-[12px] font-bold">{reply.user}</span>
-                                                            {reply.user === 'Creator' && <span className="text-[#FACC15] font-bold text-[10px]">· Creator</span>}
-                                                        </div>
-                                                        <p className="text-white text-[14px] leading-snug">{reply.text}</p>
-                                                        {reply.commentImage && (
-                                                            <div className="mt-2 rounded-lg overflow-hidden border border-white/10 max-w-[150px]">
-                                                                <img src={reply.commentImage} alt="Reply attachment" className="w-full h-auto object-cover" />
+                                            <AnimatePresence>
+                                                {comment.showReplies && comment.replies?.map(reply => (
+                                                    <div key={reply.id} className="flex gap-3 mt-4">
+                                                        <div className="flex-1">
+                                                            <div className="flex items-center gap-1.5 mb-0.5">
+                                                                <span className="text-white/50 text-[12px] font-bold">{reply.user}</span>
+                                                                {reply.user === 'Creator' && <span className="text-[#FACC15] font-bold text-[10px]">· Creator</span>}
                                                             </div>
-                                                        )}
-                                                        <div className="mt-2 flex items-center gap-4">
-                                                            <span className="text-white/40 text-[11px]">{reply.timestamp}</span>
-                                                            <button onClick={() => toggleCommentLike(reply.id, true, comment.id)} className={`transition-all active:scale-125 ${reply.isLiked ? 'text-[#FF2D55]' : 'text-white/30'}`}>
-                                                                <Heart size={14} fill={reply.isLiked ? 'currentColor' : 'none'} />
-                                                            </button>
+                                                            <p className="text-white text-[14px] leading-snug">{reply.text}</p>
+                                                            {reply.commentImage && (
+                                                                <div className="mt-2 rounded-lg overflow-hidden border border-white/10 max-w-[150px]">
+                                                                    <img src={reply.commentImage} alt="Reply attachment" className="w-full h-auto object-cover" />
+                                                                </div>
+                                                            )}
+                                                            <div className="mt-2 flex items-center gap-4">
+                                                                <span className="text-white/40 text-[11px]">{reply.timestamp}</span>
+                                                                <button onClick={() => toggleCommentLike(reply.id, true, comment.id)} className={`transition-all active:scale-125 ${reply.isLiked ? 'text-[#FF2D55]' : 'text-white/30'}`}>
+                                                                    <Heart size={14} fill={reply.isLiked ? 'currentColor' : 'none'} />
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))}
-                                        </AnimatePresence>
-                                    </div>
+                                                ))}
+                                            </AnimatePresence>
+                                        </div>
 
-                                    {/* Interaction Row */}
-                                    <div className="flex items-center gap-3 pt-1 flex-shrink-0 self-start">
-                                        <div className="flex flex-col items-center gap-0.5">
-                                            <button
-                                                onClick={() => toggleCommentLike(comment.id)}
-                                                className={`transition-all active:scale-125 ${comment.isLiked ? 'text-[#FF2D55]' : 'text-white/30 hover:text-white/50'}`}
-                                            >
-                                                <Heart size={20} fill={comment.isLiked ? 'currentColor' : 'none'} />
-                                            </button>
-                                            <span className="text-foreground/40 text-[11px] font-medium">{comment.likes}</span>
+                                        {/* Interaction Row */}
+                                        <div className="flex items-center gap-3 pt-1 flex-shrink-0 self-start">
+                                            <div className="flex flex-col items-center gap-0.5">
+                                                <button
+                                                    onClick={() => toggleCommentLike(comment.id)}
+                                                    className={`transition-all active:scale-125 ${comment.isLiked ? 'text-[#FF2D55]' : 'text-white/30 hover:text-white/50'}`}
+                                                >
+                                                    <Heart size={20} fill={comment.isLiked ? 'currentColor' : 'none'} />
+                                                </button>
+                                                <span className="text-foreground/40 text-[11px] font-medium">{comment.likes}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -223,6 +232,12 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                             type="text"
                                             value={commentText}
                                             onChange={(e) => setCommentText(e.target.value)}
+                                            onClick={() => {
+                                                if (!replyTo) {
+                                                    setShowComments(false);
+                                                    handleTopLevelCommentClick();
+                                                }
+                                            }}
                                             placeholder="Add comment..."
                                             className="flex-1 bg-transparent py-2.5 text-[15px] text-foreground outline-none placeholder:text-foreground/30 min-w-0"
                                             onKeyPress={(e) => e.key === 'Enter' && handleCommentSubmit()}
@@ -271,7 +286,14 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                     {/* Post Button - OUTSIDE */}
                                     {(commentText.trim() || selectedImage) && (
                                         <button
-                                            onClick={handleCommentSubmit}
+                                            onClick={() => {
+                                                if (!replyTo) {
+                                                    setShowComments(false);
+                                                    handleTopLevelCommentClick();
+                                                } else {
+                                                    handleCommentSubmit();
+                                                }
+                                            }}
                                             disabled={isPostingComment}
                                             className={`text-[#000000] font-bold text-[13px] sm:text-[14px] px-3 py-2 bg-[#FACC15] rounded-full hover:bg-[#EAB308] transition-all active:scale-95 uppercase tracking-wide flex-shrink-0 ${isPostingComment ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >

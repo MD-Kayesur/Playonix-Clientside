@@ -432,8 +432,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         // In "photo" mode, we only show images
         if (type === 'photo' || !offer.video_url) {
             return (
-                <div className="w-full h-full flex items-center justify-center bg-transparent">
-                    <img src={offer.image_url} alt={offer.title} className="w-full h-auto max-h-full object-contain" />
+                <div className="w-full h-full flex items-center justify-center bg-transparent relative overflow-hidden">
+                    <img src={offer.image_url} alt={offer.title} className="w-full h-full object-cover md:object-contain" />
                 </div>
             );
         }
@@ -460,7 +460,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             title="YouTube video player"
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            className="w-full h-full pointer-events-none"
+                            className="w-full h-full pointer-events-none scale-[1.3] md:scale-100"
                             onLoad={() => isCurrent && setVideoReady(true)}
                         />
                     ) : (
@@ -476,7 +476,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             onProgress={(state: any) => isCurrent && setProgress(state.played * 100)}
                             className="pointer-events-none"
                             style={{ position: 'absolute', top: 0, left: 0 }}
-                            config={{ file: { attributes: { style: { width: '100%', height: '100%', objectFit: 'contain' } } } }}
+                            config={{ file: { attributes: { style: { width: '100%', height: '100%', objectFit: window.innerWidth < 768 ? 'cover' : 'contain' } } } }}
                         />
                     )}
                 </div>
@@ -507,7 +507,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             >
                 {offers.map((offer, index) => (
                     <div key={offer.id} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-center justify-center relative">
-                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-[90vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
+                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-full md:h-[90vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
                             <div className="absolute inset-0 h-full w-full flex items-center justify-center sm:gap-5" style={{ perspective: "1200px" }}>
                                 <MediaCard
                                     offer={offer}

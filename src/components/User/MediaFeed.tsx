@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { FiShare2 } from "react-icons/fi";
+
 // import { motion } from 'framer-motion';
 import {
     MessageCircle,
@@ -14,7 +14,8 @@ import {
     Volume2,
     VolumeX,
     X,
-    Star
+    Star,
+    Share2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PageLoader from '@/Layout/PageLoader';
@@ -63,6 +64,8 @@ interface MediaFeedProps {
 }
 
 const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFeedType }) => {
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 1024 : false;
+    const iconStroke = isMobile ? 3 : 2;
     const location = useLocation();
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('q') || '';
@@ -544,7 +547,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                     {index === 0 && currentIndex === 0 && (
                                         <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-[140] flex flex-col items-center gap-2 pointer-events-none animate-bounce opacity-80 md:hidden">
                                             <span className="text-white/70 text-xs font-bold tracking-widest uppercase">Swipe Up</span>
-                                            <ChevronUp className="text-white/50 w-6 h-6" />
+                                            <ChevronUp strokeWidth={iconStroke} className="text-white/50 w-6 h-6" />
                                         </div>
                                     )}
                                     <MediaCard
@@ -614,7 +617,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                             const filled = star <= activeRating;
                                                             return (
                                                                 <div key={star} className="transition-transform duration-200" style={{ transform: star <= activeRating ? 'scale(1.15)' : 'scale(1)' }}>
-                                                                    <Star size={24} className={`${filled ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white/20'} drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]`} />
+                                                                    <Star strokeWidth={iconStroke} size={24} className={`${filled ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white/20'} drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]`} />
                                                                 </div>
                                                             );
                                                         })}
@@ -652,7 +655,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                             }}
                                             className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all"
                                         >
-                                            <Star className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${userRatings[offer.id] ? 'fill-[#FACC15] text-[#FACC15]' : 'text-foreground'}`} />
+                                            <Star strokeWidth={iconStroke} className={`w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] ${userRatings[offer.id] ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white'} drop-shadow-lg`} />
                                         </button>
                                         <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">
                                             {userRatings[offer.id] ? userRatings[offer.id].toFixed(1) : (offer.rating || 0).toFixed(1)}
@@ -660,30 +663,30 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
-                                            <MessageCircle className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
+                                        <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all">
+                                            <MessageCircle strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />
                                         </button>
                                         <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount(offer.comments)}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
-                                            <Bookmark className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-foreground'}`} />
+                                            <Bookmark strokeWidth={iconStroke} className={`w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] ${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-white'} drop-shadow-lg`} />
                                         </button>
                                         <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
-                                            <FiShare2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
+                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all active:scale-90 duration-300">
+                                            <Share2 strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />
                                         </button>
                                         <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
                                     </div>
 
                                     {(type === 'video' || (type === 'all' && offer.video_url)) && (
                                         <div className="flex flex-col items-center gap-1.5">
-                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
-                                                {isMuted ? <VolumeX className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" /> : <Volume2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />}
+                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all">
+                                                {isMuted ? <VolumeX strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" /> : <Volume2 strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />}
                                             </button>
                                         </div>
                                     )}
@@ -701,9 +704,9 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     onClick={() => {
                         window.dispatchEvent(new CustomEvent('open-sidebar-search'));
                     }}
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-foreground active:scale-95 transition-all hover:bg-foreground/10"
+                    className="w-14 h-14 rounded-full flex items-center justify-center active:scale-95 transition-all hover:bg-white/10"
                 >
-                    <Search size={22} className="text-white drop-shadow-md" />
+                    <Search strokeWidth={3} className="w-7 h-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
                 </button>
             </div>
 

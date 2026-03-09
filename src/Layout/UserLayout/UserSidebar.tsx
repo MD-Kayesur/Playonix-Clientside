@@ -18,7 +18,8 @@ import {
   Cookie,
   ChevronDown,
   ChevronUp,
-  Languages
+  Languages,
+  X
 } from "lucide-react";
 import { SidebarSearch } from "@/components/SidebarSearch";
 
@@ -50,6 +51,8 @@ export const UserSidebar: React.FC<SidebarProps> = ({
 }) => {
   const location = useLocation();
   const { theme } = useTheme();
+  const isMobileSize = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+  const iconStroke = isMobileSize ? 3 : 2;
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
 
@@ -126,10 +129,10 @@ export const UserSidebar: React.FC<SidebarProps> = ({
         <div className="absolute top-3 right-3 z-10 md:hidden">
           <button
             onClick={() => setSidebarOpen(false)}
-            className="w-8 h-8 bg-card border border-border text-foreground rounded-full flex items-center justify-center hover:bg-muted transition-colors cursor-pointer shadow-lg"
+            className="w-12 h-12 bg-card border border-border text-foreground rounded-full flex items-center justify-center hover:bg-muted transition-all active:scale-95 shadow-lg"
             aria-label="Close menu"
           >
-            ✖
+            <X strokeWidth={iconStroke} size={24} />
           </button>
         </div>
       )}

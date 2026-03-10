@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Layout></Layout>
-      <Toaster />
+      <Toaster position={window.innerWidth < 768 ? "top-center" : "top-right"} />
     </>
   )
 }

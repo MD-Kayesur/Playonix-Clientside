@@ -6,6 +6,20 @@ export const LANGUAGES = [
   { code: "en", label: "English", flag: "gb" },
   { code: "fi", label: "Suomi", flag: "fi" },
   { code: "ja", label: "日本語", flag: "jp" },
+  { code: "de", label: "Deutsch", flag: "de" },
+  { code: "es", label: "Español", flag: "es" },
+  { code: "fr", label: "Français", flag: "fr" },
+  { code: "it", label: "Italiano", flag: "it" },
+  { code: "pt", label: "Português", flag: "pt" },
+  { code: "sv", label: "Svenska", flag: "se" },
+  { code: "no", label: "Norsk", flag: "no" },
+  { code: "da", label: "Dansk", flag: "dk" },
+  { code: "nl", label: "Nederlands", flag: "nl" },
+  { code: "ko", label: "한국어", flag: "kr" },
+  { code: "ru", label: "Русский", flag: "ru" },
+  { code: "ar", label: "العربية", flag: "sa" },
+  { code: "tr", label: "Türkçe", flag: "tr" },
+  { code: "zh", label: "中文", flag: "cn" },
 ];
 
 const GoogleTranslate: React.FC = () => {

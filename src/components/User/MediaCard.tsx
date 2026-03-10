@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Star } from 'lucide-react';
 
 interface Offer {
     id: number;
@@ -15,6 +16,8 @@ interface Offer {
     tags: string[];
     terms_highlights: string[];
     disclaimer: string;
+    rating?: number;
+    ratingCount?: number;
 }
 
 interface MediaCardProps {
@@ -27,6 +30,7 @@ interface MediaCardProps {
     isDescriptionExpanded: boolean;
     ctaText?: string;
     mediaLabel?: string;
+    onRatingClick?: (id: number) => void;
 }
 
 const MediaCard: React.FC<MediaCardProps> = ({
@@ -37,8 +41,9 @@ const MediaCard: React.FC<MediaCardProps> = ({
     setFlippedCardId,
     renderMedia,
     isDescriptionExpanded,
-    ctaText = 'CLAIM OFFER',
-    mediaLabel = 'Photo'
+    ctaText = 'CLAIM BONUS',
+    mediaLabel = 'Photo',
+    onRatingClick
 }) => {
     return (
         <motion.div
@@ -78,18 +83,32 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             if (offer.website_url) window.open(offer.website_url, '_blank');
                         }}
                         type="button"
-                        className="w-full px-6 py-3 rounded-xl bg-gray-600/50 backdrop-blur-md text-white border border-white font-bold transition-all duration-300 ease-in-out hover:bg-white hover:text-black hover:shadow-xl hover:scale-105 active:scale-95 pointer-events-auto"
+                        className="w-full px-6 py-4 font-black rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-[0_0_20px_rgba(250,204,21,0.5)] animate-golden-glow"
                     >
                         {ctaText}
                     </button>
 
+                    <div
+                        className="flex items-center gap-1.5 mb-1 cursor-pointer pointer-events-auto hover:opacity-80 transition-opacity discover-underline"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onRatingClick?.(offer.id);
+                        }}
+                    >
+                        <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
+                        <span className="text-white text-[14px] font-bold">{(offer.rating || 0).toFixed(1)}</span>
+                        {offer.ratingCount !== undefined && (
+                            <span className="text-white/60 text-[14px]"> • {offer.ratingCount.toLocaleString()} reviews</span>
+                        )}
+                    </div>
+
                     <div className="flex items-center gap-3">
-                        <h2 className="text-white font-bold text-[20px] tracking-tight cursor-pointer hover:underline pointer-events-auto" onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}>{offer.title}</h2>
+                        <h2 className="text-white font-normal text-[20px] tracking-tight cursor-pointer hover:underline pointer-events-auto" onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}>{offer.title}</h2>
                     </div>
 
                     <div className="space-y-1">
                         <div className={`text-white/90 text-[14px] leading-relaxed drop-shadow-lg ${isDescriptionExpanded ? '' : 'line-clamp-2'}`}>
-                            <span className="font-semibold block mb-0.5 text-white">{offer.subtitle}</span>
+                            {/* <span className="font-semibold block mb-0.5 text-white">{offer.subtitle}</span> */}
                             {offer.description}
                         </div>
                         <div className="flex justify-end">

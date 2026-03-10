@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { UserSidebar } from "./UserSidebar";
 import { Outlet } from "react-router-dom";
-import { AiOutlineMenu } from "react-icons/ai";
+import { Menu } from "lucide-react";
 
 import { SidebarSearch } from "@/components/SidebarSearch";
 
@@ -9,6 +9,7 @@ export default function UserLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const iconStroke = isMobile ? 3 : 2;
 
   // Function to check if the screen is mobile or desktop
   const checkIfMobile = () => {
@@ -71,10 +72,10 @@ export default function UserLayout() {
       {isMobile && !sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="fixed top-0 right-0 z-[203] w-12 h-12  text-white rounded-full flex items-center justify-center hover:bg-white/10 transition-all cursor-pointer shadow-lg active:scale-95 md:hidden"
+          className="fixed top-0 right-1 z-[203] w-14 h-14 text-white rounded-full flex items-center justify-center active:scale-95 transition-all hover:bg-white/10 md:hidden"
           aria-label="Open menu"
         >
-          <AiOutlineMenu className="w-6 h-6" />
+          <Menu strokeWidth={iconStroke} className="w-7 h-7 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
         </button>
 
       )}

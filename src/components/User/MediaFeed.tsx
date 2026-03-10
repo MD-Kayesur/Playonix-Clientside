@@ -2,10 +2,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { FiShare2 } from "react-icons/fi";
+
 // import { motion } from 'framer-motion';
 import {
-    Heart,
     MessageCircle,
     Bookmark,
     ChevronUp,
@@ -14,8 +13,11 @@ import {
     Play,
     Volume2,
     VolumeX,
-    X
+    X,
+    Star,
+    Share2
 } from 'lucide-react';
+import { toast } from 'sonner';
 import PageLoader from '@/Layout/PageLoader';
 import logo from "../../assets/bgremovelogo.png";
 import CommentsSidebar from './CommentsSidebar';
@@ -33,6 +35,7 @@ export interface Comment {
     replies?: Comment[];
     showReplies?: boolean;
     commentImage?: string;
+    rating?: number;
 }
 
 export interface Offer {
@@ -51,6 +54,8 @@ export interface Offer {
     tags: string[];
     terms_highlights: string[];
     disclaimer: string;
+    rating?: number;
+    ratingCount?: number;
 }
 
 interface MediaFeedProps {
@@ -59,6 +64,8 @@ interface MediaFeedProps {
 }
 
 const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFeedType }) => {
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 1024 : false;
+    const iconStroke = isMobile ? 3 : 2;
     const location = useLocation();
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('q') || '';
@@ -79,7 +86,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [showNameSetup, setShowNameSetup] = useState(false);
     const [username, setUsername] = useState('');
     const [commentText, setCommentText] = useState('');
-    const [likedOffers, setLikedOffers] = useState<Set<number>>(new Set());
     const [savedOffers, setSavedOffers] = useState<Set<number>>(() => {
         const saved = sessionStorage.getItem('favorites');
         return new Set(saved ? JSON.parse(saved) : []);
@@ -96,6 +102,14 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [isLoading, setIsLoading] = useState(true);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
+    const [showRatingPopup, setShowRatingPopup] = useState<number | null>(null);
+    const [hoveredRating, setHoveredRating] = useState<number | null>(null);
+    const [ratingComment, setRatingComment] = useState('');
+    const [pendingRate, setPendingRate] = useState<{ offerId: number; rating: number; comment: string } | null>(null);
+    const [userRatings, setUserRatings] = useState<Record<number, number>>(() => {
+        const saved = localStorage.getItem('user_ratings');
+        return saved ? JSON.parse(saved) : {};
+    });
 
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentsMap, setCommentsMap] = useState<Record<number, Comment[]>>(() => {
@@ -132,6 +146,13 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 if (initialCategory && initialCategory !== 'All') {
                     loadedOffers = loadedOffers.filter(o => o.tags.includes(initialCategory));
                 }
+
+                // Add default ratings if missing
+                loadedOffers = loadedOffers.map(o => ({
+                    ...o,
+                    rating: o.rating || (4.0 + Math.random()),
+                    ratingCount: o.ratingCount || Math.floor(Math.random() * 20000)
+                }));
 
                 setAllOffers(loadedOffers);
                 setOffers(loadedOffers);
@@ -224,14 +245,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         }
     };
 
-    const toggleLike = (offerId: number) => {
-        setLikedOffers(prev => {
-            const newSet = new Set(prev);
-            if (newSet.has(offerId)) newSet.delete(offerId); else newSet.add(offerId);
-            return newSet;
-        });
-    };
-
     const toggleSave = (offerId: number) => {
         setSavedOffers(prev => {
             const newSet = new Set(prev);
@@ -243,7 +256,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
     const handleCommentSubmit = async () => {
         const savedUsername = localStorage.getItem('username');
-        if (!savedUsername && !username) { setShowNameSetup(true); return; }
 
         const currentOffer = offers[currentIndex];
         if (!currentOffer) return;
@@ -339,12 +351,95 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         if (username.trim()) {
             localStorage.setItem('username', username);
             setShowNameSetup(false);
+
+            // If we have a pending rate/comment, show the rating modal again for final submission
+            if (pendingRate) {
+                setShowRatingPopup(pendingRate.offerId);
+            }
         }
     };
 
     const handleShareClick = (offerId: number) => {
         setOffers(prev => prev.map(o => o.id === offerId ? { ...o, shares: (o.shares || 0) + 1 } : o));
         setShowShareModal(true);
+    };
+
+    const handleRate = async (offerId: number, rating: number, comment?: string) => {
+        const savedUsername = localStorage.getItem('username');
+
+        // If they are writing a review (with comment) and don't have a name, ask for it
+        if (comment?.trim() && !savedUsername && !username) {
+            setPendingRate({ offerId, rating, comment });
+            setShowRatingPopup(null); // Hide rating modal to show name modal
+            setShowNameSetup(true);
+            return;
+        }
+
+        const alreadyRated = userRatings[offerId] !== undefined;
+
+        setUserRatings(prev => {
+            const newRatings = { ...prev, [offerId]: rating };
+            localStorage.setItem('user_ratings', JSON.stringify(newRatings));
+            return newRatings;
+        });
+
+        // Update the current offer's count if it's the first time rating
+        if (!alreadyRated) {
+            setOffers(prev => prev.map(o =>
+                o.id === offerId
+                    ? { ...o, ratingCount: (o.ratingCount || 0) + 1 }
+                    : o
+            ));
+        }
+
+        // Add review if provided or if it's a rating
+        if (comment?.trim() || rating > 0) {
+            const newComment: Comment = {
+                id: Date.now(),
+                user: username || savedUsername || 'Anonymous',
+                avatar: '👤',
+                text: comment || '',
+                likes: 0,
+                timestamp: 'Just now',
+                replies: [],
+                rating: rating
+            };
+
+            setCommentsMap(prev => {
+                const updatedComments = [newComment, ...(prev[offerId] || [])];
+                const newMap = { ...prev, [offerId]: updatedComments };
+                localStorage.setItem('media_comments', JSON.stringify(newMap));
+                if (offers[currentIndex]?.id === offerId) {
+                    setComments(updatedComments);
+                }
+                return newMap;
+            });
+
+            setOffers(prev => prev.map(o => o.id === offerId ? { ...o, comments: (o.comments || 0) + 1 } : o));
+        }
+
+        setShowRatingPopup(null);
+        setHoveredRating(null);
+        setRatingComment('');
+        setPendingRate(null);
+
+        // Show success toast
+        const isMobile = window.innerWidth < 768;
+        toast.success("Thanks for your review!", {
+            position: isMobile ? 'top-center' : 'top-right',
+            style: {
+                minWidth: isMobile ? '200px' : '240px',
+                width: 'fit-content',
+                backgroundColor: '#000000',
+                color: '#ffffff',
+                border: '1px solid rgba(255,255,255,0.1)',
+                padding: '12px 24px',
+                fontSize: '13px',
+                fontWeight: '600',
+                marginTop: isMobile ? '12px' : '0',
+                marginLeft: isMobile ? '82px' : '0'
+            }
+        });
     };
 
     const getYouTubeId = (url: string) => {
@@ -370,8 +465,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         // In "photo" mode, we only show images
         if (type === 'photo' || !offer.video_url) {
             return (
-                <div className="w-full h-full flex items-center justify-center bg-transparent">
-                    <img src={offer.image_url} alt={offer.title} className="w-full h-auto max-h-full object-contain" />
+                <div className="w-full h-full flex items-center justify-center bg-transparent relative overflow-hidden">
+                    <img src={offer.image_url} alt={offer.title} className="w-full h-full object-cover md:object-contain" />
                 </div>
             );
         }
@@ -398,7 +493,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             title="YouTube video player"
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            className="w-full h-full pointer-events-none"
+                            className="w-full h-full pointer-events-none scale-[1.3] md:scale-100"
                             onLoad={() => isCurrent && setVideoReady(true)}
                         />
                     ) : (
@@ -414,7 +509,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                             onProgress={(state: any) => isCurrent && setProgress(state.played * 100)}
                             className="pointer-events-none"
                             style={{ position: 'absolute', top: 0, left: 0 }}
-                            config={{ file: { attributes: { style: { width: '100%', height: '100%', objectFit: 'contain' } } } }}
+                            config={{ file: { attributes: { style: { width: '100%', height: '100%', objectFit: window.innerWidth < 768 ? 'cover' : 'contain' } } } }}
                         />
                     )}
                 </div>
@@ -445,54 +540,153 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             >
                 {offers.map((offer, index) => (
                     <div key={offer.id} className="w-full h-full flex-shrink-0 snap-start snap-always flex items-center justify-center relative">
-                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-[90vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
+                        <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-full md:h-[90vh] lg:h-[95vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
                             <div className="absolute inset-0 h-full w-full flex items-center justify-center sm:gap-5" style={{ perspective: "1200px" }}>
-                                <MediaCard
-                                    offer={offer}
-                                    index={index}
-                                    currentIndex={currentIndex}
-                                    flippedCardId={flippedCardId}
-                                    setFlippedCardId={setFlippedCardId}
-                                    renderMedia={renderMedia}
-                                    isDescriptionExpanded={isDescriptionExpanded}
-                                    ctaText={offer.cta || 'CLAIM OFFER'}
-                                    mediaLabel={offer.video_url && type !== 'photo' ? 'Video' : 'Photo'}
-                                />
+                                <div className="relative h-full w-full sm:flex-1 flex items-center justify-center">
+                                    {/* Swipe Indicator - Only visible on first item for guidance */}
+                                    {index === 0 && currentIndex === 0 && (
+                                        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-[140] flex flex-col items-center gap-2 pointer-events-none animate-bounce opacity-80 md:hidden">
+                                            <span className="text-white/70 text-xs font-bold tracking-widest uppercase">Swipe Up</span>
+                                            <ChevronUp strokeWidth={iconStroke} className="text-white/50 w-6 h-6" />
+                                        </div>
+                                    )}
+                                    <MediaCard
+                                        offer={offer}
+                                        index={index}
+                                        currentIndex={currentIndex}
+                                        flippedCardId={flippedCardId}
+                                        setFlippedCardId={setFlippedCardId}
+                                        renderMedia={renderMedia}
+                                        isDescriptionExpanded={isDescriptionExpanded}
+                                        ctaText={offer.cta || 'CLAIM BONUS'}
+                                        mediaLabel={offer.video_url && type !== 'photo' ? 'Video' : 'Photo'}
+                                        onRatingClick={(id) => setShowRatingPopup(showRatingPopup === id ? null : id)}
+                                    />
+
+                                    {/* Rating Overlay - Appears only over the video card */}
+                                    {showRatingPopup === offer.id && (
+                                        <div
+                                            className="absolute inset-0 bg-black/40 backdrop-blur-[4px] z-[130] flex items-center justify-center p-4 sm:rounded-[1rem] animate-in fade-in zoom-in duration-300 overflow-hidden"
+                                            onClick={(e) => { e.stopPropagation(); setShowRatingPopup(null); setRatingComment(''); }}
+                                        >
+                                            <div
+                                                className="bg-black/60 backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-8 max-w-[280px] w-full text-center relative shadow-2xl border border-white/10 flex flex-col items-center gap-5 transition-transform"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                <button
+                                                    onClick={() => { setShowRatingPopup(null); setRatingComment(''); }}
+                                                    className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors border border-white/5"
+                                                >
+                                                    <X size={16} />
+                                                </button>
+
+                                                <div className="flex flex-col items-center gap-3 w-full mt-2">
+                                                    <div className="text-white font-black text-2xl drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]">
+                                                        {(hoveredRating || userRatings[offer.id] || 0).toFixed(1)} / 5
+                                                    </div>
+                                                    <div
+                                                        className="flex gap-1.5 relative cursor-pointer select-none py-3 px-4 bg-white/5 rounded-2xl border border-white/5"
+                                                        onMouseMove={(e) => {
+                                                            const rect = e.currentTarget.getBoundingClientRect();
+                                                            const x = e.clientX - rect.left;
+                                                            const val = (x / rect.width) * 5;
+                                                            const target = Math.round(val * 10) / 10;
+                                                            setHoveredRating(Math.max(0.1, Math.min(5, target)));
+                                                        }}
+                                                        onMouseLeave={() => setHoveredRating(null)}
+                                                        onTouchMove={(e) => {
+                                                            const rect = e.currentTarget.getBoundingClientRect();
+                                                            const touch = e.touches[0];
+                                                            const x = touch.clientX - rect.left;
+                                                            const val = (x / rect.width) * 5;
+                                                            const target = Math.round(val * 10) / 10;
+                                                            setHoveredRating(Math.max(0.1, Math.min(5, target)));
+                                                        }}
+                                                        onClick={(e) => {
+                                                            const rect = e.currentTarget.getBoundingClientRect();
+                                                            const x = e.clientX - rect.left;
+                                                            const val = (x / rect.width) * 5;
+                                                            // If user clicks near a star, give them the full star
+                                                            const finalVal = Math.ceil(val);
+                                                            setUserRatings(prev => ({ ...prev, [offer.id]: finalVal }));
+                                                        }}
+                                                    >
+                                                        {[1, 2, 3, 4, 5].map((star) => {
+                                                            const currentRating = userRatings[offer.id] || 0;
+                                                            const activeRating = hoveredRating !== null ? hoveredRating : currentRating;
+                                                            const filled = star <= activeRating;
+                                                            return (
+                                                                <div key={star} className="transition-transform duration-200" style={{ transform: star <= activeRating ? 'scale(1.15)' : 'scale(1)' }}>
+                                                                    <Star strokeWidth={iconStroke} size={24} className={`${filled ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white/20'} drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]`} />
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+
+                                                <div className="w-full">
+                                                    <textarea
+                                                        value={ratingComment}
+                                                        onChange={(e) => setRatingComment(e.target.value)}
+                                                        placeholder="Add a review..."
+                                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20"
+                                                    />
+                                                </div>
+
+                                                <button
+                                                    onClick={() => handleRate(offer.id, userRatings[offer.id] || hoveredRating || 0, ratingComment)}
+                                                    className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-white/90 transition-all transform active:scale-[0.96] text-base shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
+                                                >
+                                                    Submit Review
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
 
                                 {/* Sidebar Icons */}
-                                <div className="absolute right-2 bottom-2 sm:static w-14 lg:w-20 flex flex-col items-center gap-4 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
-                                    <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); toggleLike(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
-                                            <Heart className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${likedOffers.has(offer.id) ? 'fill-[#FF2D55] text-[#FF2D55]' : 'text-foreground'}`} />
+                                <div className="absolute right-2 bottom-5 sm:static w-14 lg:w-20 flex flex-col items-center gap-1 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
+                                    {/* Rating Icon */}
+                                    <div className="flex flex-col items-center gap-0 relative">
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setShowRatingPopup(showRatingPopup === offer.id ? null : offer.id);
+                                            }}
+                                            className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all"
+                                        >
+                                            <Star strokeWidth={iconStroke} className={`w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] ${userRatings[offer.id] ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white'} drop-shadow-lg`} />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.likes + (likedOffers.has(offer.id) ? 1 : 0))}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">
+                                            {userRatings[offer.id] ? userRatings[offer.id].toFixed(1) : (offer.rating || 0).toFixed(1)}
+                                        </span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
-                                            <MessageCircle className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
+                                        <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all">
+                                            <MessageCircle strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.comments)}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount(offer.comments)}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
                                         <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
-                                            <Bookmark className={`w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] ${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-foreground'}`} />
+                                            <Bookmark strokeWidth={iconStroke} className={`w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] ${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-white'} drop-shadow-lg`} />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all active:scale-90 duration-300">
-                                            <FiShare2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />
+                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all active:scale-90 duration-300">
+                                            <Share2 strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />
                                         </button>
-                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-2 lg:-mt-3 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
+                                        <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
                                     </div>
 
                                     {(type === 'video' || (type === 'all' && offer.video_url)) && (
                                         <div className="flex flex-col items-center gap-1.5">
-                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-foreground transition-all">
-                                                {isMuted ? <VolumeX className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" /> : <Volume2 className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px]" />}
+                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all">
+                                                {isMuted ? <VolumeX strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" /> : <Volume2 strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />}
                                             </button>
                                         </div>
                                     )}
@@ -510,9 +704,9 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     onClick={() => {
                         window.dispatchEvent(new CustomEvent('open-sidebar-search'));
                     }}
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-foreground active:scale-95 transition-all hover:bg-foreground/10"
+                    className="w-14 h-14 rounded-full flex items-center justify-center active:scale-95 transition-all hover:bg-white/10"
                 >
-                    <Search size={20} />
+                    <Search strokeWidth={3} className="w-7 h-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
                 </button>
             </div>
 
@@ -547,6 +741,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 showEmojiPicker={showEmojiPicker}
                 setShowEmojiPicker={setShowEmojiPicker}
                 isPostingComment={isPostingComment}
+                handleTopLevelCommentClick={() => {
+                    setShowComments(false);
+                    setRatingComment(commentText);
+                    setShowRatingPopup(offers[currentIndex]?.id);
+                }}
             />
 
             <ShareModal
@@ -583,6 +782,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     </div>
                 </div>
             )}
+
+
+
+
+
             <style>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -590,6 +794,33 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
                 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
                 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+                @keyframes golden-glow {
+                    0% { box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+                    50% { box-shadow: 0 0 30px rgba(250, 204, 21, 0.7); }
+                    100% { box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+                }
+                .animate-golden-glow {
+                    animation: golden-glow 2s infinite ease-in-out;
+                }
+                
+                .discover-underline {
+                    position: relative;
+                }
+                .discover-underline::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -2px;
+                    left: 0;
+                    width: 100%;
+                    height: 2px;
+                    background: linear-gradient(90deg, transparent, #FACC15, transparent);
+                    transform: scaleX(0);
+                    transition: transform 0.3s ease;
+                }
+                .discover-underline:hover::after {
+                    transform: scaleX(1);
+                }
             `}</style>
         </>
     );

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronDown, Heart, Repeat2 } from 'lucide-react';
+import { X, ChevronDown, Heart, Repeat2, Star } from 'lucide-react';
 
 interface Comment {
     id: number;
@@ -13,6 +13,7 @@ interface Comment {
     replies?: Comment[];
     showReplies?: boolean;
     commentImage?: string;
+    rating?: number;
 }
 
 interface CommentsSidebarProps {
@@ -35,6 +36,7 @@ interface CommentsSidebarProps {
     showEmojiPicker: boolean;
     setShowEmojiPicker: (show: boolean) => void;
     isPostingComment?: boolean;
+    handleTopLevelCommentClick: () => void;
 }
 
 const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
@@ -45,18 +47,17 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
     setCommentText,
     selectedImage,
     setSelectedImage,
-    username,
-    setShowNameSetup,
     handleCommentSubmit,
     toggleCommentLike,
     handleReplyClick,
     toggleReplies,
     replyTo,
     setReplyTo,
-     
+
     showEmojiPicker,
     setShowEmojiPicker,
-    isPostingComment
+    isPostingComment,
+    handleTopLevelCommentClick
 }) => {
     const commentInputRef = useRef<HTMLInputElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -85,7 +86,7 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                 <Repeat2 size={24} />
                             </button>
                             <h3 className="text-white font-bold text-[15px] sm:text-lg text-center flex-1">
-                                Comments
+                                Reviews
                             </h3>
                             <div className="flex items-center gap-3">
                                 {/* <button className="p-1 text-white/80 sm:hidden">
@@ -113,18 +114,28 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                     {/* Content Area */}
                                     <div className="flex-1 min-w-0">
                                         <div className="flex flex-col">
-                                            <div className="flex items-center gap-1.5 mb-0.5">
+                                            {/* User Info & Rating Line */}
+                                            <div className="flex flex-wrap items-center gap-2 mb-1">
                                                 <span className="text-foreground/50 font-semibold text-[13px] leading-tight">{comment.user}</span>
                                                 {comment.user === 'Creator' && (
                                                     <span className="text-[#FACC15] font-bold text-[11px]">· Creator</span>
                                                 )}
+                                                {comment.rating !== undefined && (
+                                                    <div className="flex items-center gap-1 px-2 py-0.5 bg-[#FACC15]/10 rounded-full border border-[#FACC15]/20">
+                                                        <span className="text-[#FACC15] font-black text-[11px] whitespace-nowrap">{comment.rating.toFixed(1)} / 5</span>
+                                                        <Star size={10} className="fill-[#FACC15] text-[#FACC15]" />
+                                                    </div>
+                                                )}
                                             </div>
-                                            <p className="text-foreground text-[15px] leading-snug break-words">
+
+                                            {/* Comment Text */}
+                                            <p className="text-foreground text-[15px] leading-snug break-all sm:break-words overflow-hidden">
                                                 {comment.text}
                                             </p>
+
                                             {comment.commentImage && (
                                                 <div className="mt-3 rounded-xl overflow-hidden border border-white/10 max-w-[200px]">
-                                                    <img src={comment.commentImage} alt="Comment attachment" className="w-full h-auto object-cover" />
+                                                    <img src={comment.commentImage} alt="Review attachment" className="w-full h-auto object-cover" />
                                                 </div>
                                             )}
                                         </div>
@@ -169,17 +180,15 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                         </AnimatePresence>
                                     </div>
 
-                                    {/* Interaction Row */}
-                                    <div className="flex items-center gap-3 pt-1 flex-shrink-0 self-start">
-                                        <div className="flex flex-col items-center gap-0.5">
-                                            <button
-                                                onClick={() => toggleCommentLike(comment.id)}
-                                                className={`transition-all active:scale-125 ${comment.isLiked ? 'text-[#FF2D55]' : 'text-white/30 hover:text-white/50'}`}
-                                            >
-                                                <Heart size={20} fill={comment.isLiked ? 'currentColor' : 'none'} />
-                                            </button>
-                                            <span className="text-foreground/40 text-[11px] font-medium">{comment.likes}</span>
-                                        </div>
+                                    {/* Interaction Row - Right Side Heart */}
+                                    <div className="flex flex-col items-center gap-1 pt-1 self-start ml-2">
+                                        <button
+                                            onClick={() => toggleCommentLike(comment.id)}
+                                            className={`transition-all active:scale-125 ${comment.isLiked ? 'text-[#FF2D55]' : 'text-white/30 hover:text-white/50'}`}
+                                        >
+                                            <Heart size={20} fill={comment.isLiked ? 'currentColor' : 'none'} />
+                                        </button>
+                                        <span className="text-white/40 text-[11px] font-medium">{comment.likes}</span>
                                     </div>
                                 </div>
                             ))}
@@ -211,22 +220,21 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                         </button>
                                     </div>
                                 )}
-                                <div className="flex items-center gap-2 sm:gap-3">
-                                    {/* My Avatar */}
-                                    {/* <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black flex flex-shrink-0 items-center justify-center overflow-hidden border border-white/10">
-                                        <img src={logo} alt="My Avatar" className="w-6 sm:w-7 contrast-125" />
-                                    </div> */}
 
-                                    {/* Input Box */}
+                                <div className="flex items-center gap-2 sm:gap-3">
                                     <div className="flex-1 flex items-center bg-foreground/5 rounded-full pl-3 pr-2 sm:px-4 border border-transparent focus-within:border-foreground/10 transition-all relative">
                                         <input
                                             ref={commentInputRef}
                                             type="text"
                                             value={commentText}
                                             onChange={(e) => setCommentText(e.target.value)}
-                                            onFocus={() => { if (!username) setShowNameSetup(true); }}
-                                            onClick={() => { if (!username) setShowNameSetup(true); }}
-                                            placeholder="Add comment..."
+                                            onClick={() => {
+                                                if (!replyTo) {
+                                                    setShowComments(false);
+                                                    handleTopLevelCommentClick();
+                                                }
+                                            }}
+                                            placeholder="Add review..."
                                             className="flex-1 bg-transparent py-2.5 text-[15px] text-foreground outline-none placeholder:text-foreground/30 min-w-0"
                                             onKeyPress={(e) => e.key === 'Enter' && handleCommentSubmit()}
                                         />
@@ -259,22 +267,28 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                                     {showEmojiPicker && (
                                                         <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} className="absolute bottom-full right-0 mb-4 p-2 bg-neutral-900 rounded-2xl shadow-xl border border-white/10 z-50 flex gap-2">
                                                             {['😊', '😂', '🥰', '😍', '🔥', '✨'].map(emoji => (
-                                                                <button key={emoji} onClick={() => { setCommentText(prev => (prev as string) + emoji); setShowEmojiPicker(false); }} className="text-xl hover:scale-125 transition-transform p-1">{emoji}</button>
+                                                                <button key={emoji} onClick={() => { setCommentText(prev => (typeof prev === 'string' ? prev : '') + emoji); setShowEmojiPicker(false); }} className="text-xl hover:scale-125 transition-transform p-1">{emoji}</button>
                                                             ))}
                                                         </motion.div>
                                                     )}
                                                 </AnimatePresence>
                                             </div>
-                                            <button className="hover:text-white transition-colors flex-shrink-0" onClick={() => setCommentText(prev => (prev as string) + '@')}>
+                                            <button className="hover:text-white transition-colors flex-shrink-0" onClick={() => setCommentText(prev => (typeof prev === 'string' ? prev : '') + '@')}>
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
                                             </button>
                                         </div>
                                     </div>
 
-                                    {/* Post Button - OUTSIDE */}
                                     {(commentText.trim() || selectedImage) && (
                                         <button
-                                            onClick={handleCommentSubmit}
+                                            onClick={() => {
+                                                if (!replyTo) {
+                                                    setShowComments(false);
+                                                    handleTopLevelCommentClick();
+                                                } else {
+                                                    handleCommentSubmit();
+                                                }
+                                            }}
                                             disabled={isPostingComment}
                                             className={`text-[#000000] font-bold text-[13px] sm:text-[14px] px-3 py-2 bg-[#FACC15] rounded-full hover:bg-[#EAB308] transition-all active:scale-95 uppercase tracking-wide flex-shrink-0 ${isPostingComment ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >

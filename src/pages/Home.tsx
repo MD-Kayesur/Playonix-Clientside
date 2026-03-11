@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import CommonWrapper from "@/common/CommonWrapper";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/bgremovelogo.png";
@@ -132,7 +132,7 @@ const Home = () => {
                       </svg>
                     </div>
                     <span className="text-[15px] md:text-[16px] text-gray-300 font-bold group-hover:text-white transition-colors">
-                      I accept the <span className="text-[#FACC15] underline underline-offset-4 decoration-[#FACC15]/40 hover:decoration-[#FACC15]">Terms & Privacy Policy</span>.
+                      I accept the <Link to="/privacy" className="text-[#FACC15] underline underline-offset-4 decoration-[#FACC15]/40 hover:decoration-[#FACC15]">Terms & Privacy Policy</Link>.
                     </span>
                   </label>
                 </div>
@@ -149,8 +149,8 @@ const Home = () => {
                     disabled={!isAgeConfirmed || !isTermsAccepted}
                     onClick={handleContinue}
                     className={`flex-1 h-14 rounded-2xl font-black text-sm uppercase tracking-widest transition-all active:scale-95 ${isAgeConfirmed && isTermsAccepted
-                        ? "bg-[#FACC15] text-black hover:bg-[#EAB308] shadow-xl shadow-[#FACC15]/20"
-                        : "bg-white/5 text-white/20 cursor-not-allowed"
+                      ? "bg-[#FACC15] text-black hover:bg-[#EAB308] shadow-xl shadow-[#FACC15]/20"
+                      : "bg-white/5 text-white/20 cursor-not-allowed"
                       }`}
                   >
                     Enter App

@@ -558,13 +558,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                         <div className={`relative transition-all duration-500 ease-in-out md:max-w-[450px] lg:max-w-[550px] w-full h-full md:h-[90vh] lg:h-[95vh] ${showComments ? 'md:-translate-x-[250px] lg:-translate-x-[320px]' : 'md:translate-x-0'} z-[120]`}>
                             <div className="absolute inset-0 h-full w-full flex items-center justify-center sm:gap-5" style={{ perspective: "1200px" }}>
                                 <div className="relative h-full w-full sm:flex-1 flex items-center justify-center">
-                                    {/* Swipe Indicator - Only visible on first item for guidance */}
-                                    {index === 0 && currentIndex === 0 && (
-                                        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-[140] flex flex-col items-center gap-2 pointer-events-none animate-bounce opacity-80 md:hidden">
-                                            <span className="text-white/70 text-xs font-bold tracking-widest uppercase">Swipe Up</span>
-                                            <ChevronUp strokeWidth={iconStroke} className="text-white/50 w-6 h-6" />
-                                        </div>
-                                    )}
+
                                     <MediaCard
                                         offer={offer}
                                         index={index}

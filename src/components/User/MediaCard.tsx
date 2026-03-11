@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Star, ArrowUpRight } from 'lucide-react';
 
 interface Offer {
     id: number;
@@ -99,19 +99,20 @@ const MediaCard: React.FC<MediaCardProps> = ({
                         </div>
                     </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-1 flex flex-col">
                         <div className={`text-white/90 text-[14px] leading-relaxed drop-shadow-lg ${isDescriptionExpanded ? '' : 'line-clamp-2'}`}>
-                            {offer.description}
+                            {offer.description.slice(0, 70)}....
                         </div>
-                        <div className="flex justify-end">
+                        <div className="flex justify-end pt-1">
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setFlippedCardId(offer.id);
                                 }}
-                                className="text-white font-bold text-[13px] hover:opacity-70 transition-opacity pointer-events-auto underline decoration-white/30"
+                                className="flex items-center gap-1 text-white font-black text-[14px] sm:text-[15px]   transition-colors pointer-events-auto group/read"
                             >
-                                Read More
+                                <span>See More</span>
+                                <ArrowUpRight size={18} className="group-hover/read:translate-x-0.5 group-hover/read:-translate-y-0.5 transition-transform" />
                             </button>
                         </div>
                     </div>

@@ -42,7 +42,7 @@ export default function UserLayout() {
       window.removeEventListener("resize", checkIfMobile);
     };
   }, []);
-
+//
   const handleAcceptCookies = () => {
     localStorage.setItem("cookie-consent-accepted", "true");
     setShowCookieConsent(false);

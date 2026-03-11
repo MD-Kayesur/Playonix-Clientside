@@ -60,7 +60,7 @@ html {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: #000000;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -171,7 +171,7 @@ html {
   }
 
   .dark body::after {
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: #000000;
   }
 
   /* Light mode overlay - making it readable but still seeing the image */

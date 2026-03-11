@@ -133,15 +133,12 @@ const TopCasinos = () => {
                 </button>
               </div>
 
-              {/* Podium Base - Metallic Cylinders matching your reference image */}
-              <div className={`w-full flex items-center justify-center rounded-[50%_/_15%] transition-all duration-500 relative border-t-[6px] ${isWinner ? 'h-[200px] md:h-[300px] bg-gradient-to-b from-[#fccb0b] via-[#b45309] to-[#451a03] border-[#ffe066]' :
-                  isRunnerUp ? 'h-[150px] md:h-[220px] bg-gradient-to-b from-[#f1f5f9] via-[#64748b] to-[#1e293b] border-white' :
-                    'h-[120px] md:h-[180px] bg-gradient-to-b from-[#fbbf24] via-[#78350f] to-[#431407] border-[#ffedd5]'
+              {/* Podium Base - Metallic Circle pedestals shadow-free */}
+              <div className={`w-full flex items-center justify-center rounded-[50%_/_15%] transition-all duration-500 relative border-t-2 ${isWinner ? 'h-[200px] md:h-[300px] bg-gradient-to-b from-[#fccb0b] to-[#a16207] border-yellow-400/20' :
+                  isRunnerUp ? 'h-[150px] md:h-[220px] bg-gradient-to-b from-[#f1f5f9] to-[#64748b] border-white/20' :
+                    'h-[120px] md:h-[180px] bg-gradient-to-b from-[#fbbf24] to-[#92400e] border-orange-400/20'
                 }`}>
-                {/* Metallic Gloss Reflection */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-black/20 pointer-events-none" />
-
-                <span className="text-8xl md:text-[11rem] font-black text-white/50 select-none italic tracking-tighter drop-shadow-[0_10px_8px_rgba(0,0,0,1)]">
+                <span className="text-8xl md:text-[11rem] font-black text-white/40 select-none italic tracking-tighter">
                   {position}
                 </span>
               </div>

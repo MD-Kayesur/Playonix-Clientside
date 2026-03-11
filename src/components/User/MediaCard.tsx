@@ -107,13 +107,13 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                     onRatingClick?.(offer.id);
                                 }}
                             >
-                                <div className="flex items-center gap-1 px-2.5 py-1 bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-lg">
+                                <div className="flex items-center gap-1 px-2.5 py-1   rounded-xl border border-white/10 shadow-lg">
                                     <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
                                     <span className="text-[#FACC15] text-[13px] font-black italic">{(offer.rating || 0).toFixed(1)}</span>
                                 </div>
                                 {offer.ratingCount !== undefined && (
                                     <span className="text-white text-[13px] font-black tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                                        {offer.ratingCount.toLocaleString()} <span className="text-white/60 font-medium">REVIEWS</span>
+                                        {offer.ratingCount.toLocaleString()} <span className="text-white font-black">Reviews</span>
                                     </span>
                                 )}
                             </div>
@@ -167,7 +167,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                 <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
                                 <span className="text-foreground font-black italic">{offer.rating?.toFixed(1)}</span>
                             </div>
-                            <span className="text-[10px] text-foreground/40 font-bold uppercase mt-1">{offer.ratingCount?.toLocaleString()} Reviews</span>
+                            <span className="text-[10px] text-foreground/40 font-bold  mt-1">{offer.ratingCount?.toLocaleString()} Reviews</span>
                         </div>
                     )}
                 </div>

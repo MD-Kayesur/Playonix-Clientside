@@ -81,10 +81,13 @@ const Overview = () => {
     mediaPreview: '',
     thumbnailFile: null as File | null,
     thumbnailPreview: '',
+    logoFile: null as File | null,
+    logoPreview: '',
   });
 
   const mediaInputRef = useRef<HTMLInputElement>(null);
   const thumbnailInputRef = useRef<HTMLInputElement>(null);
+  const logoInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch('/mediaData.json')
@@ -151,6 +154,17 @@ const Overview = () => {
     }
   };
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        logoFile: file,
+        logoPreview: URL.createObjectURL(file),
+      });
+    }
+  };
+
   const handlePreview = () => {
     setShowCreatePost(false);
     setShowPreview(true);
@@ -193,6 +207,8 @@ const Overview = () => {
       mediaPreview: '',
       thumbnailFile: null,
       thumbnailPreview: '',
+      logoFile: null,
+      logoPreview: '',
     });
   };
 
@@ -657,6 +673,46 @@ const Overview = () => {
                               className="bg-gray-800 border-gray-700"
                             >
                               Select
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label className="text-sm mb-2 block">Upload Logo:</Label>
+                      <div className="border-2 border-dashed border-gray-800 rounded-lg p-6 bg-[#1A1C1D]/50 flex flex-col items-center justify-center relative">
+                        {formData.logoPreview ? (
+                          <div className="relative w-full">
+                            <img src={formData.logoPreview} alt="Logo" className="w-full h-24 object-contain rounded-lg bg-black/40 p-2" />
+                            <button
+                              onClick={() => setFormData({ ...formData, logoFile: null, logoPreview: '' })}
+                              className="absolute top-2 right-2 p-1 bg-[#FACC15] rounded-full hover:bg-[#EAB308] text-black"
+                            >
+                              <X className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mb-2">
+                              <Upload className="h-6 w-6 text-gray-400" />
+                            </div>
+                            <p className="text-xs text-gray-500 mb-2">Choose a logo for the brand</p>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              ref={logoInputRef}
+                              onChange={handleLogoUpload}
+                              className="hidden"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => logoInputRef.current?.click()}
+                              className="bg-gray-800 border-gray-700 font-semibold"
+                            >
+                              Select Logo
                             </Button>
                           </>
                         )}

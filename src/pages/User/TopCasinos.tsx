@@ -18,6 +18,7 @@ interface Offer {
   tags: string[];
   rating?: number;
   ratingCount?: number;
+  logo_url?: string;
 }
 
 const TopCasinos = () => {

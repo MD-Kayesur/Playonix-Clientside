@@ -20,6 +20,7 @@ interface Offer {
     ratingCount?: number;
     saves?: number;
     shares?: number;
+    logo_url?: string;
 }
 
 interface MediaCardProps {
@@ -85,7 +86,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}
                         >
                             <img
-                                src={logo}
+                                src={offer.logo_url || logo}
                                 alt="logo"
                                 className="w-12 h-12 md:w-14 md:h-14 rounded-2xl object-cover  "
                             />

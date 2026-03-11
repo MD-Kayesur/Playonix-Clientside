@@ -10,6 +10,7 @@ export default function UserLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isAgeAccepted, setIsAgeAccepted] = useState(false);
   const iconStroke = isMobile ? 3 : 2;
 
   // Function to check if the screen is mobile or desktop
@@ -34,6 +35,10 @@ export default function UserLayout() {
       setShowCookieConsent(true);
     }
 
+    // Check age verification
+    const ageAccepted = localStorage.getItem("age-verification-accepted") === "true";
+    setIsAgeAccepted(ageAccepted);
+
     // Event listener to handle window resize
     window.addEventListener("resize", checkIfMobile);
 
@@ -42,7 +47,7 @@ export default function UserLayout() {
       window.removeEventListener("resize", checkIfMobile);
     };
   }, []);
-//
+  //
   const handleAcceptCookies = () => {
     localStorage.setItem("cookie-consent-accepted", "true");
     setShowCookieConsent(false);
@@ -52,36 +57,38 @@ export default function UserLayout() {
   return (
     <div className="flex h-[100dvh] relative overflow-hidden bg-transparent">
       {/* Sidebar Container */}
-      <div
-        className={`fixed md:relative inset-0 md:inset-auto z-[10000] md:z-auto transition-all duration-300 flex-shrink-0 
-          ${isMobile ? (sidebarOpen ? "w-70" : "w-0 overflow-hidden pointer-events-none") : (isCollapsed ? "md:w-20" : "md:w-70")}
-        `}
-      >
-        {/* Mobile Overlay backdrop */}
-        {isMobile && sidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/60 md:hidden pointer-events-auto"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-
-        {/* The actual sidebar content */}
-        <div className={`relative h-full transition-all duration-300 
-          ${isMobile ? (sidebarOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"}
-        `}>
-          <div className={`h-full bg-white dark:bg-black border-r border-black/10 dark:border-white/5 shadow-2xl pointer-events-auto transition-all duration-300 ${isCollapsed ? "w-20" : "w-70"}`}>
-            <UserSidebar
-              sidebarOpen={sidebarOpen}
-              setSidebarOpen={setSidebarOpen}
-              isCollapsed={isCollapsed}
-              setIsCollapsed={setIsCollapsed}
+      {isAgeAccepted && (
+        <div
+          className={`fixed md:relative inset-0 md:inset-auto z-[10000] md:z-auto transition-all duration-300 flex-shrink-0 
+            ${isMobile ? (sidebarOpen ? "w-70" : "w-0 overflow-hidden pointer-events-none") : (isCollapsed ? "md:w-20" : "md:w-70")}
+          `}
+        >
+          {/* Mobile Overlay backdrop */}
+          {isMobile && sidebarOpen && (
+            <div
+              className="fixed inset-0 bg-black/60 md:hidden pointer-events-auto"
+              onClick={() => setSidebarOpen(false)}
             />
+          )}
+
+          {/* The actual sidebar content */}
+          <div className={`relative h-full transition-all duration-300 
+            ${isMobile ? (sidebarOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"}
+          `}>
+            <div className={`h-full bg-white dark:bg-black border-r border-black/10 dark:border-white/5 shadow-2xl pointer-events-auto transition-all duration-300 ${isCollapsed ? "w-20" : "w-70"}`}>
+              <UserSidebar
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+                isCollapsed={isCollapsed}
+                setIsCollapsed={setIsCollapsed}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Menu Toggle Button - Mobile only */}
-      {isMobile && !sidebarOpen && (
+      {isAgeAccepted && isMobile && !sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
           className="fixed top-0 right-1 z-[203] w-14 h-14 text-white rounded-full flex items-center justify-center active:scale-95 transition-all hover:bg-white/10 md:hidden"
@@ -101,18 +108,20 @@ export default function UserLayout() {
           <Outlet />
         </div>
       </div>
-      <SidebarSearch
-        isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-        disableTrigger={true}
-      />
+      {isAgeAccepted && (
+        <SidebarSearch
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+          disableTrigger={true}
+        />
+      )}
 
       {/* Cookie Consent Banner */}
       {showCookieConsent && (
         <div className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-md z-[10001]">
           <div className="bg-[#0D0D0D]/90 backdrop-blur-xl border border-[#FACC15]/30 rounded-[2rem] p-5 md:p-7 shadow-2xl flex flex-col gap-5">
-            <p className="text-gray-200 text-sm md:text-base font-bold leading-relaxed">
-              We use essential cookies to improve your experience. By continuing, you agree to our
+            <p className="text-gray-200 text-sm md:text-base font-bold leading-relaxed text-left">
+              We use essential cookies to improve your experience. By continuing, you agree to our policies.
               <Link to="/cookies" className="text-[#FACC15] underline underline-offset-4 hover:opacity-80 transition-opacity ml-1">Learn more</Link>
             </p>
             <div className="flex gap-3">

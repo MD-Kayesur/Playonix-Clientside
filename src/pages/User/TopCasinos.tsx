@@ -77,7 +77,7 @@ const TopCasinos = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: position * 0.1, duration: 0.5 }}
-              className="flex-1 flex flex-col items-center max-w-[340px] relative"
+              className={`flex-1 flex flex-col items-center relative transition-all duration-300 ${isWinner ? 'max-w-[420px]' : 'max-w-[380px]'}`}
             >
               {/* Crown for Top 3 spots */}
               <div className="h-16 flex items-center justify-center mb-4 relative z-20">
@@ -93,9 +93,9 @@ const TopCasinos = () => {
                 <FireworkCelebration isVisible={isWinner} />
 
                 <div
-                  className={`relative w-full aspect-[4/3] rounded-3xl overflow-hidden border-[3px] mb-6 cursor-pointer shadow-2xl transition-transform hover:scale-[1.03] ${isWinner ? 'border-yellow-500 shadow-yellow-500/30' :
-                    isRunnerUp ? 'border-gray-400/80 shadow-gray-400/10' :
-                      'border-[#b45309]/80 shadow-orange-900/10'
+                  className={`relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden border-[3px] mb-6 cursor-pointer transition-transform hover:scale-[1.03] ${isWinner ? 'border-yellow-500' :
+                      isRunnerUp ? 'border-gray-400/80' :
+                        'border-[#b45309]/80'
                     }`}
                   onClick={() => navigate('/user/all', { state: { initialOfferId: offer.id, feedType: 'top-rated' } })}
                 >
@@ -114,7 +114,7 @@ const TopCasinos = () => {
               </div>
 
               {/* Info Section Below Image */}
-              <div className="text-center mb-8 w-full group">
+              <div className="text-center  w-full group">
                 <h3 className="text-base md:text-2xl font-black text-white mb-2 uppercase tracking-tighter truncate selection:bg-yellow-500/30">
                   {offer.title}
                 </h3>
@@ -122,21 +122,21 @@ const TopCasinos = () => {
                   <Star size={18} className="fill-yellow-500 text-yellow-500" />
                   <span className="text-sm md:text-xl font-black text-white font-mono">{(offer.rating || 4.5).toFixed(1)}</span>
                 </div>
-                <button
+                {/* <button
                   onClick={() => offer.website_url && window.open(offer.website_url, '_blank')}
-                  className={`px-6 md:px-10 py-2.5 md:py-3 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all transform active:scale-95 ${isWinner ? 'bg-yellow-500 text-black hover:bg-yellow-400 shadow-xl shadow-yellow-500/20' :
-                    isRunnerUp ? 'bg-white text-black hover:bg-gray-100' :
-                      'bg-[#b45309] text-white hover:bg-[#d97706]'
+                  className={`px-6 md:px-10 py-2.5 md:py-3 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all transform active:scale-95 ${isWinner ? 'bg-yellow-500 text-black hover:bg-yellow-400' :
+                      isRunnerUp ? 'bg-white text-black hover:bg-gray-100' :
+                        'bg-[#b45309] text-white hover:bg-[#d97706]'
                     }`}
                 >
                   PLAY NOW
-                </button>
+                </button> */}
               </div>
 
               {/* Podium Base - Metallic Circle pedestals shadow-free */}
               <div className={`w-full flex items-center justify-center rounded-[50%_/_15%] transition-all duration-500 relative border-t-2 ${isWinner ? 'h-[200px] md:h-[300px] bg-gradient-to-b from-[#fccb0b] to-[#a16207] border-yellow-400/20' :
-                  isRunnerUp ? 'h-[150px] md:h-[220px] bg-gradient-to-b from-[#f1f5f9] to-[#64748b] border-white/20' :
-                    'h-[120px] md:h-[180px] bg-gradient-to-b from-[#fbbf24] to-[#92400e] border-orange-400/20'
+                isRunnerUp ? 'h-[150px] md:h-[220px] bg-gradient-to-b from-[#f1f5f9] to-[#64748b] border-white/20' :
+                  'h-[120px] md:h-[180px] bg-gradient-to-b from-[#fbbf24] to-[#92400e] border-orange-400/20'
                 }`}>
                 <span className="text-8xl md:text-[11rem] font-black text-white/40 select-none italic tracking-tighter">
                   {position}

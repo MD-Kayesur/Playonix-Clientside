@@ -157,9 +157,13 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
             <button
               onClick={() => !isCollapsed && setIsAboutDropdownOpen(!isAboutDropdownOpen)}
               className={`w-full group flex font-normal items-center gap-3 rounded-lg transition-all duration-200 cursor-pointer
-                ${isAboutDropdownOpen && !isCollapsed ? "bg-muted" : "hover:bg-muted"}
+                ${isAboutDropdownOpen && !isCollapsed
+                  ? "bg-muted text-primary"
+                  : (["/about", "/terms", "/privacy", "/cookies"].includes(location.pathname) && !isAboutDropdownOpen)
+                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                    : "hover:bg-muted text-foreground/70"
+                }
                 ${isCollapsed ? "justify-center px-3 py-3" : "px-3 sm:px-4 py-2.5 sm:py-3"}
-                ${["/about", "/terms", "/privacy", "/cookies"].includes(location.pathname) ? "text-primary" : "text-foreground/70"}
               `}
             >
               <Info className={`flex-shrink-0 transition-transform duration-200 ${isCollapsed ? "w-6 h-6 sm:w-7 sm:h-7" : "w-5 h-5 sm:w-6 sm:h-6"} group-hover:scale-110`} />
@@ -186,10 +190,10 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
                       key={item.path}
                       to={item.path}
                       onClick={() => window.innerWidth < 768 && setSidebarOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-md text-[14px] transition-colors
+                      className={`flex items-center gap-3 px-3 py-2 rounded-md text-[14px] transition-all duration-200
                         ${isActive
-                          ? "text-primary font-medium"
-                          : "text-muted-foreground hover:text-primary hover:bg-muted/50"}
+                          ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                          : "text-foreground/70 hover:bg-muted hover:text-primary"}
                       `}
                     >
                       <item.icon className="w-4 h-4 min-w-[16px]" />

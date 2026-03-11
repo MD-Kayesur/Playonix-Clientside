@@ -19,7 +19,8 @@ import {
   ChevronDown,
   ChevronUp,
   Languages,
-  X
+  X,
+  Star
 } from "lucide-react";
 import { SidebarSearch } from "@/components/SidebarSearch";
 
@@ -114,6 +115,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
     { path: "/user/photos", label: "Photos", icon: Image },
     { path: "/user/favorites", label: "Favorites", icon: Bookmark },
     { path: "/user/categories", label: "Categories", icon: Trophy },
+    { path: "/user/top-rated", label: "Top Rated", icon: Star },
     { path: "/languages", label: "Languages", icon: Languages },
   ];
 

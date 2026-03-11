@@ -20,6 +20,8 @@ import AllMedia from "@/pages/User/AllMedia";
 import Sittings from "@/pages/User/Sittings";
 import Languages from "@/pages/User/Languages";
 import UserManagement from "@/pages/Admin/UserManagement";
+import TopCasinos from "@/pages/User/TopCasinos";
+
 
 import About from "@/pages/About";
 import TermsOfService from "@/pages/About/TermsOfService";
@@ -81,6 +83,7 @@ const routes = createBrowserRouter([
           { path: "favorites", element: <Favorites /> },
           { path: "settings", element: <Sittings /> },
           { path: "categories", element: <Categories /> },
+          { path: "top-rated", element: <TopCasinos /> },
         ],
       },
       {

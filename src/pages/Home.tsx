@@ -20,13 +20,6 @@ const Home = () => {
       navigate("/user/all");
       return;
     }
-
-    // Start the transition after the logo animation duration
-    const timer = setTimeout(() => {
-      setShowWelcome(true);
-    }, 2500); // Adjust timing based on logo animation duration
-
-    return () => clearTimeout(timer);
   }, [navigate]);
 
   const handleContinue = () => {
@@ -57,6 +50,7 @@ const Home = () => {
                 times: [0, 0.2, 0.8, 1], // Defines the timing for each keyframe
                 ease: "easeInOut"
               }}
+              onAnimationComplete={() => setShowWelcome(true)}
               exit={{ opacity: 0 }}
             >
               <img src={logo} alt="Logo" className="w-64 md:w-96 h-auto object-contain" />
@@ -66,13 +60,13 @@ const Home = () => {
               key="welcome"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
                 className="relative max-w-md w-full bg-card rounded-2xl shadow-2xl border border-border p-8 md:p-10 transition-colors duration-300"
               >
                 {/* Close Button */}

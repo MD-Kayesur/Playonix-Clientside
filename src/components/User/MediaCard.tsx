@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star, ArrowUpRight } from 'lucide-react';
-
+import { Star, ArrowUpRight, Bookmark, Share2 } from 'lucide-react';
+import logo from '../../assets/12142.png';
 interface Offer {
     id: number;
     title: string;
@@ -18,6 +18,8 @@ interface Offer {
     disclaimer: string;
     rating?: number;
     ratingCount?: number;
+    saves?: number;
+    shares?: number;
 }
 
 interface MediaCardProps {
@@ -77,25 +79,44 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
                 {/* Overlaid Info Area */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 pr-16 sm:pr-6 space-y-4 z-30 pointer-events-none">
-                    <div className="space-y-1.5">
-                        <div className="flex items-center gap-3">
-                            <h2 className="text-white font-bold text-[22px] tracking-tight cursor-pointer hover:underline pointer-events-auto leading-tight" onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}>{offer.title}</h2>
-                        </div>
-
+                    <div className="flex items-start gap-4">
                         <div
-                            className="flex items-center gap-1.5 cursor-pointer pointer-events-auto hover:opacity-80 transition-opacity w-fit"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onRatingClick?.(offer.id);
-                            }}
+                            className="shrink-0 pt-1 pointer-events-auto cursor-pointer transition-transform active:scale-95"
+                            onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}
                         >
-                            <div className="flex items-center gap-1 px-2 py-0.5 bg-black/40 backdrop-blur-sm rounded-lg border border-white/10">
-                                <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
-                                <span className="text-[#FACC15] text-[13px] font-black italic">{(offer.rating || 0).toFixed(1)}</span>
+                            <img
+                                src={logo}
+                                alt="logo"
+                                className="w-12 h-12 md:w-14 md:h-14 rounded-2xl object-cover  "
+                            />
+                        </div>
+                        <div className="flex-1 space-y-1">
+                            <div className="flex items-center gap-3">
+                                <h2
+                                    className="text-white font-black text-[20px] md:text-[24px] tracking-tighter cursor-pointer hover:text-[#FACC15] transition-colors pointer-events-auto leading-tight drop-shadow-lg"
+                                    onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}
+                                >
+                                    {offer.title}
+                                </h2>
                             </div>
-                            {offer.ratingCount !== undefined && (
-                                <span className="text-white/70 text-[13px] font-medium drop-shadow-md"> {offer.ratingCount.toLocaleString()} reviews</span>
-                            )}
+
+                            <div
+                                className="flex items-center gap-2 cursor-pointer pointer-events-auto hover:grayscale-[0.5] transition-all w-fit"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onRatingClick?.(offer.id);
+                                }}
+                            >
+                                <div className="flex items-center gap-1 px-2.5 py-1 bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-lg">
+                                    <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
+                                    <span className="text-[#FACC15] text-[13px] font-black italic">{(offer.rating || 0).toFixed(1)}</span>
+                                </div>
+                                {offer.ratingCount !== undefined && (
+                                    <span className="text-white text-[13px] font-black tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                                        {offer.ratingCount.toLocaleString()} <span className="text-white/60 font-medium">REVIEWS</span>
+                                    </span>
+                                )}
+                            </div>
                         </div>
                     </div>
 
@@ -135,11 +156,20 @@ const MediaCard: React.FC<MediaCardProps> = ({
                 className="absolute inset-0 w-full h-full bg-card sm:rounded-[1rem] overflow-hidden p-6 sm:p-8 flex flex-col gap-6 custom-scrollbar overflow-y-auto transition-colors duration-300"
                 style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
             >
-                <div className="flex items-center gap-4">
+                <div className="flex justify-between items-start gap-4">
                     <div className="min-w-0">
-                        <h3 className="text-foreground text-xl font-bold truncate">{offer.title}</h3>
-                        <p className="text-foreground/70 text-sm truncate">{offer.subtitle}</p>
+                        <h3 className="text-foreground text-xl md:text-2xl font-black truncate">{offer.title}</h3>
+                        <p className="text-foreground/70 text-sm font-medium truncate">{offer.subtitle}</p>
                     </div>
+                    {(offer.rating || 0) > 0 && (
+                        <div className="flex flex-col items-end shrink-0">
+                            <div className="flex items-center gap-1 bg-primary/5 px-2 py-1 rounded-lg">
+                                <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
+                                <span className="text-foreground font-black italic">{offer.rating?.toFixed(1)}</span>
+                            </div>
+                            <span className="text-[10px] text-foreground/40 font-bold uppercase mt-1">{offer.ratingCount?.toLocaleString()} Reviews</span>
+                        </div>
+                    )}
                 </div>
 
                 <div className="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-2">
@@ -160,10 +190,22 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
                     {offer.terms_highlights && (
                         <div className="space-y-3 pt-2">
-                            <h4 className="text-foreground font-bold text-xs uppercase tracking-wider">Key Highlights</h4>
+                            <div className="flex items-center justify-between">
+                                <h4 className="text-foreground font-black text-[11px] uppercase tracking-wider">Key Highlights</h4>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-1.5 grayscale opacity-40">
+                                        <Bookmark size={12} className="fill-current" />
+                                        <span className="text-[11px] font-black italic">{offer.saves || 0}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 grayscale opacity-40">
+                                        <Share2 size={12} className="fill-current" />
+                                        <span className="text-[11px] font-black italic">{offer.shares || 0}</span>
+                                    </div>
+                                </div>
+                            </div>
                             <ul className="space-y-2.5">
                                 {offer.terms_highlights.map((term, idx) => (
-                                    <li key={idx} className="flex items-start gap-3 text-foreground/90 text-sm">
+                                    <li key={idx} className="flex items-start gap-3 text-foreground/80 text-sm font-medium">
                                         <div className="w-1.5 h-1.5 rounded-full bg-[#FACC15] mt-1.5 shrink-0" />
                                         {term}
                                     </li>

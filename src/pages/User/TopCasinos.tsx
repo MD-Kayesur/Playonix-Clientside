@@ -29,11 +29,7 @@ const TopCasinos = () => {
       .then((response) => response.json())
       .then((data) => {
         const loadedOffers = Array.isArray(data) ? data : [data];
-        // Sort by rating (handled or random if missing)
-        const sorted = [...loadedOffers].map(o => ({
-          ...o,
-          rating: o.rating || (4.0 + Math.random())
-        })).sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        const sorted = [...loadedOffers].sort((a, b) => (b.rating || 0) - (a.rating || 0));
         setOffers(sorted);
       })
       .catch((error) => console.error('Error fetching offers:', error));

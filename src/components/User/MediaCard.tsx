@@ -76,39 +76,31 @@ const MediaCard: React.FC<MediaCardProps> = ({
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-20" />
 
                 {/* Overlaid Info Area */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 pr-16 sm:pr-6 space-y-3 z-30 pointer-events-none">
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (offer.website_url) window.open(offer.website_url, '_blank');
-                        }}
-                        type="button"
-                        className="w-full px-6 py-4 font-black rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-[0_0_20px_rgba(250,204,21,0.5)] animate-golden-glow"
-                    >
-                        {ctaText}
-                    </button>
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 pr-16 sm:pr-6 space-y-4 z-30 pointer-events-none">
+                    <div className="space-y-1.5">
+                        <div className="flex items-center gap-3">
+                            <h2 className="text-white font-bold text-[22px] tracking-tight cursor-pointer hover:underline pointer-events-auto leading-tight" onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}>{offer.title}</h2>
+                        </div>
 
-                    <div
-                        className="flex items-center gap-1.5 mb-1 cursor-pointer pointer-events-auto hover:opacity-80 transition-opacity discover-underline"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onRatingClick?.(offer.id);
-                        }}
-                    >
-                        <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
-                        <span className="text-white text-[14px] font-bold">{(offer.rating || 0).toFixed(1)}</span>
-                        {offer.ratingCount !== undefined && (
-                            <span className="text-white/60 text-[14px]"> • {offer.ratingCount.toLocaleString()} reviews</span>
-                        )}
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <h2 className="text-white font-normal text-[20px] tracking-tight cursor-pointer hover:underline pointer-events-auto" onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}>{offer.title}</h2>
+                        <div
+                            className="flex items-center gap-1.5 cursor-pointer pointer-events-auto hover:opacity-80 transition-opacity w-fit"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onRatingClick?.(offer.id);
+                            }}
+                        >
+                            <div className="flex items-center gap-1 px-2 py-0.5 bg-black/40 backdrop-blur-sm rounded-lg border border-white/10">
+                                <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
+                                <span className="text-[#FACC15] text-[13px] font-black italic">{(offer.rating || 0).toFixed(1)}</span>
+                            </div>
+                            {offer.ratingCount !== undefined && (
+                                <span className="text-white/70 text-[13px] font-medium drop-shadow-md"> {offer.ratingCount.toLocaleString()} reviews</span>
+                            )}
+                        </div>
                     </div>
 
                     <div className="space-y-1">
                         <div className={`text-white/90 text-[14px] leading-relaxed drop-shadow-lg ${isDescriptionExpanded ? '' : 'line-clamp-2'}`}>
-                            {/* <span className="font-semibold block mb-0.5 text-white">{offer.subtitle}</span> */}
                             {offer.description}
                         </div>
                         <div className="flex justify-end">
@@ -117,12 +109,23 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                     e.stopPropagation();
                                     setFlippedCardId(offer.id);
                                 }}
-                                className="text-white font-bold text-[13px] hover:opacity-70 transition-opacity pointer-events-auto"
+                                className="text-white font-bold text-[13px] hover:opacity-70 transition-opacity pointer-events-auto underline decoration-white/30"
                             >
                                 Read More
                             </button>
                         </div>
                     </div>
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (offer.website_url) window.open(offer.website_url, '_blank');
+                        }}
+                        type="button"
+                        className="w-full px-6 py-3.5 font-black rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-[0_0_20px_rgba(250,204,21,0.5)] animate-golden-glow text-[15px] tracking-wider"
+                    >
+                        {ctaText}
+                    </button>
                 </div>
             </div>
 

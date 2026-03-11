@@ -148,13 +148,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     loadedOffers = loadedOffers.filter(o => o.tags.includes(initialCategory));
                 }
 
-                // Add default ratings if missing
-                loadedOffers = loadedOffers.map(o => ({
-                    ...o,
-                    rating: o.rating || (4.0 + Math.random()),
-                    ratingCount: o.ratingCount || Math.floor(Math.random() * 20000)
-                }));
-
                 if (feedType === 'top-rated') {
                     loadedOffers.sort((a, b) => ((b.rating || 0) - (a.rating || 0)));
                 }

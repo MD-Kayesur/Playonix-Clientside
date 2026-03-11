@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Star, Trophy, Play, ChevronRight, Crown } from 'lucide-react';
+import { Star, Trophy, Crown, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import FireworkCelebration from '../../components/Effects/FireworkCelebration';
 
 interface Offer {
   id: number;
@@ -21,7 +22,6 @@ interface Offer {
 
 const TopCasinos = () => {
   const [offers, setOffers] = useState<Offer[]>([]);
-  const [activeTab, setActiveTab] = useState('New Casinos');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,11 +36,9 @@ const TopCasinos = () => {
   }, []);
 
   const top3 = offers.slice(0, 3);
-  // Reorder for podium: [2, 1, 3]
+  // Reorder for podium: [2nd, 1st, 3rd]
   const podiumOrder = top3.length === 3 ? [top3[1], top3[0], top3[2]] : top3;
   const others = offers.slice(3, 10);
-
-  const tabs = ['New Casinos', 'Live Casinos', 'Mobile Casinos', 'Crypto Casinos'];
 
   const extractYouTubeID = (url: string): string => {
     const match = url.match(/(?:youtube\.com\/(?:shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
@@ -53,239 +51,160 @@ const TopCasinos = () => {
   };
 
   return (
-    <div className="min-h-full bg-black text-white p-4 md:p-8 overflow-y-auto no-scrollbar relative">
-      {/* Animated Background Confetti/Particles (Subtle) */}
-      <div className="absolute inset-0 pointer-events-none opacity-30 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-yellow-400 rounded-full"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: -10,
-              opacity: 0
-            }}
-            animate={{
-              y: window.innerHeight + 10,
-              opacity: [0, 1, 0],
-              x: `calc(${Math.random() * 100}vw + ${Math.random() * 20 - 10}px)`
-            }}
-            transition={{
-              duration: Math.random() * 5 + 5,
-              repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 10
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Navigation Tabs */}
-      <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-12 border-b border-white/10 pb-4">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`relative px-4 py-2 text-sm font-bold transition-all ${activeTab === tab ? 'text-yellow-400' : 'text-gray-400 hover:text-white'
-              }`}
-          >
-            {tab}
-            {activeTab === tab && (
-              <motion.div
-                layoutId="underline"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-yellow-400 shadow-[0_0_10px_#facc15]"
-              />
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Header */}
-      <div className="text-center mb-16 relative">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-4 mb-2"
-        >
-          <div className="h-[1px] w-24 bg-gradient-to-l from-yellow-500 to-transparent" />
-          <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-            TOP RATED
-          </h1>
-          <div className="h-[1px] w-24 bg-gradient-to-r from-yellow-500 to-transparent" />
-        </motion.div>
-        <div className="flex justify-center gap-1.5">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-              className="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_8px_#facc15]"
-            />
-          ))}
+    <div className="min-h-full bg-black text-white p-4 md:p-8 overflow-y-auto no-scrollbar relative font-sans">
+      {/* Header Section from Image */}
+      <div className="text-center mb-16 relative z-10 pt-8">
+        <h1 className="text-4xl md:text-7xl font-black italic tracking-tighter text-white uppercase mb-2">
+          TOP RATED
+        </h1>
+        <div className="flex justify-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_10px_#eab308]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_10px_#eab308]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_10px_#eab308]" />
         </div>
       </div>
 
-      {/* Podium Section */}
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-end justify-center gap-1 md:gap-4 mb-20 px-2">
+      {/* Podium Section - Perfectly matching the reference image */}
+      <div className="max-w-6xl mx-auto flex items-end justify-center gap-3 md:gap-8 mb-24 relative z-10 px-2 lg:px-4">
         {top3.length > 0 && podiumOrder.map((offer) => {
-          const isWinner = offer.id === top3[0].id;
-          const isRunnerUp = offer.id === top3[1].id;
+          const isWinner = offer.id === top3[0].id; // Fortune Ox
+          const isRunnerUp = offer.id === top3[1].id; // Golden Treasure Spin
           const position = isWinner ? 1 : isRunnerUp ? 2 : 3;
-
-          const heightClass = isWinner ? "h-[320px] md:h-[400px]" : isRunnerUp ? "h-[260px] md:h-[320px]" : "h-[220px] md:h-[280px]";
-          const widthClass = isWinner ? "w-full md:w-[320px]" : "w-full md:w-[260px]";
-          const zIndex = isWinner ? "z-30" : "z-20";
 
           return (
             <motion.div
               key={offer.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: position * 0.2 }}
-              className={`relative flex flex-col items-center ${widthClass} ${zIndex}`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: position * 0.1, duration: 0.5 }}
+              className="flex-1 flex flex-col items-center max-w-[340px] relative"
             >
-              {/* Crown for Winner */}
-              {isWinner && (
-                <motion.div
-                  animate={{ y: [0, -10, 0], rotate: [-5, 5, -5] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-12 z-40"
-                >
-                  <Crown size={48} className="text-yellow-400 fill-yellow-400 drop-shadow-[0_0_20px_#facc15]" />
-                </motion.div>
-              )}
-
-              {/* Casino Card */}
-              <div
-                className={`relative w-full aspect-video rounded-2xl overflow-hidden border-2 mb-4 group cursor-pointer shadow-2xl transition-all duration-500 hover:scale-105 ${isWinner ? 'border-yellow-400 shadow-yellow-500/30' :
-                  isRunnerUp ? 'border-gray-400 shadow-gray-500/20' :
-                    'border-orange-600 shadow-orange-700/20'
-                  }`}
-                onClick={() => {
-                  navigate('/user/all', {
-                    state: {
-                      initialOfferId: offer.id,
-                      feedType: 'top-rated'
-                    }
-                  });
-                }}
-              >
-                <img src={getThumbnail(offer)} className="w-full h-full object-cover" alt={offer.title} />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Play size={40} className="text-white drop-shadow-lg" fill="white" />
-                </div>
-
-                {/* Visual Glow */}
-                <div className={`absolute inset-0 pointer-events-none ${isWinner ? 'bg-gradient-to-t from-yellow-500/20 to-transparent' :
-                  isRunnerUp ? 'bg-gradient-to-t from-gray-400/10 to-transparent' :
-                    'bg-gradient-to-t from-orange-600/10 to-transparent'
-                  }`} />
+              {/* Crown for Top 3 spots */}
+              <div className="h-16 flex items-center justify-center mb-4 relative z-20">
+                <Crown
+                  size={isWinner ? 56 : 44}
+                  className="text-yellow-500 fill-yellow-500 drop-shadow-[0_0_20px_rgba(234,179,8,0.6)]"
+                />
               </div>
 
-              {/* Info Box */}
-              <div className="text-center mb-4">
-                <h3 className="text-lg font-black truncate max-w-[200px] mb-1">{offer.title}</h3>
-                <div className="flex items-center justify-center gap-1 text-yellow-400">
-                  <Star size={16} fill="currentColor" />
-                  <span className="font-bold">{(offer.rating || 0).toFixed(1)}</span>
+              {/* Casino Image Component - Red marked aspect from image */}
+              <div className="relative w-full group">
+                {/* Reusable Firework Celebration Component */}
+                <FireworkCelebration isVisible={isWinner} />
+
+                <div
+                  className={`relative w-full aspect-[4/3] rounded-3xl overflow-hidden border-[3px] mb-6 cursor-pointer shadow-2xl transition-transform hover:scale-[1.03] ${isWinner ? 'border-yellow-500 shadow-yellow-500/30' :
+                    isRunnerUp ? 'border-gray-400/80 shadow-gray-400/10' :
+                      'border-[#b45309]/80 shadow-orange-900/10'
+                    }`}
+                  onClick={() => navigate('/user/all', { state: { initialOfferId: offer.id, feedType: 'top-rated' } })}
+                >
+                  <div className="absolute inset-0 bg-black flex items-center justify-center">
+                    {/* Portrait inner container to match the red markup */}
+                    <div className="h-full aspect-[9/16] relative">
+                      <img src={getThumbnail(offer)} className="w-full h-full object-cover" alt="" />
+                      <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full bg-white/40 backdrop-blur-lg flex items-center justify-center border border-white/30">
+                          <Play size={20} fill="white" className="ml-1 text-white" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Info Section Below Image */}
+              <div className="text-center mb-8 w-full group">
+                <h3 className="text-base md:text-2xl font-black text-white mb-2 uppercase tracking-tighter truncate selection:bg-yellow-500/30">
+                  {offer.title}
+                </h3>
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Star size={18} className="fill-yellow-500 text-yellow-500" />
+                  <span className="text-sm md:text-xl font-black text-white font-mono">{(offer.rating || 4.5).toFixed(1)}</span>
                 </div>
                 <button
                   onClick={() => offer.website_url && window.open(offer.website_url, '_blank')}
-                  className={`mt-3 px-6 py-1.5 rounded-lg text-xs font-black tracking-widest transition-all ${isWinner ? 'bg-yellow-400 text-black hover:bg-yellow-300 shadow-[0_0_15px_rgba(250,204,21,0.5)]' :
-                    isRunnerUp ? 'bg-gray-200 text-black hover:bg-white' :
-                      'bg-orange-700 text-white hover:bg-orange-600'
-                    }`}>
+                  className={`px-6 md:px-10 py-2.5 md:py-3 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all transform active:scale-95 ${isWinner ? 'bg-yellow-500 text-black hover:bg-yellow-400 shadow-xl shadow-yellow-500/20' :
+                    isRunnerUp ? 'bg-white text-black hover:bg-gray-100' :
+                      'bg-[#b45309] text-white hover:bg-[#d97706]'
+                    }`}
+                >
                   PLAY NOW
                 </button>
               </div>
 
-              {/* Podium Base */}
-              <div className={`relative w-full ${heightClass} flex flex-col items-center justify-start pt-8 rounded-t-3xl overflow-hidden ${isWinner ? 'bg-gradient-to-b from-[#b38a11] via-[#8c6b0d] to-[#4d3a07]' :
-                isRunnerUp ? 'bg-gradient-to-b from-[#4a4a4a] via-[#2a2a2a] to-[#1a1a1a]' :
-                  'bg-gradient-to-b from-[#7d3c12] via-[#5d2c0d] to-[#2d1607]'
-                } border-t border-white/20 shadow-inner`}>
+              {/* Podium Base - Metallic Cylinders matching your reference image */}
+              <div className={`w-full flex items-center justify-center rounded-[50%_/_15%] transition-all duration-500 relative border-t-[6px] ${isWinner ? 'h-[200px] md:h-[300px] bg-gradient-to-b from-[#fccb0b] via-[#b45309] to-[#451a03] border-[#ffe066]' :
+                  isRunnerUp ? 'h-[150px] md:h-[220px] bg-gradient-to-b from-[#f1f5f9] via-[#64748b] to-[#1e293b] border-white' :
+                    'h-[120px] md:h-[180px] bg-gradient-to-b from-[#fbbf24] via-[#78350f] to-[#431407] border-[#ffedd5]'
+                }`}>
+                {/* Metallic Gloss Reflection */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-black/20 pointer-events-none" />
 
-                {/* Shine Animation */}
-                <motion.div
-                  animate={{ x: ['-200%', '200%'] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
-                  className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
-                />
-
-                <span className="text-7xl md:text-9xl font-black opacity-40 select-none">
+                <span className="text-8xl md:text-[11rem] font-black text-white/50 select-none italic tracking-tighter drop-shadow-[0_10px_8px_rgba(0,0,0,1)]">
                   {position}
                 </span>
-
-                {/* Confetti Animation for Winner */}
-                {isWinner && (
-                  <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(15)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute w-1.5 h-1.5 bg-yellow-200"
-                        animate={{
-                          y: [-20, 100],
-                          x: [0, (i % 2 === 0 ? 50 : -50)],
-                          rotate: 360,
-                          opacity: [0, 1, 0]
-                        }}
-                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.1 }}
-                        style={{ top: '10%', left: `${Math.random() * 80 + 10}%` }}
-                      />
-                    ))}
-                  </div>
-                )}
               </div>
             </motion.div>
           );
         })}
       </div>
 
-      {/* Top 10 List */}
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="flex items-center gap-4 mb-8">
-          <Trophy className="text-yellow-500" size={24} />
-          <h2 className="text-2xl font-black italic tracking-tight">Top 10 Casinos</h2>
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-white/20 to-transparent" />
+      {/* Detailed Leaderboard Table - Refined for professional look */}
+      <div className="max-w-4xl mx-auto mb-32 relative z-10 px-4">
+        <div className="flex items-center gap-4 mb-10">
+          <Trophy className="text-yellow-500" size={28} />
+          <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tight">Global Leaderboard</h2>
+          <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
         </div>
 
-        <div className="space-y-3">
-          {others.map((offer, idx) => (
-            <motion.div
-              key={offer.id}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              onClick={() => {
-                navigate('/user/all', {
-                  state: {
-                    initialOfferId: offer.id,
-                    feedType: 'top-rated'
-                  }
-                });
-              }}
-              className="group flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:border-yellow-500/30 transition-all cursor-pointer"
-            >
-              <div className="flex items-center gap-6">
-                <span className="text-xl font-black text-white/30 w-8">{idx + 4}.</span>
-                <span className="text-lg font-bold group-hover:text-yellow-400 transition-colors">{offer.title}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-yellow-400">
-                <Star size={18} fill="currentColor" />
-                <span className="text-lg font-black italic">{(offer.rating || 0).toFixed(1)}</span>
-                <ChevronRight size={20} className="ml-2 text-white/20 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all" />
-              </div>
-            </motion.div>
-          ))}
+        <div className="bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
+          <div className="grid grid-cols-[100px_1fr_120px_160px] px-10 py-6 bg-white/[0.03] border-b border-white/10 text-[11px] font-black text-gray-400 uppercase tracking-[0.3em]">
+            <span>Rank</span>
+            <span>Platform</span>
+            <span className="text-center">Rating</span>
+            <span className="text-right">Action</span>
+          </div>
+
+          <div className="divide-y divide-white/5">
+            {others.map((offer, idx) => (
+              <motion.div
+                key={offer.id}
+                whileHover={{ backgroundColor: 'rgba(255,255,255,0.02)' }}
+                className="grid grid-cols-[100px_1fr_120px_160px] items-center px-10 py-6 group cursor-pointer"
+                onClick={() => navigate('/user/all', { state: { initialOfferId: offer.id, feedType: 'top-rated' } })}
+              >
+                <div className="flex items-center gap-2">
+                  <Trophy size={14} className={idx === 0 ? "text-yellow-500 fill-yellow-500" : "text-white/20"} />
+                  <span className={`text-base font-black italic ${idx === 0 ? 'text-yellow-500' : 'text-white/30'}`}>{idx + 4}</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 p-1 border border-white/10 overflow-hidden">
+                    <img src={getThumbnail(offer)} className="w-full h-full object-cover rounded-lg" alt="" />
+                  </div>
+                  <span className="text-[17px] font-black text-white group-hover:text-yellow-500 transition-colors uppercase tracking-tight">{offer.title}</span>
+                </div>
+                <div className="flex items-center justify-center gap-2 text-yellow-500 bg-yellow-400/5 px-4 py-1.5 rounded-full border border-yellow-400/10">
+                  <Star size={14} fill="currentColor" />
+                  <span className="text-base font-black italic">{(offer.rating || 4.2).toFixed(1)}</span>
+                </div>
+                <div className="text-right">
+                  <button className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors underline decoration-2 underline-offset-8">
+                    Explore Data
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Stylish Bottom Decorative Element */}
-      <div className="mt-20 flex justify-center opacity-20">
-        <div className="w-1/2 h-px bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
+      {/* Subtle Aesthetic Footer Branding */}
+      <div className="pb-40 flex flex-col items-center gap-6 opacity-20 select-none grayscale pointer-events-none">
+        <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
+        <p className="text-[10px] font-black tracking-[1em] uppercase text-center">Verified Marketplace Authority Feed</p>
       </div>
-    </div>
+    </div >
   );
 };
 

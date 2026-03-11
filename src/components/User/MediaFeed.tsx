@@ -74,10 +74,11 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const type = propType || (location.pathname.includes('photos') ? 'photo' : location.pathname.includes('videos') ? 'video' : 'all');
 
     // Determine feedType from location state or prop
-    const locationState = location.state as { feedType?: string; initialIndex?: number; initialCategory?: string };
+    const locationState = location.state as { feedType?: string; initialIndex?: number; initialCategory?: string; initialOfferId?: number };
     const feedType = propFeedType || locationState?.feedType;
     const initialIndex = locationState?.initialIndex;
     const initialCategory = locationState?.initialCategory;
+    const initialOfferId = locationState?.initialOfferId;
 
     const [offers, setOffers] = useState<Offer[]>([]);
     const [allOffers, setAllOffers] = useState<Offer[]>([]);
@@ -154,10 +155,19 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     ratingCount: o.ratingCount || Math.floor(Math.random() * 20000)
                 }));
 
+                if (feedType === 'top-rated') {
+                    loadedOffers.sort((a, b) => ((b.rating || 0) - (a.rating || 0)));
+                }
+
                 setAllOffers(loadedOffers);
                 setOffers(loadedOffers);
 
-                if (typeof initialIndex === 'number' && initialIndex < loadedOffers.length) {
+                if (initialOfferId !== undefined) {
+                    const targetIndex = loadedOffers.findIndex(o => o.id === initialOfferId);
+                    if (targetIndex !== -1) {
+                        setCurrentIndex(targetIndex);
+                    }
+                } else if (typeof initialIndex === 'number' && initialIndex < loadedOffers.length) {
                     setCurrentIndex(initialIndex);
                 }
                 setIsLoading(false);
@@ -172,14 +182,26 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     }, [type, feedType, initialCategory, initialIndex]);
 
     useEffect(() => {
-        if (!isLoading && typeof initialIndex === 'number' && containerRef.current) {
+        if (!isLoading && containerRef.current) {
+            let targetIndex = currentIndex;
+
+            // If we have an initialOfferId, find its current position in the (possibly filtered) offers
+            if (initialOfferId !== undefined) {
+                const idx = offers.findIndex(o => o.id === initialOfferId);
+                if (idx !== -1) targetIndex = idx;
+            } else if (typeof initialIndex === 'number') {
+                targetIndex = initialIndex;
+            }
+
             const itemHeight = containerRef.current.clientHeight;
-            containerRef.current.scrollTo({
-                top: initialIndex * itemHeight,
-                behavior: 'instant' as any
-            });
+            if (itemHeight > 0) {
+                containerRef.current.scrollTo({
+                    top: targetIndex * itemHeight,
+                    behavior: 'instant' as any
+                });
+            }
         }
-    }, [isLoading, initialIndex]);
+    }, [isLoading, initialIndex, initialOfferId, offers.length]);
 
     useEffect(() => {
         setIsPlaying(true);

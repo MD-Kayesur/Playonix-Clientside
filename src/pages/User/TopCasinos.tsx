@@ -166,8 +166,12 @@ const TopCasinos = () => {
                     'border-orange-600 shadow-orange-700/20'
                   }`}
                 onClick={() => {
-                  const indexInFullList = offers.findIndex(o => o.id === offer.id);
-                  navigate('/user/all', { state: { initialIndex: indexInFullList } });
+                  navigate('/user/all', {
+                    state: {
+                      initialOfferId: offer.id,
+                      feedType: 'top-rated'
+                    }
+                  });
                 }}
               >
                 <img src={getThumbnail(offer)} className="w-full h-full object-cover" alt={offer.title} />
@@ -258,8 +262,12 @@ const TopCasinos = () => {
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
               onClick={() => {
-                const indexInFullList = offers.findIndex(o => o.id === offer.id);
-                navigate('/user/all', { state: { initialIndex: indexInFullList } });
+                navigate('/user/all', {
+                  state: {
+                    initialOfferId: offer.id,
+                    feedType: 'top-rated'
+                  }
+                });
               }}
               className="group flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:border-yellow-500/30 transition-all cursor-pointer"
             >

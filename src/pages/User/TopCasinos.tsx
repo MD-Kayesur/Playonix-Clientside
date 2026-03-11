@@ -64,8 +64,8 @@ const TopCasinos = () => {
         </div>
       </div>
 
-      {/* Podium Section - Perfectly matching the reference image */}
-      <div className="max-w-6xl mx-auto flex items-end justify-center gap-3 md:gap-8 mb-24 relative z-10 px-2 lg:px-4">
+      {/* Podium Section - Responsive adjustment */}
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end justify-center gap-12 md:gap-8 mb-24 relative z-10 px-4 md:px-2 lg:px-4">
         {top3.length > 0 && podiumOrder.map((offer) => {
           const isWinner = offer.id === top3[0].id; // Fortune Ox
           const isRunnerUp = offer.id === top3[1].id; // Golden Treasure Spin
@@ -77,7 +77,7 @@ const TopCasinos = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: position * 0.1, duration: 0.5 }}
-              className={`flex-1 flex flex-col items-center relative transition-all duration-300 ${isWinner ? 'max-w-[420px]' : 'max-w-[380px]'}`}
+              className={`w-full md:flex-1 flex flex-col items-center relative transition-all duration-300 ${isWinner ? 'max-w-[320px] md:max-w-[420px] order-1 md:order-2' : isRunnerUp ? 'max-w-[280px] md:max-w-[380px] order-2 md:order-1' : 'max-w-[280px] md:max-w-[380px] order-3'}`}
             >
               {/* Crown for Top 3 spots */}
               <div className="h-16 flex items-center justify-center mb-4 relative z-20">
@@ -94,8 +94,8 @@ const TopCasinos = () => {
 
                 <div
                   className={`relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden border-[3px] mb-6 cursor-pointer transition-transform hover:scale-[1.03] ${isWinner ? 'border-yellow-500' :
-                      isRunnerUp ? 'border-gray-400/80' :
-                        'border-[#b45309]/80'
+                    isRunnerUp ? 'border-gray-400/80' :
+                      'border-[#b45309]/80'
                     }`}
                   onClick={() => navigate('/user/all', { state: { initialOfferId: offer.id, feedType: 'top-rated' } })}
                 >
@@ -155,12 +155,12 @@ const TopCasinos = () => {
           <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
         </div>
 
-        <div className="bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
-          <div className="grid grid-cols-[100px_1fr_120px_160px] px-10 py-6 bg-white/[0.03] border-b border-white/10 text-[11px] font-black text-gray-400 uppercase tracking-[0.3em]">
+        <div className="bg-white/5 backdrop-blur-2xl rounded-[1.5rem] md:rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
+          <div className="grid grid-cols-[50px_1fr_70px] md:grid-cols-[100px_1fr_120px_160px] px-4 md:px-10 py-6 bg-white/[0.03] border-b border-white/10 text-[10px] md:text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.3em]">
             <span>Rank</span>
             <span>Platform</span>
             <span className="text-center">Rating</span>
-            <span className="text-right">Action</span>
+            <span className="hidden md:block text-right">Action</span>
           </div>
 
           <div className="divide-y divide-white/5">
@@ -168,24 +168,24 @@ const TopCasinos = () => {
               <motion.div
                 key={offer.id}
                 whileHover={{ backgroundColor: 'rgba(255,255,255,0.02)' }}
-                className="grid grid-cols-[100px_1fr_120px_160px] items-center px-10 py-6 group cursor-pointer"
+                className="grid grid-cols-[50px_1fr_70px] md:grid-cols-[100px_1fr_120px_160px] items-center px-4 md:px-10 py-4 md:py-6 group cursor-pointer"
                 onClick={() => navigate('/user/all', { state: { initialOfferId: offer.id, feedType: 'top-rated' } })}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 md:gap-2">
                   <Trophy size={14} className={idx === 0 ? "text-yellow-500 fill-yellow-500" : "text-white/20"} />
-                  <span className={`text-base font-black italic ${idx === 0 ? 'text-yellow-500' : 'text-white/30'}`}>{idx + 4}</span>
+                  <span className={`text-sm md:text-base font-black italic ${idx === 0 ? 'text-yellow-500' : 'text-white/30'}`}>{idx + 4}</span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 p-1 border border-white/10 overflow-hidden">
-                    <img src={getThumbnail(offer)} className="w-full h-full object-cover rounded-lg" alt="" />
+                <div className="flex items-center gap-3 md:gap-4 overflow-hidden">
+                  <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 rounded-lg bg-white/5 p-1 border border-white/10 overflow-hidden">
+                    <img src={getThumbnail(offer)} className="w-full h-full object-cover rounded-md" alt="" />
                   </div>
-                  <span className="text-[17px] font-black text-white group-hover:text-yellow-500 transition-colors uppercase tracking-tight">{offer.title}</span>
+                  <span className="text-sm md:text-[17px] font-black text-white group-hover:text-yellow-500 transition-colors uppercase tracking-tight truncate">{offer.title}</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 text-yellow-500 bg-yellow-400/5 px-4 py-1.5 rounded-full border border-yellow-400/10">
-                  <Star size={14} fill="currentColor" />
-                  <span className="text-base font-black italic">{(offer.rating || 4.2).toFixed(1)}</span>
+                <div className="flex items-center justify-center gap-1 md:gap-2 text-yellow-500 bg-yellow-400/5 px-2 md:px-4 py-1 rounded-full border border-yellow-400/10">
+                  <Star fill="currentColor" className="w-3.5 h-3.5 md:w-4 md:h-4 text-yellow-500" />
+                  <span className="text-sm md:text-base font-black italic">{(offer.rating || 4.2).toFixed(1)}</span>
                 </div>
-                <div className="text-right">
+                <div className="hidden md:block text-right">
                   <button className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors underline decoration-2 underline-offset-8">
                     Explore Data
                   </button>

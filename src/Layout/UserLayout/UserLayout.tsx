@@ -6,6 +6,7 @@ import { Menu } from "lucide-react";
 import { SidebarSearch } from "@/components/SidebarSearch";
 
 export default function UserLayout() {
+  const [showCookieConsent, setShowCookieConsent] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -27,6 +28,12 @@ export default function UserLayout() {
     // Check on initial load
     checkIfMobile();
 
+    // Check cookie consent
+    const consent = localStorage.getItem("cookie-consent-accepted");
+    if (!consent) {
+      setShowCookieConsent(true);
+    }
+
     // Event listener to handle window resize
     window.addEventListener("resize", checkIfMobile);
 
@@ -35,6 +42,11 @@ export default function UserLayout() {
       window.removeEventListener("resize", checkIfMobile);
     };
   }, []);
+
+  const handleAcceptCookies = () => {
+    localStorage.setItem("cookie-consent-accepted", "true");
+    setShowCookieConsent(false);
+  };
 
 
   return (
@@ -94,6 +106,26 @@ export default function UserLayout() {
         setIsCollapsed={setIsCollapsed}
         disableTrigger={true}
       />
+
+      {/* Cookie Consent Banner */}
+      {showCookieConsent && (
+        <div className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-md z-[10001]">
+          <div className="bg-[#0D0D0D]/90 backdrop-blur-xl border border-[#FACC15]/30 rounded-[2rem] p-5 md:p-7 shadow-2xl flex flex-col gap-5">
+            <p className="text-gray-200 text-sm md:text-base font-bold leading-relaxed">
+              We use essential cookies to improve your experience. By continuing, you agree to our
+              <a href="#" className="text-[#FACC15] underline underline-offset-4 hover:opacity-80 transition-opacity ml-1">Learn more</a>
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={handleAcceptCookies}
+                className="flex-1 bg-[#FACC15] text-black font-black uppercase tracking-widest px-6 py-3.5 rounded-2xl hover:bg-[#EAB308] active:scale-95 transition-all shadow-lg shadow-[#FACC15]/20 text-sm"
+              >
+                Accept Cookies
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

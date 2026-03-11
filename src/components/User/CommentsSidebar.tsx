@@ -47,7 +47,6 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
     setCommentText,
     selectedImage,
     setSelectedImage,
-
     handleCommentSubmit,
     toggleCommentLike,
     handleReplyClick,
@@ -213,7 +212,6 @@ const CommentsSidebar: React.FC<CommentsSidebarProps> = ({
                                         </button>
                                     </div>
                                 )}
-
                                 {replyTo && (
                                     <div className="flex items-center justify-between px-4 py-1.5 bg-white/5 rounded-t-xl transition-all">
                                         <span className="text-[12px] text-white/50">Replying to <span className="text-white/80">{replyTo.user}</span></span>

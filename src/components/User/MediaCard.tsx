@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star, ArrowRight } from 'lucide-react';
+import { Star, ArrowRight, Bookmark, Share2, MessageCircle } from 'lucide-react';
 import logo from '../../assets/12142.png';
 interface Offer {
     id: number;
@@ -167,8 +167,8 @@ const MediaCard: React.FC<MediaCardProps> = ({
             >
                 <div className="flex justify-between items-start gap-4">
                     <div className="min-w-0">
-                        <h3 className="max-sm:text-[#1A1A1A] sm:text-foreground text-xl md:text-2xl font-black truncate">{offer.title}</h3>
-                        <p className="max-sm:text-[#1A1A1A]/70 sm:text-foreground/70 text-sm font-medium truncate">{offer.subtitle || 'Offer Details'}</p>
+                        <h3 className="max-sm:text-black sm:text-foreground text-xl md:text-2xl font-black truncate">{offer.title}</h3>
+                        <p className="max-sm:text-black sm:text-foreground/70 text-sm max-sm:font-normal font-medium truncate">{offer.subtitle || 'Offer Details'}</p>
                     </div>
                     {/* Only show original rating/reviews on desktop */}
                     <div className="hidden sm:flex flex-col items-end shrink-0">
@@ -186,18 +186,41 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
                 <div className="space-y-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
                     <div className="space-y-2">
-                        <h4 className="max-sm:text-[#1A1A1A] sm:text-foreground font-black text-sm sm:font-bold sm:text-xs uppercase tracking-wider">About this offer</h4>
-                        <p className="max-sm:text-[#1A1A1A]/80 sm:text-foreground/90 text-[15px] leading-relaxed font-medium sm:font-normal">{offer.description}</p>
+                        <h4 className="max-sm:text-black sm:text-foreground max-sm:font-normal font-black text-sm sm:font-bold sm:text-xs uppercase tracking-wider">About this offer</h4>
+                        <p className="max-sm:text-black sm:text-foreground/90 text-[15px] leading-relaxed max-sm:font-normal font-medium sm:font-normal">{offer.description}</p>
                     </div>
 
-                    {/* New Mobile Design Section */}
+                    {/* Engagement Stats Section */}
+                    <div className="grid grid-cols-4 gap-2 py-5 border-y max-sm:border-black/10 sm:border-border/50">
+                        <div className="flex flex-col items-center justify-center gap-1 border-r max-sm:border-black/10 sm:border-border/50">
+                            <Star size={18} className="text-[#FACC15] fill-[#FACC15]" />
+                            <span className="text-[15px] max-sm:font-normal font-black max-sm:text-black sm:text-foreground">{(offer.rating || 0).toFixed(1)}</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal font-black tracking-tighter max-sm:text-black sm:text-foreground/30">Rating</span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center gap-1 border-r max-sm:border-black/10 sm:border-border/50">
+                            <MessageCircle size={18} className="max-sm:text-black sm:text-foreground/60" />
+                            <span className="text-[15px] max-sm:font-normal font-black max-sm:text-black sm:text-foreground">{offer.comments || 0}</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal font-black tracking-tighter max-sm:text-black sm:text-foreground/30">Comments</span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center gap-1 border-r max-sm:border-black/10 sm:border-border/50">
+                            <Share2 size={18} className="max-sm:text-black sm:text-foreground/60" />
+                            <span className="text-[15px] max-sm:font-normal font-black max-sm:text-black sm:text-foreground">{offer.shares || 0}</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal font-black tracking-tighter max-sm:text-black sm:text-foreground/30">Shares</span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center gap-1">
+                            <Bookmark size={18} className="max-sm:text-black sm:text-foreground/60" />
+                            <span className="text-[15px] max-sm:font-normal font-black max-sm:text-black sm:text-foreground">{offer.saves || 0}</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal font-black tracking-tighter max-sm:text-black sm:text-foreground/30">Saves</span>
+                        </div>
+                    </div>
+
                     <div className="sm:hidden space-y-4">
-                        <h4 className="text-[#1A1A1A] font-black text-sm uppercase tracking-wider">Lupauksemme sinulle</h4>
+                        <h4 className="text-black max-sm:font-normal font-black text-sm uppercase tracking-wider">Lupauksemme sinulle</h4>
                         <div className="flex flex-col gap-3">
                             {offer.terms_highlights && offer.terms_highlights.map((highlight, idx) => (
                                 <div
                                     key={idx}
-                                    className="px-6 py-3 bg-gradient-to-r from-[#FF3AC6] to-[#A056FF] rounded-full text-white text-[15px] font-bold text-center shadow-lg transform transition-transform hover:scale-[1.02] flex items-center justify-center gap-2"
+                                    className="px-6 py-3 flex flex-wrap bg-gradient-to-r from-[#FF3AC6] to-[#A056FF] rounded-full text-white text-[15px] max-sm:font-normal font-bold text-center shadow-lg transform transition-transform hover:scale-[1.02] flex items-center justify-center gap-2"
                                 >
                                     {highlight}
                                     {idx === 0 && "🤝"}
@@ -230,7 +253,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     {offer.tags && offer.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2 py-2">
                             {offer.tags.map((tag, idx) => (
-                                <span key={idx} className="px-4 py-1.5 max-sm:bg-black/10 sm:bg-foreground/5 sm:dark:bg-white/5 max-sm:rounded-full sm:rounded-lg max-sm:text-[#1A1A1A] sm:text-foreground sm:dark:text-white text-[11px] sm:text-[10px] font-black sm:font-bold uppercase tracking-widest sm:tracking-tight border max-sm:border-black/5 sm:border-border sm:dark:border-white/10">
+                                <span key={idx} className="px-4 py-1.5 max-sm:bg-black/10 sm:bg-foreground/5 sm:dark:bg-white/5 max-sm:rounded-full sm:rounded-lg max-sm:text-black sm:text-foreground sm:dark:text-white text-[11px] sm:text-[10px] max-sm:font-normal font-black sm:font-bold uppercase tracking-widest sm:tracking-tight border max-sm:border-black/5 sm:border-border sm:dark:border-white/10">
                                     {tag}
                                 </span>
                             ))}
@@ -239,7 +262,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                 </div>
 
                 <div className="space-y-4 pt-6 mt-auto border-t max-sm:border-black/10 sm:border-border">
-                    <div className="sm:hidden w-full h-2 bg-gradient-to-r from-[#FF3AC6] via-[#A056FF] to-[#FF3AC6] rounded-full opacity-80" />
+
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
@@ -254,12 +277,12 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             e.stopPropagation();
                             setFlippedCardId(null);
                         }}
-                        className="w-full bg-black/5 sm:bg-foreground/5 text-[#1A1A1A] sm:text-foreground font-bold sm:font-medium py-3 rounded-2xl hover:bg-black/10 sm:hover:bg-foreground/10 transition-all text-sm"
+                        className="w-full bg-black/5 sm:bg-foreground/5 text-black sm:text-foreground max-sm:font-normal font-bold sm:font-medium py-3 rounded-2xl hover:bg-black/10 sm:hover:bg-foreground/10 transition-all text-sm"
                     >
                         Back to {mediaLabel}
                     </button>
                     {offer.disclaimer && (
-                        <p className="max-sm:text-[#1A1A1A]/30 sm:text-foreground/20 text-[10px] text-center leading-tight">
+                        <p className="max-sm:text-black sm:text-foreground/20 text-[10px] text-center leading-tight">
                             {offer.disclaimer}
                         </p>
                     )}

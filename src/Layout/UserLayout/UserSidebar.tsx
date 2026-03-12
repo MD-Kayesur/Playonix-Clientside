@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 // import { useDispatch } from "react-redux";
 // import { logout } from "@/store/Slices/AuthSlice/authSlice";
 
@@ -109,14 +110,16 @@ export const UserSidebar: React.FC<SidebarProps> = ({
   //   }
   // }, [theme]);
 
+  const { t } = useTranslation();
+
   const menuItems = [
-    { path: "/user/all", label: "All", icon: LayoutDashboard },
-    { path: "/user/videos", label: "Videos", icon: Video },
-    { path: "/user/photos", label: "Photos", icon: Image },
-    { path: "/user/favorites", label: "Favorites", icon: Bookmark },
-    { path: "/user/categories", label: "Categories", icon: Trophy },
-    { path: "/user/top-rated", label: "Top Rated", icon: Star },
-    { path: "/languages", label: "Languages", icon: Languages },
+    { path: "/user/all", label: t("media.all"), icon: LayoutDashboard },
+    { path: "/user/videos", label: t("media.videos"), icon: Video },
+    { path: "/user/photos", label: t("media.photos"), icon: Image },
+    { path: "/user/favorites", label: t("media.favorites"), icon: Bookmark },
+    { path: "/user/categories", label: t("media.categories"), icon: Trophy },
+    { path: "/user/top-rated", label: t("media.top_rated"), icon: Star },
+    { path: "/languages", label: t("media.languages"), icon: Languages },
   ];
 
   return (
@@ -241,7 +244,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
 
               {!isCollapsed && (
                 <div className="flex items-center justify-between w-full">
-                  <span className="text-[16px] truncate">About</span>
+                  <span className="text-[16px] truncate">{t("media.about")}</span>
                   {isAboutDropdownOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </div>
               )}
@@ -250,28 +253,25 @@ export const UserSidebar: React.FC<SidebarProps> = ({
             {isAboutDropdownOpen && !isCollapsed && (
               <div className="mt-1 ml-4 border-l-2 border-border pl-2 space-y-1 animate-in slide-in-from-left-2 duration-200">
                 {[
-                  { path: "/about", label: "About Us", icon: Info },
-                  { path: "/terms", label: "Terms of Service", icon: FileText },
-                  { path: "/privacy", label: "Privacy Policy", icon: Shield },
-                  { path: "/cookies", label: "Cookie Policy", icon: Cookie },
-                ].map((item) => {
-                  const isActive = location.pathname === item.path;
-                  return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      onClick={() => window.innerWidth < 768 && setSidebarOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-md text-[14px] transition-all duration-200
-                        ${isActive
-                          ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                          : "text-foreground/70 hover:bg-muted hover:text-primary"}
-                      `}
-                    >
-                      <item.icon className="w-4 h-4 min-w-[16px]" />
-                      <span className="truncate">{item.label}</span>
-                    </Link>
-                  );
-                })}
+                  { path: "/about", label: t("media.about_us"), icon: Info },
+                  { path: "/terms", label: t("media.terms"), icon: FileText },
+                  { path: "/privacy", label: t("media.privacy"), icon: Shield },
+                  { path: "/cookies", label: t("media.cookies"), icon: Cookie },
+                ].map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => window.innerWidth < 768 && setSidebarOpen(false)}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-md text-[14px] transition-all duration-200
+                      ${location.pathname === item.path
+                        ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                        : "text-foreground/70 hover:bg-muted hover:text-primary"}
+                    `}
+                  >
+                    <item.icon className="w-4 h-4 min-w-[16px]" />
+                    <span className="truncate">{item.label}</span>
+                  </Link>
+                ))}
               </div>
             )}
           </div>

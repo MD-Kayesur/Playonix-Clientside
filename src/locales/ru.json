@@ -1,0 +1,44 @@
+{
+    "common": {
+        "logout": "Выйти",
+        "settings": "Настройки",
+        "home": "Главная",
+        "login": "Войти",
+        "signup": "Регистрация",
+        "language": "Язык",
+        "search": "Поиск",
+        "notifications": "Уведомления",
+        "profile": "Профиль"
+    },
+    "auth": {
+        "login_title": "Войдите в свой аккаунт",
+        "signup_title": "Создать аккаунт",
+        "email": "Электронная почта",
+        "password": "Пароль",
+        "confirm_password": "Подтвердите пароль",
+        "forgot_password": "Забыли пароль?",
+        "dont_have_account": "Нет аккаунта?",
+        "already_have_account": "Уже есть аккаунт?",
+        "sign_in": "Войти",
+        "sign_up": "Зарегистрироваться"
+    },
+    "media": {
+        "feed": "Лента",
+        "comments": "Отзывы",
+        "share": "Поделиться",
+        "like": "Нравится",
+        "upload": "Загрузить",
+        "all": "Все",
+        "videos": "Видео",
+        "photos": "Фото",
+        "favorites": "Избранное",
+        "categories": "Категории",
+        "top_rated": "Лучшие",
+        "languages": "Языки",
+        "about": "О нас",
+        "about_us": "О компании",
+        "terms": "Условия использования",
+        "privacy": "Политика конфиденциальности",
+        "cookies": "Политика использования куки"
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "common": {
+        "logout": "लॉगआउट",
+        "settings": "सेटिंग्स",
+        "home": "होम",
+        "login": "लॉगिन",
+        "signup": "साइनअप",
+        "language": "भाषा",
+        "search": "खोज",
+        "notifications": "सूचनाएं",
+        "profile": "प्रोफ़ाइल"
+    },
+    "auth": {
+        "login_title": "अपने खाते में लॉगिन करें",
+        "signup_title": "खाता बनाएं",
+        "email": "ईमेल पता",
+        "password": "पासवर्ड",
+        "confirm_password": "पासवर्ड की पुष्टि करें",
+        "forgot_password": "पासवर्ड भूल गए?",
+        "dont_have_account": "खाता नहीं है?",
+        "already_have_account": "पहले से ही एक खाता है?",
+        "sign_in": "साइन इन करें",
+        "sign_up": "साइन अप करें"
+    },
+    "media": {
+        "feed": "मीडिया फीड",
+        "comments": "समीक्षाएं",
+        "share": "शेयर",
+        "like": "लाइक",
+        "upload": "अपलोड",
+        "all": "सभी",
+        "videos": "वीडियो",
+        "photos": "फ़ोटो",
+        "favorites": "पसंदीदा",
+        "categories": "श्रेणियां",
+        "top_rated": "टॉप रेटेड",
+        "languages": "भाषाएं",
+        "about": "के बारे में",
+        "about_us": "हमारे बारे में",
+        "terms": "सेवा की शर्तें",
+        "privacy": "गोपनीयता नीति",
+        "cookies": "कुकी नीति"
+    }
+}

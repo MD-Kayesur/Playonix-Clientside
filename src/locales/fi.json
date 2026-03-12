@@ -27,6 +27,18 @@
         "comments": "Arvostelut",
         "share": "Jaa",
         "like": "Tykkää",
-        "upload": "Lataa"
+        "upload": "Lataa",
+        "all": "Kaikki",
+        "videos": "Videot",
+        "photos": "Kuvat",
+        "favorites": "Suosikit",
+        "categories": "Kategoriat",
+        "top_rated": "Huippuluokitellut",
+        "languages": "Kielet",
+        "about": "Tietoa",
+        "about_us": "Tietoa meistä",
+        "terms": "Käyttöehdot",
+        "privacy": "Tietosuojakäytäntö",
+        "cookies": "Evästekäytäntö"
     }
 }

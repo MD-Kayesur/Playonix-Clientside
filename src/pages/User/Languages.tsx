@@ -1,28 +1,24 @@
-import { useEffect, useState } from "react";
-import { LANGUAGES } from "@/components/LanguageToggle/GoogleTranslate";
+import { useTranslation } from "react-i18next";
+import { LANGUAGES } from "@/locales/languages";
 import { Check } from "lucide-react";
 
 const LanguagesPage = () => {
-    const [currentLang, setCurrentLang] = useState("en");
-
-    useEffect(() => {
-        const match = document.cookie.match(/googtrans=\/en\/([\w-]+)/);
-        const lang = match ? match[1] : "en";
-        setCurrentLang(lang);
-    }, []);
+    const { i18n, t } = useTranslation();
+    const currentLang = i18n.language.split('-')[0];
 
     const handleLanguageChange = (lang: string) => {
+        i18n.changeLanguage(lang);
         localStorage.setItem("app_language", lang);
-        document.cookie = `googtrans=/en/${lang};path=/;domain=${window.location.hostname}`;
-        document.cookie = `googtrans=/en/${lang};path=/;`;
-        window.location.reload();
+        // Remove Google Translate cookie if it exists
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;domain=${window.location.hostname}`;
     };
 
     return (
         <div className="min-h-full p-4 sm:p-6 lg:p-8 animate-in fade-in duration-500">
             <div className=" mx-auto">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-foreground mb-2">Language Selection</h1>
+                    <h1 className="text-3xl font-bold text-foreground mb-2">{t("media.languages")}</h1>
                     <p className="text-muted-foreground">Select your preferred language for the platform.</p>
                 </div>
 

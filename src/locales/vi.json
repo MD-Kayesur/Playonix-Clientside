@@ -1,0 +1,44 @@
+{
+    "common": {
+        "logout": "Đăng xuất",
+        "settings": "Cài đặt",
+        "home": "Trang chủ",
+        "login": "Đăng nhập",
+        "signup": "Đăng ký",
+        "language": "Ngôn ngữ",
+        "search": "Tìm kiếm",
+        "notifications": "Thông báo",
+        "profile": "Hồ sơ"
+    },
+    "auth": {
+        "login_title": "Đăng nhập vào tài khoản của bạn",
+        "signup_title": "Tạo tài khoản",
+        "email": "Địa chỉ email",
+        "password": "Mật khẩu",
+        "confirm_password": "Xác nhận mật khẩu",
+        "forgot_password": "Quên mật khẩu?",
+        "dont_have_account": "Chưa có tài khoản?",
+        "already_have_account": "Đã có tài khoản?",
+        "sign_in": "Đăng nhập",
+        "sign_up": "Đăng ký"
+    },
+    "media": {
+        "feed": "Nguồn cấp dữ liệu",
+        "comments": "Đánh giá",
+        "share": "Chia sẻ",
+        "like": "Thích",
+        "upload": "Tải lên",
+        "all": "Tất cả",
+        "videos": "Video",
+        "photos": "Ảnh",
+        "favorites": "Yêu thích",
+        "categories": "Danh mục",
+        "top_rated": "Được xếp hạng hàng đầu",
+        "languages": "Ngôn ngữ",
+        "about": "Giới thiệu",
+        "about_us": "Về chúng tôi",
+        "terms": "Điều khoản dịch vụ",
+        "privacy": "Chính sách bảo mật",
+        "cookies": "Chính sách cookie"
+    }
+}

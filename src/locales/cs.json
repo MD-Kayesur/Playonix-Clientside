@@ -1,0 +1,44 @@
+{
+    "common": {
+        "logout": "Odhlásit se",
+        "settings": "Nastavení",
+        "home": "Domů",
+        "login": "Přihlásit se",
+        "signup": "Zaregistrovat se",
+        "language": "Jazyk",
+        "search": "Hledat",
+        "notifications": "Oznámení",
+        "profile": "Profil"
+    },
+    "auth": {
+        "login_title": "Přihlaste se ke svému účtu",
+        "signup_title": "Vytvořit účet",
+        "email": "E-mailová adresa",
+        "password": "Heslo",
+        "confirm_password": "Potvrdit heslo",
+        "forgot_password": "Zapomněli jste heslo?",
+        "dont_have_account": "Nemáte účet?",
+        "already_have_account": "Již máte účet?",
+        "sign_in": "Přihlásit se",
+        "sign_up": "Zaregistrovat se"
+    },
+    "media": {
+        "feed": "Kanál médií",
+        "comments": "Recenze",
+        "share": "Sdílet",
+        "like": "To se mi líbí",
+        "upload": "Nahrát",
+        "all": "Vše",
+        "videos": "Videa",
+        "photos": "Fotky",
+        "favorites": "Oblíbené",
+        "categories": "Kategorie",
+        "top_rated": "Nejlépe hodnocené",
+        "languages": "Jazyky",
+        "about": "O nás",
+        "about_us": "O společnosti",
+        "terms": "Podmínky služby",
+        "privacy": "Zásady ochrany osobních údajů",
+        "cookies": "Zásady používání souborů cookie"
+    }
+}

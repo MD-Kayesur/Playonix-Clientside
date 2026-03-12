@@ -1,0 +1,44 @@
+{
+    "common": {
+        "logout": "Çıkış Yap",
+        "settings": "Ayarlar",
+        "home": "Anasayfa",
+        "login": "Giriş Yap",
+        "signup": "Kayıt Ol",
+        "language": "Dil",
+        "search": "Ara",
+        "notifications": "Bildirimler",
+        "profile": "Profil"
+    },
+    "auth": {
+        "login_title": "Hesabınıza giriş yapın",
+        "signup_title": "Hesap oluştur",
+        "email": "E-posta Adresi",
+        "password": "Şifre",
+        "confirm_password": "Şifreyi Onayla",
+        "forgot_password": "Şifrenizi mi unuttunuz?",
+        "dont_have_account": "Hesabınız yok mu?",
+        "already_have_account": "Zaten bir hesabınız var mı?",
+        "sign_in": "Giriş Yap",
+        "sign_up": "Kayıt Ol"
+    },
+    "media": {
+        "feed": "Medya Akışı",
+        "comments": "Yorumlar",
+        "share": "Paylaş",
+        "like": "Beğen",
+        "upload": "Yükle",
+        "all": "Hepsi",
+        "videos": "Videolar",
+        "photos": "Fotoğraflar",
+        "favorites": "Favoriler",
+        "categories": "Kategoriler",
+        "top_rated": "En Çok Oylananlar",
+        "languages": "Diller",
+        "about": "Hakkında",
+        "about_us": "Hakkımızda",
+        "terms": "Kullanım Koşulları",
+        "privacy": "Gizlilik Politikası",
+        "cookies": "Çerez Politikası"
+    }
+}

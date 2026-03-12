@@ -1,0 +1,44 @@
+{
+    "common": {
+        "logout": "Logout",
+        "settings": "Impostazioni",
+        "home": "Home",
+        "login": "Login",
+        "signup": "Registrati",
+        "language": "Lingua",
+        "search": "Cerca",
+        "notifications": "Notifiche",
+        "profile": "Profilo"
+    },
+    "auth": {
+        "login_title": "Accedi al tuo account",
+        "signup_title": "Crea un account",
+        "email": "Indirizzo email",
+        "password": "Password",
+        "confirm_password": "Conferma Password",
+        "forgot_password": "Password dimenticata?",
+        "dont_have_account": "Non hai un account?",
+        "already_have_account": "Hai già un account?",
+        "sign_in": "Accedi",
+        "sign_up": "Registrati"
+    },
+    "media": {
+        "feed": "Feed multimediale",
+        "comments": "Recensioni",
+        "share": "Condividi",
+        "like": "Mi piace",
+        "upload": "Carica",
+        "all": "Tutto",
+        "videos": "Video",
+        "photos": "Foto",
+        "favorites": "Preferiti",
+        "categories": "Categorie",
+        "top_rated": "Più votati",
+        "languages": "Lingue",
+        "about": "Informazioni",
+        "about_us": "Chi siamo",
+        "terms": "Termini di servizio",
+        "privacy": "Informativa sulla privacy",
+        "cookies": "Informativa sui cookie"
+    }
+}

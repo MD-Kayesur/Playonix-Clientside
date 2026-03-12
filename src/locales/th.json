@@ -1,0 +1,44 @@
+{
+    "common": {
+        "logout": "ออกจากระบบ",
+        "settings": "การตั้งค่า",
+        "home": "หน้าแรก",
+        "login": "เข้าสู่ระบบ",
+        "signup": "ลงทะเบียน",
+        "language": "ภาษา",
+        "search": "ค้นหา",
+        "notifications": "การแจ้งเตือน",
+        "profile": "โปรไฟล์"
+    },
+    "auth": {
+        "login_title": "เข้าสู่ระบบบัญชีของคุณ",
+        "signup_title": "สร้างบัญชี",
+        "email": "อีเมล",
+        "password": "รหัสผ่าน",
+        "confirm_password": "ยืนยันรหัสผ่าน",
+        "forgot_password": "ลืมรหัสผ่าน?",
+        "dont_have_account": "ยังไม่มีบัญชี?",
+        "already_have_account": "มีบัญชีอยู่แล้ว?",
+        "sign_in": "ลงชื่อเข้าใช้",
+        "sign_up": "ลงชื่อสมัครใช้"
+    },
+    "media": {
+        "feed": "ฟีดสื่อ",
+        "comments": "รีวิว",
+        "share": "แชร์",
+        "like": "ถูกใจ",
+        "upload": "อัปโหลด",
+        "all": "ทั้งหมด",
+        "videos": "วิดีโอ",
+        "photos": "รูปภาพ",
+        "favorites": "รายการโปรด",
+        "categories": "หมวดหมู่",
+        "top_rated": "ยอดนิยม",
+        "languages": "ภาษา",
+        "about": "เกี่ยวกับ",
+        "about_us": "เกี่ยวกับเรา",
+        "terms": "ข้อกำหนดการให้บริการ",
+        "privacy": "นโยบายความเป็นส่วนตัว",
+        "cookies": "นโยบายคุกกี้"
+    }
+}

@@ -27,6 +27,18 @@
         "comments": "レビュー",
         "share": "共有",
         "like": "いいね",
-        "upload": "アップロード"
+        "upload": "アップロード",
+        "all": "すべて",
+        "videos": "動画",
+        "photos": "写真",
+        "favorites": "お気に入り",
+        "categories": "カテゴリー",
+        "top_rated": "トップ評価",
+        "languages": "言語",
+        "about": "アバウト",
+        "about_us": "私たちについて",
+        "terms": "利用規約",
+        "privacy": "プライバシーポリシー",
+        "cookies": "クッキーポリシー"
     }
 }

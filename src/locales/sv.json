@@ -1,0 +1,44 @@
+{
+    "common": {
+        "logout": "Logga ut",
+        "settings": "Inställningar",
+        "home": "Hem",
+        "login": "Logga in",
+        "signup": "Registrera dig",
+        "language": "Språk",
+        "search": "Sök",
+        "notifications": "Aviseringar",
+        "profile": "Profil"
+    },
+    "auth": {
+        "login_title": "Logga in på ditt konto",
+        "signup_title": "Skapa ett konto",
+        "email": "E-postadress",
+        "password": "Lösenord",
+        "confirm_password": "Bekräfta lösenord",
+        "forgot_password": "Glömt lösenordet?",
+        "dont_have_account": "Har du inget konto?",
+        "already_have_account": "Har du redan ett konto?",
+        "sign_in": "Logga in",
+        "sign_up": "Registrera dig"
+    },
+    "media": {
+        "feed": "Mediaflöde",
+        "comments": "Recensioner",
+        "share": "Dela",
+        "like": "Gilla",
+        "upload": "Ladda upp",
+        "all": "Alla",
+        "videos": "Videor",
+        "photos": "Foton",
+        "favorites": "Favoriter",
+        "categories": "Kategorier",
+        "top_rated": "Topprankade",
+        "languages": "Språk",
+        "about": "Om",
+        "about_us": "Om oss",
+        "terms": "Användarvillkor",
+        "privacy": "Integritetspolicy",
+        "cookies": "Cookiepolicy"
+    }
+}

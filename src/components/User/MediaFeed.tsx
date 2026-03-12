@@ -676,7 +676,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                 </div>
 
                                 {/* Sidebar Icons */}
-                                <div className="absolute right-2 bottom-5 sm:static w-14 lg:w-20 flex flex-col items-center gap-1 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120]">
+                                <div className={`absolute right-2 bottom-5 sm:static w-14 lg:w-20 flex flex-col items-center gap-1 sm:gap-6 lg:gap-0 sm:self-end sm:mb-2 flex-shrink-0 z-[120] transition-all duration-300 ${(flippedCardId !== null && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                                     {/* Rating Icon */}
                                     <div className="flex flex-col items-center gap-0 relative">
                                         <button
@@ -689,7 +689,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                             <Star strokeWidth={iconStroke} className={`w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] ${userRatings[offer.id] ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white'} drop-shadow-lg`} />
                                         </button>
                                         <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">
-                                            {userRatings[offer.id] ? userRatings[offer.id].toFixed(1) : (offer.rating || 0).toFixed(1)}
+                                            {(offer.rating || 0).toFixed(1)}
                                         </span>
                                     </div>
 
@@ -729,7 +729,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             </div>
 
             {/* Mobile Search - Use the same logic as original */}
-            <div className="fixed top-1 left-2 z-[200] md:hidden">
+            <div className={`fixed top-0 left-0 z-[200] md:hidden transition-opacity duration-300 ${(flippedCardId !== null && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <button
                     id="mobile-search-button"
                     onClick={() => {
@@ -737,7 +737,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     }}
                     className="text-white active:scale-95 transition-all p-1"
                 >
-                    <Search strokeWidth={3} className="w-7 h-7 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
+                    <Search strokeWidth={3} className="w-[38px] h-[38px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
                 </button>
             </div>
 

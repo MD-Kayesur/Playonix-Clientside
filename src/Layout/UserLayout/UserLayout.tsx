@@ -91,10 +91,10 @@ export default function UserLayout() {
       {isAgeAccepted && isMobile && !sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="fixed top-1 right-2 z-[203] text-white active:scale-95 transition-all md:hidden p-1"
+          className="fixed top-0 right-0 z-[203] text-white active:scale-95 transition-all md:hidden p-1"
           aria-label="Open menu"
         >
-          <Menu strokeWidth={iconStroke} className="w-7 h-7 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
+          <Menu strokeWidth={iconStroke} className="w-[38px] h-[38px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
         </button>
       )}
 

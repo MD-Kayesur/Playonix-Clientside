@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star, Bookmark, Share2, ArrowRight } from 'lucide-react';
+import { Star, ArrowRight } from 'lucide-react';
 import logo from '../../assets/12142.png';
- interface Offer {
+interface Offer {
     id: number;
     title: string;
     subtitle: string;
@@ -94,7 +94,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                         <div className="flex-1 space-y-1">
                             <div className="flex items-center gap-3">
                                 <h2
-                                    className="text-white font-black text-[20px] md:text-[24px] tracking-tighter cursor-pointer hover:text-[#FACC15] transition-colors pointer-events-auto leading-tight drop-shadow-lg"
+                                    className="text-white font-normal text-[20px] md:text-[24px] tracking-tighter cursor-pointer hover:text-[#FACC15] transition-colors pointer-events-auto leading-tight drop-shadow-lg"
                                     onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}
                                 >
                                     {offer.title}
@@ -110,12 +110,12 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             >
                                 <div className="flex items-center gap-1.5 drop-shadow-lg">
                                     <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
-                                    <span className="text-white text-[15px] font-black leading-none">{(offer.rating || 0).toFixed(1)}</span>
+                                    <span className="text-white text-[15px] font-normal leading-none">{(offer.rating || 0).toFixed(1)}</span>
                                 </div>
                                 {offer.ratingCount !== undefined && (
                                     <div className="flex items-center gap-2">
                                         <span className="text-white/60 text-[10px]">•</span>
-                                        <span className="text-white text-[15px] font-black tracking-tight drop-shadow-lg">
+                                        <span className="text-white text-[15px] font-normal tracking-tight drop-shadow-lg">
                                             {offer.ratingCount.toLocaleString()} <span className="font-medium text-white">reviews</span>
                                         </span>
                                     </div>
@@ -149,10 +149,10 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                     e.stopPropagation();
                                     setFlippedCardId(offer.id);
                                 }}
-                                className="flex items-center gap-1 text-white font-black text-[14px] sm:text-[15px]   transition-colors pointer-events-auto group/read"
+                                className="flex items-center gap-1 text-white font-normal text-[14px] sm:text-[15px]   transition-colors pointer-events-auto group/read"
                             >
                                 <span>See More</span>
-                                <ArrowRight size={18} className="group-hover/read:translate-x-0.5 group-hover/read:-translate-y-0.5 transition-transform" />
+                                <ArrowRight size={18} className="animate-arrow-move" />
                             </button>
                         </div>
                     </div>
@@ -162,55 +162,59 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
             {/* Back Side */}
             <div
-                className="absolute inset-0 w-full h-full bg-card sm:rounded-[1rem] overflow-hidden p-6 sm:p-8 flex flex-col gap-6 custom-scrollbar overflow-y-auto transition-colors duration-300"
+                className="absolute inset-0 w-full h-full max-sm:bg-[#FFF9F1] sm:bg-card sm:rounded-[1rem] overflow-hidden p-6 sm:p-8 flex flex-col gap-6 custom-scrollbar overflow-y-auto transition-colors duration-300 max-sm:shadow-inner"
                 style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
             >
                 <div className="flex justify-between items-start gap-4">
                     <div className="min-w-0">
-                        <h3 className="text-foreground text-xl md:text-2xl font-black truncate">{offer.title}</h3>
-                        <p className="text-foreground/70 text-sm font-medium truncate">{offer.subtitle}</p>
+                        <h3 className="max-sm:text-[#1A1A1A] sm:text-foreground text-xl md:text-2xl font-black truncate">{offer.title}</h3>
+                        <p className="max-sm:text-[#1A1A1A]/70 sm:text-foreground/70 text-sm font-medium truncate">{offer.subtitle || 'Offer Details'}</p>
                     </div>
-                    {(offer.rating || 0) > 0 && (
-                        <div className="flex flex-col items-end shrink-0">
-                            <div className="flex items-center gap-1.5 px-2 py-1">
-                                <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
-                                <span className="text-foreground font-black">{(offer.rating || 0).toFixed(1)}</span>
-                            </div>
-                            <span className="text-[10px] text-foreground/40 font-bold mt-1 uppercase tracking-wider">{offer.ratingCount?.toLocaleString()} Reviews</span>
-                        </div>
-                    )}
+                    {/* Only show original rating/reviews on desktop */}
+                    <div className="hidden sm:flex flex-col items-end shrink-0">
+                        {(offer.rating || 0) > 0 && (
+                            <>
+                                <div className="flex items-center gap-1.5 px-2 py-1">
+                                    <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
+                                    <span className="text-foreground font-black">{(offer.rating || 0).toFixed(1)}</span>
+                                </div>
+                                <span className="text-[10px] text-foreground/40 font-bold mt-1 uppercase tracking-wider">{offer.ratingCount?.toLocaleString()} Reviews</span>
+                            </>
+                        )}
+                    </div>
                 </div>
 
-                <div className="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-2">
+                <div className="space-y-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
                     <div className="space-y-2">
-                        <h4 className="text-foreground font-bold text-xs uppercase tracking-wider">About this offer</h4>
-                        <p className="text-foreground/90 text-[15px] leading-relaxed">{offer.description}</p>
+                        <h4 className="max-sm:text-[#1A1A1A] sm:text-foreground font-black text-sm sm:font-bold sm:text-xs uppercase tracking-wider">About this offer</h4>
+                        <p className="max-sm:text-[#1A1A1A]/80 sm:text-foreground/90 text-[15px] leading-relaxed font-medium sm:font-normal">{offer.description}</p>
                     </div>
 
-                    {offer.tags && offer.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 py-2">
-                            {offer.tags.map((tag, idx) => (
-                                <span key={idx} className="px-3 py-1 bg-foreground/5 dark:bg-white/5 border border-border dark:border-white/10 rounded-lg text-foreground dark:text-white text-[10px] font-bold uppercase tracking-tight">
-                                    {tag}
-                                </span>
+                    {/* New Mobile Design Section */}
+                    <div className="sm:hidden space-y-4">
+                        <h4 className="text-[#1A1A1A] font-black text-sm uppercase tracking-wider">Lupauksemme sinulle</h4>
+                        <div className="flex flex-col gap-3">
+                            {offer.terms_highlights && offer.terms_highlights.map((highlight, idx) => (
+                                <div
+                                    key={idx}
+                                    className="px-6 py-3 bg-gradient-to-r from-[#FF3AC6] to-[#A056FF] rounded-full text-white text-[15px] font-bold text-center shadow-lg transform transition-transform hover:scale-[1.02] flex items-center justify-center gap-2"
+                                >
+                                    {highlight}
+                                    {idx === 0 && "🤝"}
+                                    {idx === 1 && "⚖️"}
+                                    {idx === 2 && "🌍"}
+                                    {idx === 3 && "✨"}
+                                    {idx === 4 && "🧠"}
+                                </div>
                             ))}
                         </div>
-                    )}
+                    </div>
 
+                    {/* Original Desktop Design Section */}
                     {offer.terms_highlights && (
-                        <div className="space-y-3 pt-2">
+                        <div className="hidden sm:block space-y-3 pt-2">
                             <div className="flex items-center justify-between">
                                 <h4 className="text-foreground font-black text-[11px] uppercase tracking-wider">Key Highlights</h4>
-                                <div className="flex items-center gap-4">
-                                    <div className="flex items-center gap-1.5 grayscale opacity-40">
-                                        <Bookmark size={12} className="fill-current" />
-                                        <span className="text-[11px] font-black italic">{offer.saves || 0}</span>
-                                    </div>
-                                    <div className="flex items-center gap-1.5 grayscale opacity-40">
-                                        <Share2 size={12} className="fill-current" />
-                                        <span className="text-[11px] font-black italic">{offer.shares || 0}</span>
-                                    </div>
-                                </div>
                             </div>
                             <ul className="space-y-2.5">
                                 {offer.terms_highlights.map((term, idx) => (
@@ -222,15 +226,26 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             </ul>
                         </div>
                     )}
+
+                    {offer.tags && offer.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2 py-2">
+                            {offer.tags.map((tag, idx) => (
+                                <span key={idx} className="px-4 py-1.5 max-sm:bg-black/10 sm:bg-foreground/5 sm:dark:bg-white/5 max-sm:rounded-full sm:rounded-lg max-sm:text-[#1A1A1A] sm:text-foreground sm:dark:text-white text-[11px] sm:text-[10px] font-black sm:font-bold uppercase tracking-widest sm:tracking-tight border max-sm:border-black/5 sm:border-border sm:dark:border-white/10">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
-                <div className="space-y-4 pt-6 mt-auto border-t border-border">
+                <div className="space-y-4 pt-6 mt-auto border-t max-sm:border-black/10 sm:border-border">
+                    <div className="sm:hidden w-full h-2 bg-gradient-to-r from-[#FF3AC6] via-[#A056FF] to-[#FF3AC6] rounded-full opacity-80" />
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
                             if (offer.website_url) window.open(offer.website_url, '_blank');
                         }}
-                        className="w-full bg-primary text-primary-foreground font-bold py-4 rounded-2xl border border-primary/20 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(0,0,0,0.1)] active:scale-95"
+                        className="w-full max-sm:bg-[#1A1A1A] sm:bg-primary max-sm:text-white sm:text-primary-foreground font-black sm:font-bold py-4 rounded-2xl sm:border sm:border-primary/20 hover:opacity-90 max-sm:shadow-xl sm:shadow-[0_0_20px_rgba(0,0,0,0.1)] transition-all active:scale-95"
                     >
                         {ctaText}
                     </button>
@@ -239,12 +254,12 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             e.stopPropagation();
                             setFlippedCardId(null);
                         }}
-                        className="w-full bg-foreground/5 text-foreground font-medium py-3 rounded-2xl hover:bg-foreground/10 transition-all text-sm transition-colors duration-300"
+                        className="w-full bg-black/5 sm:bg-foreground/5 text-[#1A1A1A] sm:text-foreground font-bold sm:font-medium py-3 rounded-2xl hover:bg-black/10 sm:hover:bg-foreground/10 transition-all text-sm"
                     >
                         Back to {mediaLabel}
                     </button>
                     {offer.disclaimer && (
-                        <p className="text-foreground/20 text-[10px] text-center leading-tight">
+                        <p className="max-sm:text-[#1A1A1A]/30 sm:text-foreground/20 text-[10px] text-center leading-tight">
                             {offer.disclaimer}
                         </p>
                     )}

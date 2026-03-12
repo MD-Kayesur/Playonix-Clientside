@@ -212,7 +212,22 @@ button {
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* For Firefox */
+@keyframes arrow-move {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-arrow-move {
+  animation: arrow-move 1.2s ease-in-out infinite;
+}
+
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.08);

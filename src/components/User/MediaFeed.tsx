@@ -105,6 +105,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
     const [showRatingPopup, setShowRatingPopup] = useState<number | null>(null);
+    const [showFeedback, setShowFeedback] = useState(false);
     const [hoveredRating, setHoveredRating] = useState<number | null>(null);
     const [ratingComment, setRatingComment] = useState('');
     const [pendingRate, setPendingRate] = useState<{ offerId: number; rating: number; comment: string } | null>(null);
@@ -435,6 +436,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         }
 
         setShowRatingPopup(null);
+        setShowFeedback(false);
         setHoveredRating(null);
         setRatingComment('');
         setPendingRate(null);
@@ -577,18 +579,18 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                     {showRatingPopup === offer.id && (
                                         <div
                                             className="absolute inset-0 bg-black/60 z-[130] flex items-center justify-center p-4 sm:rounded-[1rem] animate-in fade-in zoom-in duration-300 overflow-hidden"
-                                            onClick={(e) => { e.stopPropagation(); setShowRatingPopup(null); setRatingComment(''); }}
+                                            onClick={(e) => { e.stopPropagation(); setShowRatingPopup(null); setRatingComment(''); setShowFeedback(false); }}
                                         >
                                             <div
                                                 className="max-w-[260px] w-full text-center relative flex flex-col items-center gap-5 transition-transform"
                                                 onClick={(e) => e.stopPropagation()}
                                             >
                                                 <div className="flex flex-col items-center  w-full">
-                                                    <div className="text-white font-black text-4xl tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                                                    <div className="text-white font-normal text-2xl tracking-tighter ">
                                                         {(hoveredRating || userRatings[offer.id] || 0).toFixed(1)} / 5
                                                     </div>
                                                     <div
-                                                        className="flex gap-1 relative cursor-pointer select-none py-1 px-2 rounded-xl"
+                                                        className="flex flex-col items-center w-fit cursor-pointer select-none group/rating"
                                                         onMouseMove={(e) => {
                                                             const rect = e.currentTarget.getBoundingClientRect();
                                                             const x = e.clientX - rect.left;
@@ -613,62 +615,86 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                             setUserRatings(prev => ({ ...prev, [offer.id]: finalVal }));
                                                         }}
                                                     >
-                                                        {[1, 2, 3, 4, 5].map((star) => {
-                                                            const currentRating = userRatings[offer.id] || 0;
-                                                            const activeRating = hoveredRating !== null ? hoveredRating : currentRating;
+                                                        <div className="flex gap-1 relative py-1 px-2 rounded-xl">
+                                                            {[1, 2, 3, 4, 5].map((star) => {
+                                                                const currentRating = userRatings[offer.id] || 0;
+                                                                const activeRating = hoveredRating !== null ? hoveredRating : currentRating;
 
-                                                            // Calculate fill percentage for each star
-                                                            const fillPercentage = Math.max(0, Math.min(100, (activeRating - (star - 1)) * 100));
+                                                                // Calculate fill percentage for each star
+                                                                const fillPercentage = Math.max(0, Math.min(100, (activeRating - (star - 1)) * 100));
 
-                                                            return (
-                                                                <div
-                                                                    key={star}
-                                                                    className="relative transition-transform duration-200"
-                                                                    style={{ transform: star <= activeRating + 0.5 ? 'scale(1.15)' : 'scale(1)' }}
-                                                                >
-                                                                    {/* Background Star (Unfilled) */}
-                                                                    <Star strokeWidth={0} size={40} className="fill-white/20 text-white/20" />
-
-                                                                    {/* Foreground Star (Filled - Clipped) */}
+                                                                return (
                                                                     <div
-                                                                        className="absolute inset-0 overflow-hidden transition-all duration-100 ease-out"
-                                                                        style={{ width: `${fillPercentage}%` }}
+                                                                        key={star}
+                                                                        className="relative transition-transform duration-200"
+                                                                        style={{ transform: star <= activeRating + 0.5 ? 'scale(1.15)' : 'scale(1)' }}
                                                                     >
-                                                                        <Star
-                                                                            strokeWidth={0}
-                                                                            size={40}
-                                                                            className="fill-[#FACC15] text-[#FACC15] drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"
-                                                                        />
+                                                                        {/* Background Star (Unfilled) */}
+                                                                        <Star strokeWidth={0} size={24} className="fill-white/20 text-white/20" />
+
+                                                                        {/* Foreground Star (Filled - Clipped) */}
+                                                                        <div
+                                                                            className="absolute inset-0 overflow-hidden transition-all duration-100 ease-out"
+                                                                            style={{ width: `${fillPercentage}%` }}
+                                                                        >
+                                                                            <Star
+                                                                                strokeWidth={0}
+                                                                                size={24}
+                                                                                className="fill-[#FACC15] text-[#FACC15] "
+                                                                            />
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            );
-                                                        })}
+                                                                );
+                                                            })}
+                                                        </div>
+
+                                                        {/* Progress Bar */}
+                                                        <div className="w-full h-1 bg-white/10 rounded-full mt-1.5 overflow-hidden shadow-inner group-hover/rating:h-1.5 transition-all">
+                                                            <div
+                                                                className="h-full bg-gradient-to-r from-[#FACC15] to-[#fde047] transition-all duration-300 ease-out shadow-[0_0_10px_rgba(250,204,21,0.5)]"
+                                                                style={{ width: `${((hoveredRating || userRatings[offer.id] || 0) / 5) * 100}%` }}
+                                                            />
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div className="flex items-center gap-1.5 text-white font-bold text-base drop-shadow-md">
-                                                    <span>Swipe Right</span>
-                                                    <div className="flex -space-x-3.5">
-                                                        <ChevronRight size={24} className="text-white/40" />
-                                                        <ChevronRight size={24} className="text-white/70" />
-                                                        <ChevronRight size={24} className="text-white" />
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <div className="flex items-center gap-1.5 text-white/80 font-medium text-sm drop-shadow-md">
+                                                        <span>Swipe</span>
+                                                        <div className="flex -space-x-3.5">
+                                                            <ChevronRight size={20} className="text-white/30" />
+                                                            <ChevronRight size={20} className="text-white/60" />
+                                                            <ChevronRight size={20} className="text-white" />
+                                                        </div>
+                                                    </div>
+                                                    {/* Swipe Line / Indicator */}
+                                                    <div className="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
+                                                        <div className="w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer-fast" />
                                                     </div>
                                                 </div>
 
-                                                <div className="w-full mt-1">
-                                                    <textarea
-                                                        value={ratingComment}
-                                                        onChange={(e) => setRatingComment(e.target.value)}
-                                                        placeholder="Add a review..."
-                                                        className="w-full bg-[#121212]/90 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20 shadow-2xl"
-                                                    />
-                                                </div>
+                                                {showFeedback && (
+                                                    <div className="w-full mt-1 animate-in fade-in slide-in-from-top-2 duration-300">
+                                                        <textarea
+                                                            value={ratingComment}
+                                                            onChange={(e) => setRatingComment(e.target.value)}
+                                                            placeholder="Add a review..."
+                                                            className="w-full bg-[#121212]/90 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20 shadow-2xl"
+                                                        />
+                                                    </div>
+                                                )}
 
                                                 <button
-                                                    onClick={() => handleRate(offer.id, userRatings[offer.id] || hoveredRating || 0, ratingComment)}
-                                                    className="w-full bg-white text-black font-black py-4 rounded-xl hover:bg-white/90 transition-all transform active:scale-[0.96] text-base shadow-[0_8px_20px_rgba(255,255,255,0.15)]"
+                                                    onClick={() => {
+                                                        if (!showFeedback) {
+                                                            setShowFeedback(true);
+                                                        } else {
+                                                            handleRate(offer.id, userRatings[offer.id] || hoveredRating || 0, ratingComment);
+                                                        }
+                                                    }}
+                                                    className=" px-2.5 bg-white text-black font-bold py-2.5 rounded-lg hover:bg-white/90 transition-all transform active:scale-[0.96] text-sm shadow-[0_4px_12px_rgba(255,255,255,0.1)]"
                                                 >
-                                                    Submit Review
+                                                    {showFeedback ? "Submit Review" : "Submit Rating"}
                                                 </button>
                                             </div>
                                         </div>
@@ -682,7 +708,9 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                setShowRatingPopup(showRatingPopup === offer.id ? null : offer.id);
+                                                const isOpen = showRatingPopup === offer.id;
+                                                setShowRatingPopup(isOpen ? null : offer.id);
+                                                if (isOpen) setShowFeedback(false);
                                             }}
                                             className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all"
                                         >

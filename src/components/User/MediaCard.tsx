@@ -131,7 +131,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             if (offer.website_url) window.open(offer.website_url, '_blank');
                         }}
                         type="button"
-                        className="w-full px-6 py-3.5 font-black rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-lg text-[15px] tracking-wider"
+                        className="w-full px-6 py-3.5 font-normal rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-lg text-[15px] tracking-wider"
                     >
                         {ctaText}
                     </button>
@@ -268,7 +268,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             e.stopPropagation();
                             if (offer.website_url) window.open(offer.website_url, '_blank');
                         }}
-                        className="w-full px-6 py-4 font-black rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-lg text-[15px] tracking-wider"
+                        className="w-full px-6 py-4 font-normal rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-lg text-[15px] tracking-wider"
                     >
                         {ctaText}
                     </button>
@@ -277,7 +277,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             e.stopPropagation();
                             setFlippedCardId(null);
                         }}
-                        className="w-full bg-black/5 text-black font-bold sm:font-medium lg:font-normal py-3 rounded-2xl hover:bg-black/10 transition-all text-sm"
+                        className="w-full bg-black/5 text-black font-normal sm:font-medium lg:font-normal py-3 rounded-2xl hover:bg-black/10 transition-all text-sm"
                     >
                         Back to {mediaLabel}
                     </button>

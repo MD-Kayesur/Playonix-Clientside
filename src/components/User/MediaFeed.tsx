@@ -729,15 +729,15 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             </div>
 
             {/* Mobile Search - Use the same logic as original */}
-            <div className="fixed top-0 left-0 z-[200] md:hidden">
+            <div className="fixed top-1 left-2 z-[200] md:hidden">
                 <button
                     id="mobile-search-button"
                     onClick={() => {
                         window.dispatchEvent(new CustomEvent('open-sidebar-search'));
                     }}
-                    className="w-14 h-14 rounded-full flex items-center justify-center active:scale-95 transition-all hover:bg-white/10"
+                    className="text-white active:scale-95 transition-all p-1"
                 >
-                    <Search strokeWidth={3} className="w-7 h-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
+                    <Search strokeWidth={3} className="w-7 h-7 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
                 </button>
             </div>
 

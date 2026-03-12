@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star, ArrowUpRight, Bookmark, Share2 } from 'lucide-react';
+import { Star, Bookmark, Share2, ArrowRight } from 'lucide-react';
 import logo from '../../assets/12142.png';
-interface Offer {
+ interface Offer {
     id: number;
     title: string;
     subtitle: string;
@@ -108,18 +108,36 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                     onRatingClick?.(offer.id);
                                 }}
                             >
-                                <div className="flex items-center gap-1 px-2.5 py-1   rounded-xl border border-white/10 shadow-lg">
-                                    <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
-                                    <span className="text-[#FACC15] text-[13px] font-black italic">{(offer.rating || 0).toFixed(1)}</span>
+                                <div className="flex items-center gap-1.5 drop-shadow-lg">
+                                    <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
+                                    <span className="text-white text-[15px] font-black leading-none">{(offer.rating || 0).toFixed(1)}</span>
                                 </div>
                                 {offer.ratingCount !== undefined && (
-                                    <span className="text-white text-[13px] font-black tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                                        {offer.ratingCount.toLocaleString()} <span className="text-white font-black">Reviews</span>
-                                    </span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-white/60 text-[10px]">•</span>
+                                        <span className="text-white text-[15px] font-black tracking-tight drop-shadow-lg">
+                                            {offer.ratingCount.toLocaleString()} <span className="font-medium text-white">reviews</span>
+                                        </span>
+                                    </div>
                                 )}
                             </div>
                         </div>
                     </div>
+
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (offer.website_url) window.open(offer.website_url, '_blank');
+                        }}
+                        type="button"
+                        className="w-full px-6 py-3.5 font-black rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-[0_0_20px_rgba(250,204,21,0.5)] animate-golden-glow text-[15px] tracking-wider"
+                    >
+                        {ctaText}
+                    </button>
+
+
+
 
                     <div className="space-y-1 flex flex-col">
                         <div className={`text-white/90 text-[14px] leading-relaxed drop-shadow-lg ${isDescriptionExpanded ? '' : 'line-clamp-2'}`}>
@@ -134,21 +152,11 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                 className="flex items-center gap-1 text-white font-black text-[14px] sm:text-[15px]   transition-colors pointer-events-auto group/read"
                             >
                                 <span>See More</span>
-                                <ArrowUpRight size={18} className="group-hover/read:translate-x-0.5 group-hover/read:-translate-y-0.5 transition-transform" />
+                                <ArrowRight size={18} className="group-hover/read:translate-x-0.5 group-hover/read:-translate-y-0.5 transition-transform" />
                             </button>
                         </div>
                     </div>
 
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (offer.website_url) window.open(offer.website_url, '_blank');
-                        }}
-                        type="button"
-                        className="w-full px-6 py-3.5 font-black rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-[0_0_20px_rgba(250,204,21,0.5)] animate-golden-glow text-[15px] tracking-wider"
-                    >
-                        {ctaText}
-                    </button>
                 </div>
             </div>
 
@@ -164,11 +172,11 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     </div>
                     {(offer.rating || 0) > 0 && (
                         <div className="flex flex-col items-end shrink-0">
-                            <div className="flex items-center gap-1 bg-primary/5 px-2 py-1 rounded-lg">
+                            <div className="flex items-center gap-1.5 px-2 py-1">
                                 <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
-                                <span className="text-foreground font-black italic">{offer.rating?.toFixed(1)}</span>
+                                <span className="text-foreground font-black">{(offer.rating || 0).toFixed(1)}</span>
                             </div>
-                            <span className="text-[10px] text-foreground/40 font-bold  mt-1">{offer.ratingCount?.toLocaleString()} Reviews</span>
+                            <span className="text-[10px] text-foreground/40 font-bold mt-1 uppercase tracking-wider">{offer.ratingCount?.toLocaleString()} Reviews</span>
                         </div>
                     )}
                 </div>

@@ -15,7 +15,8 @@ import {
     VolumeX,
     X,
     Star,
-    Share2
+    Share2,
+    ChevronRight
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PageLoader from '@/Layout/PageLoader';
@@ -575,26 +576,19 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                     {/* Rating Overlay - Appears only over the video card */}
                                     {showRatingPopup === offer.id && (
                                         <div
-                                            className="absolute inset-0 bg-black/40 backdrop-blur-[4px] z-[130] flex items-center justify-center p-4 sm:rounded-[1rem] animate-in fade-in zoom-in duration-300 overflow-hidden"
+                                            className="absolute inset-0 bg-black/60 z-[130] flex items-center justify-center p-4 sm:rounded-[1rem] animate-in fade-in zoom-in duration-300 overflow-hidden"
                                             onClick={(e) => { e.stopPropagation(); setShowRatingPopup(null); setRatingComment(''); }}
                                         >
                                             <div
-                                                className="bg-black/60 backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-8 max-w-[280px] w-full text-center relative shadow-2xl border border-white/10 flex flex-col items-center gap-5 transition-transform"
+                                                className="max-w-[260px] w-full text-center relative flex flex-col items-center gap-5 transition-transform"
                                                 onClick={(e) => e.stopPropagation()}
                                             >
-                                                <button
-                                                    onClick={() => { setShowRatingPopup(null); setRatingComment(''); }}
-                                                    className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors border border-white/5"
-                                                >
-                                                    <X size={16} />
-                                                </button>
-
-                                                <div className="flex flex-col items-center gap-3 w-full mt-2">
-                                                    <div className="text-white font-black text-2xl drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]">
+                                                <div className="flex flex-col items-center  w-full">
+                                                    <div className="text-white font-black text-4xl tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
                                                         {(hoveredRating || userRatings[offer.id] || 0).toFixed(1)} / 5
                                                     </div>
                                                     <div
-                                                        className="flex gap-1.5 relative cursor-pointer select-none py-3 px-4 bg-white/5 rounded-2xl border border-white/5"
+                                                        className="flex gap-1 relative cursor-pointer select-none py-1 px-2 rounded-xl"
                                                         onMouseMove={(e) => {
                                                             const rect = e.currentTarget.getBoundingClientRect();
                                                             const x = e.clientX - rect.left;
@@ -615,36 +609,64 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                             const rect = e.currentTarget.getBoundingClientRect();
                                                             const x = e.clientX - rect.left;
                                                             const val = (x / rect.width) * 5;
-                                                            // If user clicks near a star, give them the full star
-                                                            const finalVal = Math.ceil(val);
+                                                            const finalVal = Math.max(0.1, Math.min(5, Math.round(val * 10) / 10));
                                                             setUserRatings(prev => ({ ...prev, [offer.id]: finalVal }));
                                                         }}
                                                     >
                                                         {[1, 2, 3, 4, 5].map((star) => {
                                                             const currentRating = userRatings[offer.id] || 0;
                                                             const activeRating = hoveredRating !== null ? hoveredRating : currentRating;
-                                                            const filled = star <= activeRating;
+
+                                                            // Calculate fill percentage for each star
+                                                            const fillPercentage = Math.max(0, Math.min(100, (activeRating - (star - 1)) * 100));
+
                                                             return (
-                                                                <div key={star} className="transition-transform duration-200" style={{ transform: star <= activeRating ? 'scale(1.15)' : 'scale(1)' }}>
-                                                                    <Star strokeWidth={iconStroke} size={24} className={`${filled ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white/20'} drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]`} />
+                                                                <div
+                                                                    key={star}
+                                                                    className="relative transition-transform duration-200"
+                                                                    style={{ transform: star <= activeRating + 0.5 ? 'scale(1.15)' : 'scale(1)' }}
+                                                                >
+                                                                    {/* Background Star (Unfilled) */}
+                                                                    <Star strokeWidth={0} size={40} className="fill-white/20 text-white/20" />
+
+                                                                    {/* Foreground Star (Filled - Clipped) */}
+                                                                    <div
+                                                                        className="absolute inset-0 overflow-hidden transition-all duration-100 ease-out"
+                                                                        style={{ width: `${fillPercentage}%` }}
+                                                                    >
+                                                                        <Star
+                                                                            strokeWidth={0}
+                                                                            size={40}
+                                                                            className="fill-[#FACC15] text-[#FACC15] drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             );
                                                         })}
                                                     </div>
                                                 </div>
 
-                                                <div className="w-full">
+                                                <div className="flex items-center gap-1.5 text-white font-bold text-base drop-shadow-md">
+                                                    <span>Swipe Right</span>
+                                                    <div className="flex -space-x-3.5">
+                                                        <ChevronRight size={24} className="text-white/40" />
+                                                        <ChevronRight size={24} className="text-white/70" />
+                                                        <ChevronRight size={24} className="text-white" />
+                                                    </div>
+                                                </div>
+
+                                                <div className="w-full mt-1">
                                                     <textarea
                                                         value={ratingComment}
                                                         onChange={(e) => setRatingComment(e.target.value)}
                                                         placeholder="Add a review..."
-                                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20"
+                                                        className="w-full bg-[#121212]/90 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20 shadow-2xl"
                                                     />
                                                 </div>
 
                                                 <button
                                                     onClick={() => handleRate(offer.id, userRatings[offer.id] || hoveredRating || 0, ratingComment)}
-                                                    className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-white/90 transition-all transform active:scale-[0.96] text-base shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
+                                                    className="w-full bg-white text-black font-black py-4 rounded-xl hover:bg-white/90 transition-all transform active:scale-[0.96] text-base shadow-[0_8px_20px_rgba(255,255,255,0.15)]"
                                                 >
                                                     Submit Review
                                                 </button>

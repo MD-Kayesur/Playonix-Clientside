@@ -63,6 +63,7 @@ const Overview = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [contains18Plus, setContains18Plus] = useState(false);
+  const [show18PlusError, setShow18PlusError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -166,6 +167,11 @@ const Overview = () => {
   };
 
   const handlePreview = () => {
+    if (!contains18Plus) {
+      setShow18PlusError(true);
+      return;
+    }
+    setShow18PlusError(false);
     setShowCreatePost(false);
     setShowPreview(true);
   };
@@ -191,8 +197,14 @@ const Overview = () => {
   };
 
   const handlePublish = () => {
+    if (!contains18Plus) {
+      setShow18PlusError(true);
+      return;
+    }
     console.log('Publishing post:', formData);
     setShowPreview(false);
+    setShow18PlusError(false);
+    setContains18Plus(false);
     setFormData({
       title: '',
       type: '',
@@ -586,9 +598,22 @@ const Overview = () => {
                       />
                     </div>
 
-                    <div className="flex items-center justify-between py-2">
-                      <Label className="text-sm">This media contains 18+ content</Label>
-                      <Switch checked={contains18Plus} onCheckedChange={setContains18Plus} />
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between py-2">
+                        <Label className="text-sm">This media contains 18+ content <span className="text-red-500">*</span></Label>
+                        <Switch
+                          checked={contains18Plus}
+                          onCheckedChange={(checked) => {
+                            setContains18Plus(checked);
+                            if (checked) setShow18PlusError(false);
+                          }}
+                        />
+                      </div>
+                      {show18PlusError && (
+                        <p className="text-xs text-red-500 font-medium">
+                          You must confirm that this media contains 18+ content before publishing.
+                        </p>
+                      )}
                     </div>
                   </div>
 

@@ -105,7 +105,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
     const [showRatingPopup, setShowRatingPopup] = useState<number | null>(null);
-    const [showFeedback, setShowFeedback] = useState(false);
     const [hoveredRating, setHoveredRating] = useState<number | null>(null);
     const [ratingComment, setRatingComment] = useState('');
     const [pendingRate, setPendingRate] = useState<{ offerId: number; rating: number; comment: string } | null>(null);
@@ -436,7 +435,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         }
 
         setShowRatingPopup(null);
-        setShowFeedback(false);
         setHoveredRating(null);
         setRatingComment('');
         setPendingRate(null);
@@ -553,7 +551,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         <>
             <div
                 ref={containerRef}
-                className="h-[100dvh] w-full overflow-y-auto snap-y snap-mandatory no-scrollbar scroll-smooth flex flex-col items-center shadow-2xl"
+                className={`h-[100dvh] w-full ${showRatingPopup !== null ? 'overflow-hidden' : 'overflow-y-auto'} snap-y snap-mandatory no-scrollbar scroll-smooth flex flex-col items-center shadow-2xl`}
                 onScroll={handleOnScroll}
             >
                 {offers.map((offer, index) => (
@@ -578,8 +576,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                     {/* Rating Overlay - Appears only over the video card */}
                                     {showRatingPopup === offer.id && (
                                         <div
-                                            className="absolute inset-0 bg-black/60 z-[130] flex items-center justify-center p-4 sm:rounded-[1rem] animate-in fade-in zoom-in duration-300 overflow-hidden"
-                                            onClick={(e) => { e.stopPropagation(); setShowRatingPopup(null); setRatingComment(''); setShowFeedback(false); }}
+                                            className="absolute inset-0 bg-black/60 z-[130] flex items-start md:items-center justify-center p-4 pt-20 md:pt-4 sm:rounded-[1rem] animate-in fade-in zoom-in duration-300 overflow-hidden"
+                                            onClick={(e) => { e.stopPropagation(); setShowRatingPopup(null); setRatingComment(''); }}
                                         >
                                             <div
                                                 className="max-w-[260px] w-full text-center relative flex flex-col items-center gap-5 transition-transform"
@@ -673,28 +671,22 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                     </div>
                                                 </div>
 
-                                                {showFeedback && (
-                                                    <div className="w-full mt-1 animate-in fade-in slide-in-from-top-2 duration-300">
-                                                        <textarea
-                                                            value={ratingComment}
-                                                            onChange={(e) => setRatingComment(e.target.value)}
-                                                            placeholder="Add a review..."
-                                                            className="w-full bg-[#121212]/90 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20 shadow-2xl"
-                                                        />
-                                                    </div>
-                                                )}
+                                                <div className="w-full mt-1 animate-in fade-in slide-in-from-top-2 duration-300">
+                                                    <textarea
+                                                        value={ratingComment}
+                                                        onChange={(e) => setRatingComment(e.target.value)}
+                                                        placeholder="Add a review (optional)"
+                                                        className="w-full bg-[#121212]/90 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20 shadow-2xl"
+                                                    />
+                                                </div>
 
                                                 <button
                                                     onClick={() => {
-                                                        if (!showFeedback) {
-                                                            setShowFeedback(true);
-                                                        } else {
-                                                            handleRate(offer.id, userRatings[offer.id] || hoveredRating || 0, ratingComment);
-                                                        }
+                                                        handleRate(offer.id, userRatings[offer.id] || hoveredRating || 0, ratingComment);
                                                     }}
                                                     className=" px-2.5 bg-white text-black font-bold py-2.5 rounded-lg hover:bg-white/90 transition-all transform active:scale-[0.96] text-sm shadow-[0_4px_12px_rgba(255,255,255,0.1)]"
                                                 >
-                                                    {showFeedback ? "Submit Review" : "Submit Rating"}
+                                                    Submit Review
                                                 </button>
                                             </div>
                                         </div>
@@ -710,7 +702,6 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                 e.stopPropagation();
                                                 const isOpen = showRatingPopup === offer.id;
                                                 setShowRatingPopup(isOpen ? null : offer.id);
-                                                if (isOpen) setShowFeedback(false);
                                             }}
                                             className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all"
                                         >

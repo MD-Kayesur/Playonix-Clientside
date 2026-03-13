@@ -39,6 +39,13 @@
         "about_us": "关于我们",
         "terms": "服务条款",
         "privacy": "隐私政策",
-        "cookies": "Cookie政策"
+        "cookies": "Cookie政策",
+        "select_language_subtitle": "选择您平台的首选语言。",
+        "all_subtitle": "探索我们全面的媒体内容集。",
+        "videos_subtitle": "观看最新最受欢迎的视频。",
+        "photos_subtitle": "发现令人惊叹的摄影和图像。",
+        "favorites_subtitle": "您个人保存的媒体集。",
+        "categories_subtitle": "按您最喜欢的类别浏览内容。",
+        "top_rated_subtitle": "查看我们平台上评价最高的内容。"
     }
 }

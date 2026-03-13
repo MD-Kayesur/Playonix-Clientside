@@ -39,6 +39,13 @@
         "about_us": "À propos de nous",
         "terms": "Conditions d'utilisation",
         "privacy": "Politique de confidentialité",
-        "cookies": "Politique de cookies"
+        "cookies": "Politique de cookies",
+        "select_language_subtitle": "Sélectionnez votre langue préférée pour la plateforme.",
+        "all_subtitle": "Explorez notre collection complète de contenus multimédias.",
+        "videos_subtitle": "Regardez les vidéos les plus récentes et les plus populaires.",
+        "photos_subtitle": "Découvrez des photographies et des images époustouflantes.",
+        "favorites_subtitle": "Votre collection de médias personnellement sauvegardée.",
+        "categories_subtitle": "Parcourez le contenu par vos catégories préférées.",
+        "top_rated_subtitle": "Consultez le contenu le mieux noté sur notre plateforme."
     }
 }

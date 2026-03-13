@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Heart, ThumbsUp, MessageCircle, Bookmark, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ interface Offer {
 }
 
 const Categories = () => {
+  const { t } = useTranslation();
   const [offers, setOffers] = useState<Offer[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [favorites, setFavorites] = useState<Set<number>>(new Set());
@@ -150,7 +152,7 @@ const Categories = () => {
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                     }`}
                 >
-                  {category}
+                  {category === 'All' ? t("media.all") : category}
                 </button>
               ))}
             </div>
@@ -258,9 +260,9 @@ const Categories = () => {
           <div className="flex flex-col items-center justify-center py-20">
             <Heart className="h-16 w-16 text-gray-700 mb-4" />
             <h3 className="text-xl font-semibold text-gray-400 mb-2">
-              No offers in this category
+              {t("media.no_offers_category")}
             </h3>
-            <p className="text-gray-600">Try selecting a different category</p>
+            <p className="text-gray-600">{t("media.try_different_category")}</p>
           </div>
         )}
       </div>

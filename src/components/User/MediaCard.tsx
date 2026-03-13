@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Star, ArrowRight, Bookmark, Share2, MessageCircle } from 'lucide-react';
 import logo from '../../assets/12142.png';
@@ -48,6 +49,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
     mediaLabel = 'Photo',
     onRatingClick
 }) => {
+    const { t } = useTranslation();
     return (
         <motion.div
             animate={{
@@ -116,7 +118,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                     <div className="flex items-center gap-2">
                                         <span className="text-white/60 text-[10px]">•</span>
                                         <span className="text-white text-[15px] font-normal tracking-tight drop-shadow-lg">
-                                            {offer.ratingCount.toLocaleString()} <span className="font-medium text-white">reviews</span>
+                                            {offer.ratingCount.toLocaleString()} <span className="font-medium text-white">{t("media.reviews")}</span>
                                         </span>
                                     </div>
                                 )}
@@ -151,7 +153,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                 }}
                                 className="flex items-center gap-1 text-white font-normal text-[14px] sm:text-[15px]   transition-colors pointer-events-auto group/read"
                             >
-                                <span>See More</span>
+                                <span>{t("media.see_more")}</span>
                                 <ArrowRight size={18} className="animate-arrow-move" />
                             </button>
                         </div>
@@ -168,7 +170,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                 <div className="flex justify-between items-start gap-4">
                     <div className="min-w-0">
                         <h3 className="text-white text-xl md:text-2xl font-black truncate">{offer.title}</h3>
-                        <p className="text-white/80 text-sm max-sm:font-normal lg:font-normal font-medium truncate">{offer.subtitle || 'Offer Details'}</p>
+                        <p className="text-white/80 text-sm max-sm:font-normal lg:font-normal font-medium truncate">{offer.subtitle || t("media.about_offer")}</p>
                     </div>
                     {/* Only show original rating/reviews on desktop */}
                     <div className="hidden sm:flex flex-col items-end shrink-0">
@@ -178,7 +180,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                     <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
                                     <span className="text-white font-black">{(offer.rating || 0).toFixed(1)}</span>
                                 </div>
-                                <span className="text-[10px] text-white/40 font-bold mt-1 uppercase tracking-wider">{offer.ratingCount?.toLocaleString()} Reviews</span>
+                                <span className="text-[10px] text-white/40 font-bold mt-1 uppercase tracking-wider">{offer.ratingCount?.toLocaleString()} {t("media.reviews")}</span>
                             </>
                         )}
                     </div>
@@ -186,7 +188,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
                 <div className="space-y-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
                     <div className="space-y-2">
-                        <h4 className="text-white/60 max-sm:font-normal lg:font-normal font-black text-sm sm:font-bold sm:text-xs uppercase tracking-wider">About this offer</h4>
+                        <h4 className="text-white/60 max-sm:font-normal lg:font-normal font-black text-sm sm:font-bold sm:text-xs uppercase tracking-wider">{t("media.about_offer")}</h4>
                         <p className="text-white text-[15px] leading-relaxed max-sm:font-normal lg:font-normal font-medium sm:font-normal">{offer.description}</p>
                     </div>
 
@@ -195,27 +197,27 @@ const MediaCard: React.FC<MediaCardProps> = ({
                         <div className="flex flex-col items-center justify-center gap-1 border-r border-white/10">
                             <Star size={18} className="text-[#FACC15] fill-[#FACC15]" />
                             <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-white">{(offer.rating || 0).toFixed(1)}</span>
-                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">Rating</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">{t("media.rating")}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-1 border-r border-white/10">
                             <MessageCircle size={18} className="text-white" />
                             <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-white">{offer.comments || 0}</span>
-                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">Comments</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">{t("media.comments")}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-1 border-r border-white/10">
                             <Share2 size={18} className="text-white" />
                             <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-white">{offer.shares || 0}</span>
-                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">Shares</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">{t("media.shares")}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-1">
                             <Bookmark size={18} className="text-white" />
                             <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-white">{offer.saves || 0}</span>
-                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">Saves</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">{t("media.saves")}</span>
                         </div>
                     </div>
 
                     <div className="sm:max-lg:hidden space-y-4">
-                        <h4 className="text-white/60 max-sm:font-normal font-black text-sm uppercase tracking-wider">Bonuses</h4>
+                        <h4 className="text-white/60 max-sm:font-normal font-black text-sm uppercase tracking-wider">{t("media.bonuses")}</h4>
                         <div className="flex flex-col gap-3">
                             {offer.terms_highlights && offer.terms_highlights.map((highlight, idx) => (
                                 <div
@@ -237,7 +239,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     {offer.terms_highlights && (
                         <div className="hidden sm:max-lg:block space-y-3 pt-2">
                             <div className="flex items-center justify-between">
-                                <h4 className="text-white/60 font-black text-[11px] uppercase tracking-wider">Bonuses</h4>
+                                <h4 className="text-white/60 font-black text-[11px] uppercase tracking-wider">{t("media.bonuses")}</h4>
                             </div>
                             <ul className="space-y-2.5">
                                 {offer.terms_highlights.map((term, idx) => (
@@ -279,10 +281,10 @@ const MediaCard: React.FC<MediaCardProps> = ({
                         }}
                         className="w-full bg-white/5 text-white font-normal sm:font-medium lg:font-normal py-3 rounded-2xl hover:bg-white/10 transition-all text-sm"
                     >
-                        Back to {mediaLabel}
+                        {t("media.back_to")} {mediaLabel === 'Photo' ? t("media.photos") : t("media.videos")}
                     </button>
                     <p className="text-white/60 text-[10px] text-center leading-tight max-sm:font-normal lg:font-normal">
-                        Ad | 18+ | Gamble Responsibly
+                        {t("media.disclaimer")}
                     </p>
                 </div>
             </div>

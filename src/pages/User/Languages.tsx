@@ -19,7 +19,7 @@ const LanguagesPage = () => {
             <div className=" mx-auto">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-foreground mb-2">{t("media.languages")}</h1>
-                    <p className="text-muted-foreground">Select your preferred language for the platform.</p>
+                    <p className="text-muted-foreground">{t("media.select_language_subtitle")}</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

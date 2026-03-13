@@ -39,6 +39,13 @@
         "about_us": "Hakkımızda",
         "terms": "Kullanım Koşulları",
         "privacy": "Gizlilik Politikası",
-        "cookies": "Çerez Politikası"
+        "cookies": "Çerez Politikası",
+        "select_language_subtitle": "Platform için tercih ettiğiniz dili seçin.",
+        "all_subtitle": "Explore our comprehensive collection of media content.",
+        "videos_subtitle": "Watch the latest and most popular videos.",
+        "photos_subtitle": "Discover stunning photography and images.",
+        "favorites_subtitle": "Your personally saved collection of media.",
+        "categories_subtitle": "Browse content by your favorite categories.",
+        "top_rated_subtitle": "Check out the highest rated content on our platform."
     }
 }

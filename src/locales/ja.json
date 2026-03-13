@@ -39,6 +39,13 @@
         "about_us": "私たちについて",
         "terms": "利用規約",
         "privacy": "プライバシーポリシー",
-        "cookies": "クッキーポリシー"
+        "cookies": "クッキーポリシー",
+        "select_language_subtitle": "プラットフォームの優先言語を選択してください。",
+        "all_subtitle": "メディアコンテンツの包括的なコレクションをご覧ください。",
+        "videos_subtitle": "最新の人気ビデオをご覧ください。",
+        "photos_subtitle": "素晴らしい写真や画像を見つけてください。",
+        "favorites_subtitle": "個人的に保存したメディアコレクション。",
+        "categories_subtitle": "お気に入りのカテゴリでコンテンツを閲覧する。",
+        "top_rated_subtitle": "プラットフォームで最も評価の高いコンテンツをチェックしてください。"
     }
 }

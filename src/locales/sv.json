@@ -39,6 +39,13 @@
         "about_us": "Om oss",
         "terms": "Användarvillkor",
         "privacy": "Integritetspolicy",
-        "cookies": "Cookiepolicy"
+        "cookies": "Cookiepolicy",
+        "select_language_subtitle": "Välj ditt föredragna språk för plattformen.",
+        "all_subtitle": "Explore our comprehensive collection of media content.",
+        "videos_subtitle": "Watch the latest and most popular videos.",
+        "photos_subtitle": "Discover stunning photography and images.",
+        "favorites_subtitle": "Your personally saved collection of media.",
+        "categories_subtitle": "Browse content by your favorite categories.",
+        "top_rated_subtitle": "Check out the highest rated content on our platform."
     }
 }

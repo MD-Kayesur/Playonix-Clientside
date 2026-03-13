@@ -39,6 +39,13 @@
         "about_us": "Về chúng tôi",
         "terms": "Điều khoản dịch vụ",
         "privacy": "Chính sách bảo mật",
-        "cookies": "Chính sách cookie"
+        "cookies": "Chính sách cookie",
+        "select_language_subtitle": "Chọn ngôn ngữ ưa thích của bạn cho nền tảng.",
+        "all_subtitle": "Explore our comprehensive collection of media content.",
+        "videos_subtitle": "Watch the latest and most popular videos.",
+        "photos_subtitle": "Discover stunning photography and images.",
+        "favorites_subtitle": "Your personally saved collection of media.",
+        "categories_subtitle": "Browse content by your favorite categories.",
+        "top_rated_subtitle": "Check out the highest rated content on our platform."
     }
 }

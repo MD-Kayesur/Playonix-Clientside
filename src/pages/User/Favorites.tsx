@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Heart, ThumbsUp, MessageCircle, Bookmark, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ interface Offer {
 }
 
 const Favorites = () => {
+  const { t } = useTranslation();
   const [offers, setOffers] = useState<Offer[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [favorites, setFavorites] = useState<Set<number>>(new Set());
@@ -144,7 +146,7 @@ const Favorites = () => {
                     : 'bg-muted/50 text-muted-foreground hover:bg-muted'
                     }`}
                 >
-                  {category}
+                  {category === 'All' ? t("media.all") : category}
                 </button>
               ))}
             </div>
@@ -252,9 +254,9 @@ const Favorites = () => {
           <div className="flex flex-col items-center justify-center py-20">
             <Heart className="h-16 w-16 text-gray-700 mb-4" />
             <h3 className="text-xl font-semibold text-gray-400 mb-2">
-              No favorites yet
+              {t("media.no_favorites")}
             </h3>
-            <p className="text-gray-600">Explore offers and bookmark your favorites</p>
+            <p className="text-gray-600">{t("media.explore_bookmarks")}</p>
           </div>
         )}
       </div>

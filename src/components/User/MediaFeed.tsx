@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactPlayer from 'react-player';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
@@ -65,6 +66,7 @@ interface MediaFeedProps {
 }
 
 const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFeedType }) => {
+    const { t } = useTranslation();
     const isMobile = typeof window !== 'undefined' ? window.innerWidth < 1024 : false;
     const iconStroke = isMobile ? 3 : 2;
     const location = useLocation();
@@ -441,7 +443,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
         // Show success toast
         const isMobile = window.innerWidth < 768;
-        toast.success("Thanks for your review!", {
+        toast.success(t("media.thanks_review"), {
             position: isMobile ? 'top-center' : 'top-right',
             style: {
                 minWidth: isMobile ? '200px' : '240px',
@@ -542,8 +544,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     if (isLoading || offers.length === 0) {
         if (isLoading) return <div className="h-full bg-background flex items-center justify-center text-foreground text-xl"><PageLoader /></div>;
         return <div className="h-full bg-background flex flex-col items-center justify-center text-foreground text-xl p-4 text-center">
-            <p className="mb-4">No content found</p>
-            {feedType === 'favorites' && <p className="text-sm text-foreground/50">Explore and save some favorites first!</p>}
+            <p className="mb-4">{t("media.no_content")}</p>
+            {feedType === 'favorites' && <p className="text-sm text-foreground/50">{t("media.favorites_empty")}</p>}
         </div>;
     }
 
@@ -568,8 +570,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                         setFlippedCardId={setFlippedCardId}
                                         renderMedia={renderMedia}
                                         isDescriptionExpanded={isDescriptionExpanded}
-                                        ctaText={offer.cta || 'CLAIM BONUS'}
-                                        mediaLabel={offer.video_url && type !== 'photo' ? 'Video' : 'Photo'}
+                                        ctaText={offer.cta || t("auth.sign_up")}
+                                        mediaLabel={offer.video_url && type !== 'photo' ? t("media.videos") : t("media.photos")}
                                         onRatingClick={(id) => setShowRatingPopup(showRatingPopup === id ? null : id)}
                                     />
 
@@ -658,7 +660,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
                                                 <div className="flex flex-col items-center gap-2">
                                                     <div className="flex items-center gap-1.5 text-white/80 font-medium text-sm drop-shadow-md">
-                                                        <span>Swipe</span>
+                                                        <span>{t("media.swipe")}</span>
                                                         <div className="flex -space-x-3.5">
                                                             <ChevronRight size={20} className="text-white/30" />
                                                             <ChevronRight size={20} className="text-white/60" />
@@ -675,7 +677,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                     <textarea
                                                         value={ratingComment}
                                                         onChange={(e) => setRatingComment(e.target.value)}
-                                                        placeholder="Add a review (optional)"
+                                                        placeholder={t("media.add_review_placeholder")}
                                                         className="w-full  backdrop-blur-lg border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20 shadow-2xl"
                                                     />
                                                 </div>
@@ -686,7 +688,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                     }}
                                                     className=" px-2.5 bg-white text-black font-bold py-2.5 rounded-lg hover:bg-white/90 transition-all transform active:scale-[0.96] text-sm shadow-[0_4px_12px_rgba(255,255,255,0.1)]"
                                                 >
-                                                    Submit Review
+                                                    {t("media.submit_review")}
                                                 </button>
                                             </div>
                                         </div>

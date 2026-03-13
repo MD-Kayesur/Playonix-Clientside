@@ -67,7 +67,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
         >
             {/* Front Side */}
             <div
-                className="absolute inset-0 w-full h-full overflow-hidden bg-black sm:rounded-[1rem] cursor-pointer"
+                className="absolute inset-0 w-full h-full overflow-hidden bg-black sm:rounded-[1rem]  "
                 style={{ backfaceVisibility: "hidden" }}
                 onClick={() => {
                     if (index === currentIndex && window.innerWidth < 640) {
@@ -96,8 +96,8 @@ const MediaCard: React.FC<MediaCardProps> = ({
                         <div className="flex-1 space-y-1">
                             <div className="flex items-center gap-3">
                                 <h2
-                                    className="text-white font-normal text-[20px] md:text-[24px] tracking-tighter cursor-pointer hover:text-[#FACC15] transition-colors pointer-events-auto leading-tight drop-shadow-lg"
-                                    onClick={(e) => { e.stopPropagation(); offer.website_url && window.open(offer.website_url, '_blank'); }}
+                                    className="text-white font-normal text-[20px] md:text-[24px] tracking-tighter   transition-colors pointer-events-auto leading-tight drop-shadow-lg"
+            
                                 >
                                     {offer.title}
                                 </h2>

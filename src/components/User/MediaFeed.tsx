@@ -676,7 +676,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                         value={ratingComment}
                                                         onChange={(e) => setRatingComment(e.target.value)}
                                                         placeholder="Add a review (optional)"
-                                                        className="w-full bg-[#121212]/90 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20 shadow-2xl"
+                                                        className="w-full  backdrop-blur-lg border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#FACC15] transition-all resize-none h-24 custom-scrollbar placeholder:text-white/20 shadow-2xl"
                                                     />
                                                 </div>
 

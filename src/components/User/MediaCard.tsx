@@ -162,13 +162,13 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
             {/* Back Side */}
             <div
-                className="absolute inset-0 w-full h-full bg-[#FFF9F1] sm:rounded-[1rem] overflow-hidden p-6 sm:p-8 flex flex-col gap-6 custom-scrollbar overflow-y-auto transition-colors duration-300 shadow-inner"
+                className="absolute inset-0 w-full h-full bg-[#0D0D0D] sm:rounded-[1rem] overflow-hidden p-6 sm:p-8 flex flex-col gap-6 custom-scrollbar overflow-y-auto transition-colors duration-300 shadow-inner"
                 style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
             >
                 <div className="flex justify-between items-start gap-4">
                     <div className="min-w-0">
-                        <h3 className="text-black text-xl md:text-2xl font-black truncate">{offer.title}</h3>
-                        <p className="text-black text-sm max-sm:font-normal lg:font-normal font-medium truncate">{offer.subtitle || 'Offer Details'}</p>
+                        <h3 className="text-white text-xl md:text-2xl font-black truncate">{offer.title}</h3>
+                        <p className="text-white/80 text-sm max-sm:font-normal lg:font-normal font-medium truncate">{offer.subtitle || 'Offer Details'}</p>
                     </div>
                     {/* Only show original rating/reviews on desktop */}
                     <div className="hidden sm:flex flex-col items-end shrink-0">
@@ -176,9 +176,9 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             <>
                                 <div className="flex items-center gap-1.5 px-2 py-1">
                                     <Star size={14} className="fill-[#FACC15] text-[#FACC15]" />
-                                    <span className="text-black font-black">{(offer.rating || 0).toFixed(1)}</span>
+                                    <span className="text-white font-black">{(offer.rating || 0).toFixed(1)}</span>
                                 </div>
-                                <span className="text-[10px] text-black/40 font-bold mt-1 uppercase tracking-wider">{offer.ratingCount?.toLocaleString()} Reviews</span>
+                                <span className="text-[10px] text-white/40 font-bold mt-1 uppercase tracking-wider">{offer.ratingCount?.toLocaleString()} Reviews</span>
                             </>
                         )}
                     </div>
@@ -186,36 +186,36 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
                 <div className="space-y-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
                     <div className="space-y-2">
-                        <h4 className="text-black max-sm:font-normal lg:font-normal font-black text-sm sm:font-bold sm:text-xs uppercase tracking-wider">About this offer</h4>
-                        <p className="text-black text-[15px] leading-relaxed max-sm:font-normal lg:font-normal font-medium sm:font-normal">{offer.description}</p>
+                        <h4 className="text-white/60 max-sm:font-normal lg:font-normal font-black text-sm sm:font-bold sm:text-xs uppercase tracking-wider">About this offer</h4>
+                        <p className="text-white text-[15px] leading-relaxed max-sm:font-normal lg:font-normal font-medium sm:font-normal">{offer.description}</p>
                     </div>
 
                     {/* Engagement Stats Section */}
-                    <div className="grid grid-cols-4 gap-2 py-5 border-y border-black/10">
-                        <div className="flex flex-col items-center justify-center gap-1 border-r border-black/10">
+                    <div className="grid grid-cols-4 gap-2 py-5 border-y border-white/10">
+                        <div className="flex flex-col items-center justify-center gap-1 border-r border-white/10">
                             <Star size={18} className="text-[#FACC15] fill-[#FACC15]" />
-                            <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-black">{(offer.rating || 0).toFixed(1)}</span>
-                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-black">Rating</span>
+                            <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-white">{(offer.rating || 0).toFixed(1)}</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">Rating</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center gap-1 border-r border-black/10">
-                            <MessageCircle size={18} className="text-black" />
-                            <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-black">{offer.comments || 0}</span>
-                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-black">Comments</span>
+                        <div className="flex flex-col items-center justify-center gap-1 border-r border-white/10">
+                            <MessageCircle size={18} className="text-white" />
+                            <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-white">{offer.comments || 0}</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">Comments</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center gap-1 border-r border-black/10">
-                            <Share2 size={18} className="text-black" />
-                            <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-black">{offer.shares || 0}</span>
-                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-black">Shares</span>
+                        <div className="flex flex-col items-center justify-center gap-1 border-r border-white/10">
+                            <Share2 size={18} className="text-white" />
+                            <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-white">{offer.shares || 0}</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">Shares</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-1">
-                            <Bookmark size={18} className="text-black" />
-                            <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-black">{offer.saves || 0}</span>
-                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-black">Saves</span>
+                            <Bookmark size={18} className="text-white" />
+                            <span className="text-[15px] max-sm:font-normal lg:font-normal font-black text-white">{offer.saves || 0}</span>
+                            <span className="text-[9px] uppercase max-sm:font-normal lg:font-normal font-black tracking-tighter text-white/60">Saves</span>
                         </div>
                     </div>
 
                     <div className="sm:max-lg:hidden space-y-4">
-                        <h4 className="text-black max-sm:font-normal font-black text-sm uppercase tracking-wider">Lupauksemme sinulle</h4>
+                        <h4 className="text-white/60 max-sm:font-normal font-black text-sm uppercase tracking-wider">Bonuses</h4>
                         <div className="flex flex-col gap-3">
                             {offer.terms_highlights && offer.terms_highlights.map((highlight, idx) => (
                                 <div
@@ -237,11 +237,11 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     {offer.terms_highlights && (
                         <div className="hidden sm:max-lg:block space-y-3 pt-2">
                             <div className="flex items-center justify-between">
-                                <h4 className="text-black font-black text-[11px] uppercase tracking-wider">Key Highlights</h4>
+                                <h4 className="text-white/60 font-black text-[11px] uppercase tracking-wider">Bonuses</h4>
                             </div>
                             <ul className="space-y-2.5">
                                 {offer.terms_highlights.map((term, idx) => (
-                                    <li key={idx} className="flex items-start gap-3 text-black text-sm font-medium">
+                                    <li key={idx} className="flex items-start gap-3 text-white text-sm font-medium">
                                         <div className="w-1.5 h-1.5 rounded-full bg-[#FACC15] mt-1.5 shrink-0" />
                                         {term}
                                     </li>
@@ -253,7 +253,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     {offer.tags && offer.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2 py-2">
                             {offer.tags.map((tag, idx) => (
-                                <span key={idx} className="px-4 py-1.5 bg-black/10 rounded-full sm:rounded-lg lg:rounded-full text-black text-[11px] sm:text-[10px] max-sm:font-normal lg:font-normal font-black sm:font-bold uppercase tracking-widest sm:tracking-tight border border-black/5">
+                                <span key={idx} className="px-4 py-1.5 bg-white/10 rounded-full sm:rounded-lg lg:rounded-full text-white text-[11px] sm:text-[10px] max-sm:font-normal lg:font-normal font-black sm:font-bold uppercase tracking-widest sm:tracking-tight border border-white/5">
                                     {tag}
                                 </span>
                             ))}
@@ -261,7 +261,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     )}
                 </div>
 
-                <div className="space-y-4 pt-6 mt-auto border-t border-black/10">
+                <div className="space-y-4 pt-6 mt-auto border-t border-white/10">
 
                     <button
                         onClick={(e) => {
@@ -277,15 +277,13 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             e.stopPropagation();
                             setFlippedCardId(null);
                         }}
-                        className="w-full bg-black/5 text-black font-normal sm:font-medium lg:font-normal py-3 rounded-2xl hover:bg-black/10 transition-all text-sm"
+                        className="w-full bg-white/5 text-white font-normal sm:font-medium lg:font-normal py-3 rounded-2xl hover:bg-white/10 transition-all text-sm"
                     >
                         Back to {mediaLabel}
                     </button>
-                    {offer.disclaimer && (
-                        <p className="text-black text-[10px] text-center leading-tight max-sm:font-normal lg:font-normal">
-                            {offer.disclaimer}
-                        </p>
-                    )}
+                    <p className="text-white/60 text-[10px] text-center leading-tight max-sm:font-normal lg:font-normal">
+                        Ad | 18+ | Gamble Responsibly
+                    </p>
                 </div>
             </div>
         </motion.div>

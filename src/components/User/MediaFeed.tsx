@@ -765,7 +765,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                     }}
                     className="text-white active:scale-95 transition-all p-1"
                 >
-                    <Search strokeWidth={3} className="w-[38px] h-[38px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
+                    <Search strokeWidth={3} className="w-[26px] h-[26px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
                 </button>
             </div>
 

@@ -32,15 +32,15 @@ const ShareModal: React.FC<ShareModalProps> = ({
     };
 
     const shareOptions = [
-        { name: 'Native Share', icon: <Send size={24} className="text-black" />, color: 'bg-[#FACC15]', onClick: handleNativeShare },
-        { name: 'Copy Link', icon: <Link size={24} />, color: 'bg-[#2E7DFF]', onClick: () => { navigator.clipboard.writeText(url); toast.success('Link copied to clipboard!'); } },
-        { name: 'WhatsApp', icon: <FaWhatsapp size={26} />, color: 'bg-[#25D366]', onClick: () => window.open(`https://wa.me/?text=${encodeURIComponent(title + " \n" + url)}`, '_blank', 'noopener,noreferrer') },
-        { name: 'Facebook', icon: <Facebook size={22} />, color: 'bg-[#1877F2]', onClick: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer') },
-        { name: 'Telegram', icon: <FaTelegram size={24} />, color: 'bg-[#24A1DE]', onClick: () => window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank', 'noopener,noreferrer') },
-        { name: 'X / Twitter', icon: <FaXTwitter size={22} />, color: 'bg-[#000000]', onClick: () => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank', 'noopener,noreferrer') },
-        { name: 'LinkedIn', icon: <Linkedin size={22} />, color: 'bg-[#0A66C2]', onClick: () => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer') },
-        { name: 'Embed', icon: <Code size={22} />, color: 'bg-[#0096a7]', onClick: () => { navigator.clipboard.writeText(`<iframe src="${url}" width="100%" height="450px" frameborder="0"></iframe>`); toast.success('Embed code copied!'); } },
-        { name: 'Email', icon: <Mail size={22} />, color: 'bg-[#EA4335]', onClick: () => window.open(`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer') },
+        { name: 'Native Share', icon: <Send size={30} className="text-black" />, color: 'bg-[#FACC15]', onClick: handleNativeShare },
+        { name: 'Copy Link', icon: <Link size={30} />, color: 'bg-[#2E7DFF]', onClick: () => { navigator.clipboard.writeText(url); toast.success('Link copied to clipboard!'); } },
+        { name: 'WhatsApp', icon: <FaWhatsapp size={30} />, color: 'bg-[#25D366]', onClick: () => window.open(`https://wa.me/?text=${encodeURIComponent(title + " \n" + url)}`, '_blank', 'noopener,noreferrer') },
+        { name: 'Facebook', icon: <Facebook size={30} />, color: 'bg-[#1877F2]', onClick: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer') },
+        { name: 'Telegram', icon: <FaTelegram size={30} />, color: 'bg-[#24A1DE]', onClick: () => window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank', 'noopener,noreferrer') },
+        { name: 'X / Twitter', icon: <FaXTwitter size={30} />, color: 'bg-[#000000]', onClick: () => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank', 'noopener,noreferrer') },
+        { name: 'LinkedIn', icon: <Linkedin size={30} />, color: 'bg-[#0A66C2]', onClick: () => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer') },
+        { name: 'Embed', icon: <Code size={30} />, color: 'bg-[#0096a7]', onClick: () => { navigator.clipboard.writeText(`<iframe src="${url}" width="100%" height="450px" frameborder="0"></iframe>`); toast.success('Embed code copied!'); } },
+        { name: 'Email', icon: <Mail size={30} />, color: 'bg-[#EA4335]', onClick: () => window.open(`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer') },
     ];
 
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Star, ArrowRight, Bookmark, Share2, MessageCircle, Zap } from 'lucide-react';
+import { Star, ArrowRight, Bookmark, Share2, MessageCircle } from 'lucide-react';
 import logo from '../../assets/12142.png';
 interface Offer {
     id: number;
@@ -307,10 +307,8 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full group-hover/cta_back:animate-shimmer-fast pointer-events-none z-20" />
 
                             <span className="relative z-30 flex items-center justify-center gap-2">
-                                <Zap className="w-4 h-4 fill-black group-hover/cta_back:animate-bounce" />
-                                {ctaText}
-                                <Zap className="w-4 h-4 fill-black group-hover/cta_back:animate-bounce" />
-                            </span>
+                                 {ctaText}
+                             </span>
                         </button>
                     </div>
                     <button

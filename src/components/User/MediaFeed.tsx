@@ -705,7 +705,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                 const isOpen = showRatingPopup === offer.id;
                                                 setShowRatingPopup(isOpen ? null : offer.id);
                                             }}
-                                            className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all"
+                                            className="w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center transition-all"
                                         >
                                             <Star strokeWidth={iconStroke} className={`w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] ${userRatings[offer.id] ? 'fill-[#FACC15] text-[#FACC15]' : 'text-white'} drop-shadow-lg`} />
                                         </button>
@@ -715,21 +715,21 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all">
+                                        <button onClick={handleExpandAndComment} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center text-white transition-all">
                                             <MessageCircle strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />
                                         </button>
                                         <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount(offer.comments)}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center transition-all">
+                                        <button onClick={(e) => { e.stopPropagation(); toggleSave(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center transition-all">
                                             <Bookmark strokeWidth={iconStroke} className={`w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] ${savedOffers.has(offer.id) ? 'fill-[#facd3b] text-[#facd3b]' : 'text-white'} drop-shadow-lg`} />
                                         </button>
                                         <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount((offer.saves || 0) + (savedOffers.has(offer.id) ? 1 : 0))}</span>
                                     </div>
 
                                     <div className="flex flex-col items-center gap-0">
-                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all active:scale-90 duration-300">
+                                        <button onClick={(e) => { e.stopPropagation(); handleShareClick(offer.id); }} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center text-white transition-all active:scale-90 duration-300">
                                             <Share2 strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />
                                         </button>
                                         <span className="text-[13px] lg:text-[15px] font-semibold text-white -mt-1 lg:-mt-3 drop-shadow-md">{formatCount(offer.shares || 0)}</span>
@@ -737,7 +737,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 
                                     {(type === 'video' || (type === 'all' && offer.video_url)) && (
                                         <div className="flex flex-col items-center gap-1.5">
-                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full hover:bg-foreground/10 flex items-center justify-center text-white transition-all">
+                                            <button onClick={() => setIsMuted(!isMuted)} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center text-white transition-all">
                                                 {isMuted ? <VolumeX strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" /> : <Volume2 strokeWidth={iconStroke} className="w-[26px] h-[26px] lg:w-[32px] lg:h-[32px] drop-shadow-lg" />}
                                             </button>
                                         </div>
@@ -769,8 +769,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 }}
                 className="hidden sm:flex absolute bottom-10 flex-col gap-3 z-[120]"
             >
-                <button onClick={() => handleScroll('up')} disabled={currentIndex === 0} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${currentIndex === 0 ? 'opacity-20' : 'text-foreground hover:bg-foreground/10'}`}><ChevronUp size={28} /></button>
-                <button onClick={() => handleScroll('down')} disabled={currentIndex === offers.length - 1} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${currentIndex === offers.length - 1 ? 'opacity-20' : 'text-foreground hover:bg-foreground/10'}`}><ChevronDown size={28} /></button>
+                <button onClick={() => handleScroll('up')} disabled={currentIndex === 0} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${currentIndex === 0 ? 'opacity-20' : 'text-foreground'}`}><ChevronUp size={28} /></button>
+                <button onClick={() => handleScroll('down')} disabled={currentIndex === offers.length - 1} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${currentIndex === offers.length - 1 ? 'opacity-20' : 'text-foreground'}`}><ChevronDown size={28} /></button>
             </div>
 
             <CommentsSidebar

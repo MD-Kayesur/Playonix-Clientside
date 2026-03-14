@@ -97,7 +97,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             <div className="flex items-center gap-3">
                                 <h2
                                     className="text-white font-normal text-[20px] md:text-[24px] tracking-tighter   transition-colors pointer-events-auto leading-tight drop-shadow-lg"
-            
+
                                 >
                                     {offer.title}
                                 </h2>
@@ -133,9 +133,20 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             if (offer.website_url) window.open(offer.website_url, '_blank');
                         }}
                         type="button"
-                        className="w-full px-6 py-3.5 font-normal rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-lg text-[15px] tracking-wider"
+                        className="w-full px-6 py-3.5 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95 pointer-events-auto border-none shadow-lg text-[16px] tracking-wider relative overflow-hidden group/cta animate-pulse-gentle bg-transparent"
                     >
-                        {ctaText}
+                        {/* Colorful Falling/Rotating Border */}
+                        <div className="absolute -inset-[3px] rounded-2xl overflow-hidden pointer-events-none z-0">
+                            <div className="absolute inset-[-200%] animate-spin-slow bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)]" />
+                        </div>
+
+                        {/* Main Button Surface */}
+                        <div className="absolute inset-[1.5px] bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] rounded-[15px] z-10 pointer-events-none group-hover/cta:brightness-110 transition-all shadow-inner" />
+
+                        {/* White Shimmer Swipe */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover/cta:animate-shimmer-fast pointer-events-none z-20" />
+
+                        <span className="relative z-30">{ctaText}</span>
                     </button>
 
 
@@ -270,9 +281,20 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             e.stopPropagation();
                             if (offer.website_url) window.open(offer.website_url, '_blank');
                         }}
-                        className="w-full px-6 py-4 font-normal rounded-2xl bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] text-black transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 pointer-events-auto border-none shadow-lg text-[15px] tracking-wider"
+                        className="w-full px-6 py-4 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95 pointer-events-auto border-none shadow-lg text-[16px] tracking-wider relative overflow-hidden group/cta_back animate-pulse-gentle bg-transparent"
                     >
-                        {ctaText}
+                        {/* Colorful Falling/Rotating Border */}
+                        <div className="absolute -inset-[3px] rounded-2xl overflow-hidden pointer-events-none z-0">
+                            <div className="absolute inset-[-200%] animate-spin-slow bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)]" />
+                        </div>
+
+                        {/* Main Button Surface */}
+                        <div className="absolute inset-[1.5px] bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] rounded-[15px] z-10 pointer-events-none group-hover/cta_back:brightness-110 transition-all shadow-inner" />
+
+                        {/* White Shimmer Swipe */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover/cta_back:animate-shimmer-fast pointer-events-none z-20" />
+
+                        <span className="relative z-30">{ctaText}</span>
                     </button>
                     <button
                         onClick={(e) => {

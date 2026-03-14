@@ -17,7 +17,8 @@ import {
   Cookie,
   ChevronDown,
   ChevronUp,
-  Users
+  Users,
+  X
 } from "lucide-react";
 import {
   MdKeyboardDoubleArrowLeft,
@@ -76,12 +77,12 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
     >
       {/* Mobile Close Button */}
       {sidebarOpen && (
-        <div className="absolute top-3 right-3 md:hidden z-10">
+        <div className="absolute top-3 right-0 md:hidden z-10">
           <button
             onClick={() => setSidebarOpen(false)}
-            className="w-8 h-8 bg-card border border-border text-foreground rounded-full flex items-center justify-center hover:bg-muted transition-colors cursor-pointer shadow-lg"
+            className="w-10 h-10 bg-card border border-border text-foreground rounded-full flex items-center justify-center hover:bg-muted transition-all active:scale-95 shadow-lg"
           >
-            ✖
+            <X strokeWidth={3} size={24} />
           </button>
         </div>
       )}

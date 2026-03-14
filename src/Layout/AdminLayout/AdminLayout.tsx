@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { AdminSidebar } from "./AdminSidebar";
 import { Outlet } from "react-router-dom";
-import { AiOutlineMenuFold } from "react-icons/ai";
+import { Menu } from "lucide-react";
+
 
 
 export default function AdminLayout() {
@@ -69,10 +70,10 @@ export default function AdminLayout() {
       {isMobile && !sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="fixed top-6 right-6 z-[9999] w-12 h-12 bg-neutral-800/80  text-white rounded-full flex items-center justify-center hover:bg-neutral-700/80 transition-all cursor-pointer shadow-lg active:scale-95 md:hidden"
+          className="fixed top-0 right-0 z-[203] text-white active:scale-95 transition-all md:hidden p-1"
           aria-label="Open menu"
         >
-          <AiOutlineMenuFold className="w-6 h-6" />
+          <Menu strokeWidth={3} className="w-[26px] h-[26px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
         </button>
       )}
 

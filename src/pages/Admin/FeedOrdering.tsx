@@ -17,7 +17,7 @@ import {
   MoreVertical, Edit, Trash2, Eye, Pin, Upload, X, Heart, MessageCircle, Bookmark, Share, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
-import ReviewModerationList from '@/components/Admin/ReviewModerationList';
+import ReviewModerationList from '@/pages/Admin/ReviewModerationList';
 
 
 interface Feed {

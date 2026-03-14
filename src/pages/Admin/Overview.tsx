@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { FiShare2 } from "react-icons/fi";
+import { toast } from 'sonner';
 import {
   Select,
   SelectContent,
@@ -202,6 +203,7 @@ const Overview = () => {
       return;
     }
     console.log('Publishing post:', formData);
+    toast.success('posted successfully');
     setShowPreview(false);
     setShow18PlusError(false);
     setContains18Plus(false);

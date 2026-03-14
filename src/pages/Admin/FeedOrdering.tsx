@@ -185,6 +185,7 @@ const FeedOrdering = () => {
       ));
       setShowEditModal(false);
       setSelectedFeed(null);
+      toast.success('posted successfully');
     }
   };
 

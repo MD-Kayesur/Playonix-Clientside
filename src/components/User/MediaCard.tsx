@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Star, ArrowRight, Bookmark, Share2, MessageCircle } from 'lucide-react';
+import { Star, ArrowRight, Bookmark, Share2, MessageCircle, Zap } from 'lucide-react';
 import logo from '../../assets/12142.png';
 interface Offer {
     id: number;
@@ -114,43 +114,46 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                     <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
                                     <span className="text-white text-[15px] font-normal leading-none">{(offer.rating || 0).toFixed(1)}</span>
                                 </div>
-                                {offer.ratingCount !== undefined && (
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-white/60 text-[10px]">•</span>
-                                        <span className="text-white text-[15px] font-normal tracking-tight drop-shadow-lg">
-                                            {offer.ratingCount.toLocaleString()} <span className="font-medium text-white">{t("media.reviews")}</span>
-                                        </span>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>
 
 
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (offer.website_url) window.open(offer.website_url, '_blank');
-                        }}
-                        type="button"
-                        className="w-full px-6 py-3.5 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95 pointer-events-auto border-none shadow-lg text-[16px] tracking-wider relative overflow-hidden group/cta animate-pulse-gentle bg-transparent"
-                    >
-                        {/* Colorful Falling/Rotating Border */}
-                        <div className="absolute -inset-[3px] rounded-2xl overflow-hidden pointer-events-none z-0">
-                            <div className="absolute inset-[-200%] animate-spin-slow bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)]" />
+                    <div className="relative group/cta_container animate-glow-bloom pointer-events-auto">
+                        {/* Drifting Sparkles */}
+                        <div className="absolute -inset-4 pointer-events-none overflow-hidden rounded-3xl opacity-0 group-hover/cta_container:opacity-100 transition-opacity duration-700">
+                            <div className="absolute top-1/4 left-10 w-1 h-1 bg-white rounded-full animate-sparkle [--tw-translate-x:-20px] [--tw-translate-y:-30px]"></div>
+                            <div className="absolute top-3/4 left-1/2 w-1.5 h-1.5 bg-yellow-200 rounded-full animate-sparkle delay-300 [--tw-translate-x:30px] [--tw-translate-y:-20px]"></div>
+                            <div className="absolute top-1/2 right-4 w-1 h-1 bg-white rounded-full animate-sparkle delay-700 [--tw-translate-x:10px] [--tw-translate-y:-40px]"></div>
+                            <div className="absolute bottom-2 left-1/4 w-1 h-1 bg-yellow-100 rounded-full animate-sparkle delay-1000 [--tw-translate-x:-15px] [--tw-translate-y:-25px]"></div>
                         </div>
 
-                        {/* Main Button Surface */}
-                        <div className="absolute inset-[1.5px] bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] rounded-[15px] z-10 pointer-events-none group-hover/cta:brightness-110 transition-all shadow-inner" />
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                if (offer.website_url) window.open(offer.website_url, '_blank');
+                            }}
+                            type="button"
+                            className="w-full px-6 py-4 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.05] active:scale-95 border-none shadow-2xl text-[16px] tracking-wider relative overflow-hidden group/cta animate-pulse-gentle bg-transparent"
+                        >
+                            {/* Colorful Falling/Rotating Border */}
+                            <div className="absolute -inset-[3px] rounded-2xl overflow-hidden pointer-events-none z-0">
+                                <div className="absolute inset-[-200%] animate-spin-slow group-hover/cta:duration-[1.5s] bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)]" />
+                            </div>
 
-                        {/* White Shimmer Swipe */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover/cta:animate-shimmer-fast pointer-events-none z-20" />
+                            {/* Main Button Surface (Metallic Gold) */}
+                            <div className="absolute inset-[1.5px] bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] rounded-[15px] z-10 pointer-events-none group-hover/cta:brightness-125 transition-all shadow-[inset_0_2px_10px_rgba(255,255,255,0.6),inset_0_-2px_10px_rgba(0,0,0,0.2)]" />
 
-                        <span className="relative z-30">{ctaText}</span>
-                    </button>
+                            {/* White Shimmer Swipe */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full group-hover/cta:animate-shimmer-fast pointer-events-none z-20" />
 
-
-
+                            <span className="relative z-30 flex items-center justify-center gap-2">
+                                <Zap className="w-4 h-4 fill-black group-hover/cta:animate-bounce" />
+                                {ctaText}
+                                <Zap className="w-4 h-4 fill-black group-hover/cta:animate-bounce" />
+                            </span>
+                        </button>
+                    </div>
 
                     <div className="space-y-1 flex flex-col">
                         <div className={`text-white/90 text-[14px] leading-relaxed drop-shadow-lg ${isDescriptionExpanded ? '' : 'line-clamp-2'}`}>
@@ -276,26 +279,39 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
                 <div className="space-y-4 pt-6 mt-auto border-t border-white/10">
 
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (offer.website_url) window.open(offer.website_url, '_blank');
-                        }}
-                        className="w-full px-6 py-4 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95 pointer-events-auto border-none shadow-lg text-[16px] tracking-wider relative overflow-hidden group/cta_back animate-pulse-gentle bg-transparent"
-                    >
-                        {/* Colorful Falling/Rotating Border */}
-                        <div className="absolute -inset-[3px] rounded-2xl overflow-hidden pointer-events-none z-0">
-                            <div className="absolute inset-[-200%] animate-spin-slow bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)]" />
+                    <div className="relative group/cta_back_container animate-glow-bloom pointer-events-auto">
+                        {/* Drifting Sparkles */}
+                        <div className="absolute -inset-4 pointer-events-none overflow-hidden rounded-3xl opacity-0 group-hover/cta_back_container:opacity-100 transition-opacity duration-700">
+                            <div className="absolute top-1/4 left-10 w-1 h-1 bg-white rounded-full animate-sparkle [--tw-translate-x:-20px] [--tw-translate-y:-25px]"></div>
+                            <div className="absolute top-3/4 left-1/2 w-1.5 h-1.5 bg-yellow-200 rounded-full animate-sparkle delay-300 [--tw-translate-x:25px] [--tw-translate-y:-15px]"></div>
+                            <div className="absolute top-1/2 right-4 w-1 h-1 bg-white rounded-full animate-sparkle delay-700 [--tw-translate-x:15px] [--tw-translate-y:-35px]"></div>
                         </div>
 
-                        {/* Main Button Surface */}
-                        <div className="absolute inset-[1.5px] bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] rounded-[15px] z-10 pointer-events-none group-hover/cta_back:brightness-110 transition-all shadow-inner" />
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                if (offer.website_url) window.open(offer.website_url, '_blank');
+                            }}
+                            className="w-full px-6 py-5 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.05] active:scale-95 border-none shadow-2xl text-[16px] tracking-wider relative overflow-hidden group/cta_back animate-pulse-gentle bg-transparent"
+                        >
+                            {/* Colorful Falling/Rotating Border */}
+                            <div className="absolute -inset-[3px] rounded-2xl overflow-hidden pointer-events-none z-0">
+                                <div className="absolute inset-[-200%] animate-spin-slow group-hover/cta_back:duration-[1.5s] bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)]" />
+                            </div>
 
-                        {/* White Shimmer Swipe */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover/cta_back:animate-shimmer-fast pointer-events-none z-20" />
+                            {/* Main Button Surface (Metallic Gold) */}
+                            <div className="absolute inset-[1.5px] bg-gradient-to-r from-[#FACC15] via-[#FFE55C] to-[#FACC15] rounded-[15px] z-10 pointer-events-none group-hover/cta_back:brightness-125 transition-all shadow-[inset_0_2px_10px_rgba(255,255,255,0.6),inset_0_-2px_10px_rgba(0,0,0,0.2)]" />
 
-                        <span className="relative z-30">{ctaText}</span>
-                    </button>
+                            {/* White Shimmer Swipe */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full group-hover/cta_back:animate-shimmer-fast pointer-events-none z-20" />
+
+                            <span className="relative z-30 flex items-center justify-center gap-2">
+                                <Zap className="w-4 h-4 fill-black group-hover/cta_back:animate-bounce" />
+                                {ctaText}
+                                <Zap className="w-4 h-4 fill-black group-hover/cta_back:animate-bounce" />
+                            </span>
+                        </button>
+                    </div>
                     <button
                         onClick={(e) => {
                             e.stopPropagation();

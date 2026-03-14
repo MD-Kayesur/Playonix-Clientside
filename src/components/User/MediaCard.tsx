@@ -96,7 +96,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                         <div className="flex-1 space-y-1">
                             <div className="flex items-center gap-3">
                                 <h2
-                                    className="text-white font-normal text-[20px] md:text-[24px] tracking-tighter   transition-colors pointer-events-auto leading-tight drop-shadow-lg"
+                                    className="text-white font-semibold text-[20px] md:text-[24px] tracking-tighter transition-colors pointer-events-auto leading-tight drop-shadow-xl"
 
                                 >
                                     {offer.title}
@@ -156,7 +156,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     </div>
 
                     <div className="space-y-1 flex flex-col">
-                        <div className={`text-white/90 text-[14px] leading-relaxed drop-shadow-lg ${isDescriptionExpanded ? '' : 'line-clamp-2'}`}>
+                        <div className={`text-white font-medium text-[14px] leading-relaxed drop-shadow-xl ${isDescriptionExpanded ? '' : 'line-clamp-2'}`}>
                             {offer.description.slice(0, 70)}....
                         </div>
                         <div className="flex justify-end pt-1">

@@ -81,7 +81,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const feedType = propFeedType || locationState?.feedType;
     const initialIndex = locationState?.initialIndex;
     const initialCategory = locationState?.initialCategory;
-    const initialOfferId = locationState?.initialOfferId;
+    const initialOfferId = locationState?.initialOfferId || Number(searchParams.get('v')) || undefined;
 
     const [offers, setOffers] = useState<Offer[]>([]);
     const [allOffers, setAllOffers] = useState<Offer[]>([]);
@@ -803,8 +803,8 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             <ShareModal
                 showShareModal={showShareModal}
                 setShowShareModal={setShowShareModal}
-                url={offers[currentIndex]?.video_url || offers[currentIndex]?.image_url}
-                title={offers[currentIndex]?.title}
+                url={`${window.location.origin}${location.pathname}?v=${offers[currentIndex]?.id}`}
+                title={`${offers[currentIndex]?.title} - OCReels`}
             />
 
             {showNameSetup && (

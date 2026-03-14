@@ -625,24 +625,7 @@ const App: React.FC = () => {
       <div className="min-h-screen   text-white flex items-center justify-center p-1 xs:p-2 md:p-4 relative overflow-hidden">
         <AnimatedBackground />
 
-        {/* Mobile Image Banner */}
-        <div className="lg:hidden absolute top-0 left-0 right-0 h-32 xs:h-36 md:h-48 overflow-hidden">
-          <div className="absolute inset-0 from-blue-500/10 via-purple-500/10 to-cyan-500/10 z-10"></div>
-          <img
-            src={CUBE_GROUP_IMAGE}
-            alt="Abstract futuristic background"
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute bottom-3 xs:bottom-4 left-3 xs:left-4 right-3 xs:right-4 bg-black/40 backdrop-blur-xl rounded-lg xs:rounded-xl p-3 xs:p-4 border border-white/10">
-            <h3 className="text-base xs:text-lg font-bold text-white mb-1.5 xs:mb-2 flex items-center gap-1.5 xs:gap-2">
-              <Sparkles className="h-4 w-4 xs:h-5 xs:w-5 text-[#10B981]" />
-              Achieve Your Italian Fluency Goals.
-            </h3>
-            <p className="text-gray-300 text-[10px] xs:text-xs leading-relaxed">
-              Pick up exactly where you left off. Your next lesson is waiting for you.
-            </p>
-          </div>
-        </div>
+        {/* Mobile Image Banner Removed */}
 
         <div className="w-full max-w-7xl lg:grid lg:grid-cols-2 shadow-xl xs:shadow-3xl rounded-lg xs:rounded-xl md:rounded-3xl overflow-hidden border border-gray-700/50 backdrop-blur-xl transform transition-all duration-1000 hover:shadow-4xl relative z-10 mt-32 xs:mt-36 md:mt-0 lg:mt-0">
           {/* Left Side: Form */}

@@ -131,10 +131,10 @@ export const UserSidebar: React.FC<SidebarProps> = ({
     >
       {/* Close Button - Mobile Only */}
       {sidebarOpen && (
-        <div className="absolute top-3 right-3 z-10 md:hidden">
+        <div className="absolute top-3 right-0 z-10 md:hidden">
           <button
             onClick={() => setSidebarOpen(false)}
-            className="w-12 h-12 bg-card border border-border text-foreground rounded-full flex items-center justify-center hover:bg-muted transition-all active:scale-95 shadow-lg"
+            className="w-10 h-10 bg-card border border-border text-foreground rounded-full flex items-center justify-center hover:bg-muted transition-all active:scale-95 shadow-lg"
             aria-label="Close menu"
           >
             <X strokeWidth={iconStroke} size={24} />

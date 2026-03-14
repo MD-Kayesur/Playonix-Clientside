@@ -278,11 +278,11 @@ button {
 
   0%,
   100% {
-    filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.4)) drop-shadow(0 0 10px rgba(250, 204, 21, 0.2));
+    filter: drop-shadow(0 0 3px rgba(250, 204, 21, 0.3)) drop-shadow(0 0 8px rgba(250, 204, 21, 0.1));
   }
 
   50% {
-    filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.7)) drop-shadow(0 0 25px rgba(250, 204, 21, 0.3));
+    filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.5)) drop-shadow(0 0 18px rgba(250, 204, 21, 0.25));
   }
 }
 

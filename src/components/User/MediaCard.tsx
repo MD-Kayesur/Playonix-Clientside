@@ -112,7 +112,10 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             >
                                 <div className="flex items-center gap-1.5 drop-shadow-lg">
                                     <Star size={16} className="fill-[#FACC15] text-[#FACC15]" />
-                                    <span className="text-white text-[15px] font-normal leading-none">{(offer.rating || 0).toFixed(1)}</span>
+                                    <span className="text-white text-[15px] font-normal leading-none flex items-center gap-1.5">
+                                        {(offer.rating || 0).toFixed(1)}
+                                        <span className="text-white text-[13px] font-normal">({(offer.ratingCount || 0).toLocaleString()} {t("media.reviews")})</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>

@@ -151,10 +151,8 @@ const MediaCard: React.FC<MediaCardProps> = ({
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full group-hover/cta:animate-shimmer-fast pointer-events-none z-20" />
 
                             <span className="relative z-30 flex items-center justify-center gap-2">
-                                <Zap className="w-4 h-4 fill-black group-hover/cta:animate-bounce" />
                                 {ctaText}
-                                <Zap className="w-4 h-4 fill-black group-hover/cta:animate-bounce" />
-                            </span>
+                             </span>
                         </button>
                     </div>
 

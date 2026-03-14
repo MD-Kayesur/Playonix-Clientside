@@ -1,9 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useAppSelector } from "@/redux/hooks/redux-hook";
 
 const AdminRoutes = () => {
-  const isAdmin = true; // replace with Redux or auth logic
+  const user = useAppSelector((state) => state.auth.user);
 
-  return isAdmin ? <Outlet /> : <Navigate to="/login" replace />;
+  // Check if the user is logged in and is an admin
+  if (!user || user.role !== "admin") {
+    console.log("AdminRoute: Access denied", user);
+    return <Navigate to="/login" replace />;
+  }
+
+  console.log("AdminRoute: Access granted", user);
+  return <Outlet />;
 };
 
 export default AdminRoutes;

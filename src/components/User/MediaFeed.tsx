@@ -91,7 +91,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
     const [username, setUsername] = useState('');
     const [commentText, setCommentText] = useState('');
     const [savedOffers, setSavedOffers] = useState<Set<number>>(() => {
-        const saved = sessionStorage.getItem('favorites');
+        const saved = localStorage.getItem('favorites');
         return new Set(saved ? JSON.parse(saved) : []);
     });
 
@@ -142,7 +142,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 }
 
                 if (feedType === 'favorites') {
-                    const savedFavorites = sessionStorage.getItem('favorites');
+                    const savedFavorites = localStorage.getItem('favorites');
                     const favoritesSet = new Set<number>(savedFavorites ? JSON.parse(savedFavorites) : []);
                     loadedOffers = loadedOffers.filter(o => favoritesSet.has(o.id));
                 }
@@ -267,7 +267,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
         setSavedOffers(prev => {
             const newSet = new Set(prev);
             if (newSet.has(offerId)) newSet.delete(offerId); else newSet.add(offerId);
-            sessionStorage.setItem('favorites', JSON.stringify(Array.from(newSet)));
+            localStorage.setItem('favorites', JSON.stringify(Array.from(newSet)));
             return newSet;
         });
     };
@@ -585,42 +585,42 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                 className="max-w-[260px] w-full text-center relative flex flex-col items-center gap-5 transition-transform"
                                                 onClick={(e) => e.stopPropagation()}
                                             >
-                                                <div className="flex flex-col items-center  w-full">
-                                                    <div className="text-white font-normal text-2xl tracking-tighter ">
+                                                <div
+                                                    className="flex flex-col items-center w-fit cursor-pointer select-none group/rating gap-5"
+                                                    onMouseMove={(e) => {
+                                                        const rect = e.currentTarget.getBoundingClientRect();
+                                                        const x = e.clientX - rect.left;
+                                                        const val = (x / rect.width) * 5;
+                                                        const target = Math.round(val * 10) / 10;
+                                                        setHoveredRating(Math.max(0.1, Math.min(5, target)));
+                                                    }}
+                                                    onMouseLeave={() => setHoveredRating(null)}
+                                                    onTouchMove={(e) => {
+                                                        const rect = e.currentTarget.getBoundingClientRect();
+                                                        const touch = e.touches[0];
+                                                        const x = touch.clientX - rect.left;
+                                                        const val = (x / rect.width) * 5;
+                                                        const target = Math.round(val * 10) / 10;
+                                                        setHoveredRating(Math.max(0.1, Math.min(5, target)));
+                                                    }}
+                                                    onClick={(e) => {
+                                                        const rect = e.currentTarget.getBoundingClientRect();
+                                                        const x = e.clientX - rect.left;
+                                                        const val = (x / rect.width) * 5;
+                                                        const finalVal = Math.max(0.1, Math.min(5, Math.round(val * 10) / 10));
+                                                        setUserRatings(prev => ({ ...prev, [offer.id]: finalVal }));
+                                                    }}
+                                                >
+                                                    <div className="text-white font-normal text-2xl tracking-tighter">
                                                         {(hoveredRating || userRatings[offer.id] || 0).toFixed(1)} / 5
                                                     </div>
-                                                    <div
-                                                        className="flex flex-col items-center w-fit cursor-pointer select-none group/rating"
-                                                        onMouseMove={(e) => {
-                                                            const rect = e.currentTarget.getBoundingClientRect();
-                                                            const x = e.clientX - rect.left;
-                                                            const val = (x / rect.width) * 5;
-                                                            const target = Math.round(val * 10) / 10;
-                                                            setHoveredRating(Math.max(0.1, Math.min(5, target)));
-                                                        }}
-                                                        onMouseLeave={() => setHoveredRating(null)}
-                                                        onTouchMove={(e) => {
-                                                            const rect = e.currentTarget.getBoundingClientRect();
-                                                            const touch = e.touches[0];
-                                                            const x = touch.clientX - rect.left;
-                                                            const val = (x / rect.width) * 5;
-                                                            const target = Math.round(val * 10) / 10;
-                                                            setHoveredRating(Math.max(0.1, Math.min(5, target)));
-                                                        }}
-                                                        onClick={(e) => {
-                                                            const rect = e.currentTarget.getBoundingClientRect();
-                                                            const x = e.clientX - rect.left;
-                                                            const val = (x / rect.width) * 5;
-                                                            const finalVal = Math.max(0.1, Math.min(5, Math.round(val * 10) / 10));
-                                                            setUserRatings(prev => ({ ...prev, [offer.id]: finalVal }));
-                                                        }}
-                                                    >
+
+                                                    <div className="flex flex-col items-center w-full">
                                                         <div className="flex gap-1 relative py-1 px-2 rounded-xl">
                                                             {[1, 2, 3, 4, 5].map((star) => {
                                                                 const currentRating = userRatings[offer.id] || 0;
                                                                 const activeRating = hoveredRating !== null ? hoveredRating : currentRating;
 
-                                                                // Calculate fill percentage for each star
                                                                 const fillPercentage = Math.max(0, Math.min(100, (activeRating - (star - 1)) * 100));
 
                                                                 return (
@@ -629,10 +629,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                                         className="relative transition-transform duration-200"
                                                                         style={{ transform: star <= activeRating + 0.5 ? 'scale(1.15)' : 'scale(1)' }}
                                                                     >
-                                                                        {/* Background Star (Unfilled) */}
                                                                         <Star strokeWidth={0} size={24} className="fill-white/20 text-white/20" />
-
-                                                                        {/* Foreground Star (Filled - Clipped) */}
                                                                         <div
                                                                             className="absolute inset-0 overflow-hidden transition-all duration-100 ease-out"
                                                                             style={{ width: `${fillPercentage}%` }}
@@ -656,20 +653,19 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                                                             />
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div className="flex flex-col items-center gap-2">
-                                                    <div className="flex items-center gap-1.5 text-white/80 font-medium text-sm drop-shadow-md">
-                                                        <span>{t("media.swipe")}</span>
-                                                        <div className="flex -space-x-3.5">
-                                                            <ChevronRight size={20} className="text-white/30" />
-                                                            <ChevronRight size={20} className="text-white/60" />
-                                                            <ChevronRight size={20} className="text-white" />
+                                                    <div className="flex flex-col items-center gap-2">
+                                                        <div className="flex items-center gap-1.5 text-white/80 font-medium text-sm drop-shadow-md">
+                                                            <span>{t("media.swipe")}</span>
+                                                            <div className="flex -space-x-3.5">
+                                                                <ChevronRight size={20} className="text-white/30" />
+                                                                <ChevronRight size={20} className="text-white/60" />
+                                                                <ChevronRight size={20} className="text-white" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    {/* Swipe Line / Indicator */}
-                                                    <div className="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
-                                                        <div className="w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer-fast" />
+                                                        <div className="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
+                                                            <div className="w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer-fast" />
+                                                        </div>
                                                     </div>
                                                 </div>
 

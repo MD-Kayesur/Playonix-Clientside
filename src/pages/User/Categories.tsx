@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Heart, ThumbsUp, MessageCircle, Bookmark, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, MessageCircle, Bookmark, Play, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface Offer {
@@ -17,6 +17,7 @@ interface Offer {
   tags: string[];
   terms_highlights: string[];
   disclaimer: string;
+  rating?: number;
 }
 
 const Categories = () => {
@@ -74,8 +75,8 @@ const Categories = () => {
         console.error('Error fetching offers:', error);
       });
 
-    // Load favorites from sessionStorage
-    const savedFavorites = sessionStorage.getItem('favorites');
+    // Load favorites from localStorage
+    const savedFavorites = localStorage.getItem('favorites');
     if (savedFavorites) {
       setFavorites(new Set(JSON.parse(savedFavorites)));
     }
@@ -118,7 +119,7 @@ const Categories = () => {
       } else {
         newFavorites.add(id);
       }
-      sessionStorage.setItem('favorites', JSON.stringify(Array.from(newFavorites)));
+      localStorage.setItem('favorites', JSON.stringify(Array.from(newFavorites)));
       return newFavorites;
     });
   };
@@ -241,11 +242,12 @@ const Categories = () => {
 
                     <div className="flex items-center gap-3 text-xs text-gray-300">
                       <div className="flex items-center gap-1">
-                        <ThumbsUp className="h-3 w-3" />
-                        <span>{formatNumber(offer.likes)}</span>
+                        <Star className="h-3 w-3 fill-[#FACC15] text-[#FACC15]" />
+                        <span>{(offer.rating || 0).toFixed(1)}</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1.5 ml-1">
                         <MessageCircle className="h-3 w-3" />
+                        <span>{formatNumber(offer.comments)}</span>
                       </div>
                     </div>
                   </div>

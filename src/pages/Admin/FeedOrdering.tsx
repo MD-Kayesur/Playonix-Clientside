@@ -13,8 +13,12 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { useRef } from 'react';
-import { MoreVertical, Edit, Trash2, Eye, Pin, Upload, X, Heart, MessageCircle, Bookmark, Share, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  MoreVertical, Edit, Trash2, Eye, Pin, Upload, X, Heart, MessageCircle, Bookmark, Share, ChevronLeft, ChevronRight
+} from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
+import ReviewModerationList from '@/components/Admin/ReviewModerationList';
+
 
 interface Feed {
   id: number;
@@ -52,7 +56,18 @@ const FeedOrdering = () => {
   const [contains18Plus, setContains18Plus] = useState(false);
   const [feeds, setFeeds] = useState<Feed[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showCommentSection, setShowCommentSection] = useState(false);
+  const [commentsMap, setCommentsMap] = useState<Record<number, any[]>>({});
   const itemsPerPage = 10;
+
+  useEffect(() => {
+    // Load comments from localStorage
+    const saved = localStorage.getItem('media_comments');
+    if (saved) {
+      setCommentsMap(JSON.parse(saved));
+    }
+  }, []);
+
 
   useEffect(() => {
     fetch('/mediaData.json')
@@ -134,7 +149,9 @@ const FeedOrdering = () => {
   const handleView = (feed: Feed) => {
     setSelectedFeed(feed);
     setShowViewModal(true);
+    setShowCommentSection(false);
   };
+
 
   // Handle Delete
   const handleDelete = (id: number) => {
@@ -771,7 +788,10 @@ const FeedOrdering = () => {
                           <Heart className="h-6 w-6" />
                           <span className="text-xs">1.4k</span>
                         </button>
-                        <button className="flex flex-col items-center gap-1">
+                        <button
+                          className={`flex flex-col items-center gap-1 transition-colors ${showCommentSection ? 'text-[#FACC15]' : ''}`}
+                          onClick={() => setShowCommentSection(!showCommentSection)}
+                        >
                           <MessageCircle className="h-6 w-6" />
                           <span className="text-xs">1k</span>
                         </button>
@@ -783,34 +803,47 @@ const FeedOrdering = () => {
                         </button>
                       </div>
 
-                      {/* Description */}
-                      <div>
-                        <h4 className="font-semibold mb-2">Description:</h4>
-                        <p className="text-sm text-gray-300">
-                          {selectedFeed.description ||
-                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}
-                        </p>
-                      </div>
+                      {/* Disclaimers & Comments Container */}
+                      <div className="flex-1 overflow-y-auto max-h-[400px] no-scrollbar space-y-4">
+                        {!showCommentSection ? (
+                          <>
+                            {/* Description */}
+                            <div>
+                              <h4 className="font-semibold mb-2">Description:</h4>
+                              <p className="text-sm text-gray-300">
+                                {selectedFeed.description ||
+                                  'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}
+                              </p>
+                            </div>
 
-                      {/* Terms */}
-                      <div>
-                        <h4 className="font-semibold mb-2">Terms highlights:</h4>
-                        <p className="text-sm text-gray-300">
-                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </p>
-                      </div>
+                            {/* Terms */}
+                            <div>
+                              <h4 className="font-semibold mb-2">Terms highlights:</h4>
+                              <p className="text-sm text-gray-300">
+                                {selectedFeed.termsHighlights || 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}
+                              </p>
+                            </div>
 
-                      {/* Disclaimers */}
-                      <div className="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-3">
-                        <div className="flex items-start gap-2">
-                          <span className="text-yellow-500">⚠</span>
-                          <div>
-                            <h4 className="font-semibold text-yellow-500 mb-1">Disclaimers:</h4>
-                            <p className="text-xs text-gray-300">
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            </p>
-                          </div>
-                        </div>
+                            {/* Disclaimers */}
+                            <div className="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-3">
+                              <div className="flex items-start gap-2">
+                                <span className="text-yellow-500">⚠</span>
+                                <div>
+                                  <h4 className="font-semibold text-yellow-500 mb-1">Disclaimers:</h4>
+                                  <p className="text-xs text-gray-300">
+                                    {selectedFeed.disclaimers || 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <ReviewModerationList
+                            offerId={selectedFeed.id}
+                            commentsMap={commentsMap}
+                            setCommentsMap={setCommentsMap}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

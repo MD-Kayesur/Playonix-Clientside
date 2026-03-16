@@ -20,7 +20,7 @@ const CookiePolicy = () => {
                     <section>
                         <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">2. Personalization</h2>
                         <p>
-                            Cookies help Rappio remember your favorite categories—whether you prefer Slots, Live Casino, or Sportsbook offers—so we can prioritize what you see first.
+                            Cookies help OCReels remember your favorite categories—whether you prefer Slots, Live Casino, or Sportsbook offers—so we can prioritize what you see first.
                         </p>
                     </section>
 

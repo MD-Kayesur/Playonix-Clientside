@@ -67,9 +67,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
       setIsDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
     }
   }, [theme]);
-
-  const isAboutActive = ["/about", "/terms", "/privacy", "/cookies"].includes(location.pathname);
-
+  const isAboutActive = ["/about", "/terms-of-service", "/privacy-policy", "/cookie-policy"].includes(decodeURIComponent(location.pathname));
   // Automatically open the About dropdown if an About sub-route is active
   useEffect(() => {
     if (isAboutActive) {
@@ -254,9 +252,9 @@ export const UserSidebar: React.FC<SidebarProps> = ({
               <div className="mt-1 ml-4 border-l-2 border-border pl-2 space-y-1 animate-in slide-in-from-left-2 duration-200">
                 {[
                   { path: "/about", label: t("media.about_us"), icon: Info },
-                  { path: "/terms", label: t("media.terms"), icon: FileText },
-                  { path: "/privacy", label: t("media.privacy"), icon: Shield },
-                  { path: "/cookies", label: t("media.cookies"), icon: Cookie },
+                  { path: "/terms-of-service", label: t("media.terms"), icon: FileText },
+                  { path: "/privacy-policy", label: t("media.privacy"), icon: Shield },
+                  { path: "/cookie-policy", label: t("media.cookies"), icon: Cookie },
                 ].map((item) => (
                   <Link
                     key={item.path}

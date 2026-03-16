@@ -117,7 +117,7 @@ export default function UserLayout() {
           <div className="bg-[#0D0D0D]/90 backdrop-blur-xl border border-[#FACC15]/30 rounded-[2rem] p-5 md:p-7 shadow-2xl flex flex-col gap-5">
             <p className="text-gray-200 text-sm md:text-base font-bold leading-relaxed text-left">
               We use essential cookies to improve your experience. By continuing, you agree to our policies.
-              <Link to="/cookies" className="text-[#FACC15] underline underline-offset-4 hover:opacity-80 transition-opacity ml-1">Learn more</Link>
+              <Link to="/cookie-policy" className="text-[#FACC15] underline underline-offset-4 hover:opacity-80 transition-opacity ml-1">Learn more</Link>
             </p>
             <div className="flex gap-3">
               <button

@@ -20,21 +20,21 @@ const PrivacyPolicy = () => {
                     <section>
                         <h2 className="text-xl font-semibold text-foreground mb-2">2. Marketing & Communication</h2>
                         <p>
-                            By signing up, you may receive updates about the latest casino bonuses and exclusive Rappio offers. You can opt-out of these communications at any time via your account settings.
+                            By signing up, you may receive updates about the latest casino bonuses and exclusive OCReels offers. You can opt-out of these communications at any time via your account settings.
                         </p>
                     </section>
 
                     <section>
                         <h2 className="text-xl font-semibold text-foreground mb-2">3. Third-Party Redirection</h2>
                         <p>
-                            When you click an offer link on Rappio, you are redirected to a third-party site. We do not control their privacy practices and encourage you to review the policies of any casino you visit through our platform.
+                            When you click an offer link on OCReels, you are redirected to a third-party site. We do not control their privacy practices and encourage you to review the policies of any casino you visit through our platform.
                         </p>
                     </section>
 
                     <section>
                         <h2 className="text-xl font-semibold text-foreground mb-2">4. Data Protection</h2>
                         <p>
-                            We use advanced encryption and security protocols to ensure that your interaction with Rappio remains private and secure from unauthorized access.
+                            We use advanced encryption and security protocols to ensure that your interaction with OCReels remains private and secure from unauthorized access.
                         </p>
                     </section>
 

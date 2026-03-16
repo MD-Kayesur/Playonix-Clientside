@@ -46,15 +46,15 @@ const routes = createBrowserRouter([
             element: <About />,
           },
           {
-            path: "terms",
+            path: "terms-of-service",
             element: <TermsOfService />,
           },
           {
-            path: "privacy",
+            path: "privacy-policy",
             element: <PrivacyPolicy />,
           },
           {
-            path: "cookies",
+            path: "cookie-policy",
             element: <CookiePolicy />,
           },
           {

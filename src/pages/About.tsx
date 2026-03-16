@@ -6,7 +6,7 @@ const About = () => {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-3">
           <Info className="w-8 h-8 text-[#FACC15]" />
-          About Rappio
+          About OCReels
         </h1>
         <p className="text-lg text-muted-foreground">
           The ultimate hub for high-stakes entertainment. We connect the world's most passionate players with elite casino offers, exclusive rewards, and a premium community experience.
@@ -23,12 +23,13 @@ const About = () => {
           </div>
           <div className="p-6 pt-0 text-muted-foreground space-y-4">
             <p>
-              Rappio is a premier digital media platform dedicated to the gaming and casino industry. We serve as a high-performance bridge between international gaming operators and selective enthusiasts, providing curated access to the best offers in the market.
+              OCReels is a premier digital media platform dedicated to the gaming and casino industry. We serve as a high-performance bridge between international gaming operators and selective enthusiasts, providing curated access to the best offers in the market.
             </p>
+            <p>htsi</p>
             <div className="space-y-2">
               <div className="flex justify-between border-b border-border pb-2">
                 <span className="font-semibold text-foreground">Registered Name:</span>
-                <span>Rappio Media Group Ltd.</span>
+                <span>OCReels Media Group Ltd.</span>
               </div>
               <div className="flex justify-between border-b border-border pb-2">
                 <span className="font-semibold text-foreground">Headquarters:</span>
@@ -51,7 +52,7 @@ const About = () => {
           </div>
           <div className="p-6 pt-0 text-muted-foreground space-y-4">
             <p>
-              Rappio operates under a clear, compliant affiliate model. We are independently owned and operated, ensuring that our recommendations remain objective and focused on providing maximum value to our community.
+              OCReels operates under a clear, compliant affiliate model. We are independently owned and operated, ensuring that our recommendations remain objective and focused on providing maximum value to our community.
             </p>
             <div className="space-y-2">
               <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">

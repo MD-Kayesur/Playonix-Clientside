@@ -13,14 +13,14 @@ const TermsOfService = () => {
                     <section>
                         <h2 className="text-xl font-semibold text-foreground mb-2">1. Eligibility & Age Restriction</h2>
                         <p>
-                            You must be at least 18 years of age (or the legal age for gambling in your jurisdiction) to use Rappio. By using our services, you warrant that you meet these eligibility requirements.
+                            You must be at least 18 years of age (or the legal age for gambling in your jurisdiction) to use OCReels. By using our services, you warrant that you meet these eligibility requirements.
                         </p>
                     </section>
 
                     <section>
                         <h2 className="text-xl font-semibold text-foreground mb-2">2. Affiliate Disclosure</h2>
                         <p>
-                            Rappio is a casino affiliate website. We do not provide real-money gambling services on this site. Instead, we provide information and outbound links to third-party casino operators. We may receive commissions when you click these links and perform certain actions.
+                            OCReels is a casino affiliate website. We do not provide real-money gambling services on this site. Instead, we provide information and outbound links to third-party casino operators. We may receive commissions when you click these links and perform certain actions.
                         </p>
                     </section>
 
@@ -34,7 +34,7 @@ const TermsOfService = () => {
                     <section>
                         <h2 className="text-xl font-semibold text-foreground mb-2">4. Disclaimers & No Guarantee</h2>
                         <p>
-                            While we strive to provide accurate and up-to-date information regarding casino offers and bonuses, Rappio cannot guarantee the accuracy or validity of third-party offers. Always check the specific terms and conditions on the operator's website.
+                            While we strive to provide accurate and up-to-date information regarding casino offers and bonuses, OCReels cannot guarantee the accuracy or validity of third-party offers. Always check the specific terms and conditions on the operator's website.
                         </p>
                     </section>
 

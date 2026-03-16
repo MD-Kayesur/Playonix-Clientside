@@ -160,7 +160,7 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
               className={`w-full group flex font-normal items-center gap-3 rounded-lg transition-all duration-200 cursor-pointer
                 ${isAboutDropdownOpen && !isCollapsed
                   ? "bg-muted text-primary"
-                  : (["/about", "/terms", "/privacy", "/cookies"].includes(location.pathname) && !isAboutDropdownOpen)
+                  : (["/about", "/terms-of-service", "/privacy-policy", "/cookie-policy"].includes(decodeURIComponent(location.pathname)) && !isAboutDropdownOpen)
                     ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
                     : "hover:bg-muted text-foreground/70"
                 }
@@ -181,9 +181,9 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
               <div className="mt-1 ml-4 border-l-2 border-border pl-2 space-y-1 animate-in slide-in-from-left-2 duration-200">
                 {[
                   { path: "/about", label: "About Us", icon: Info },
-                  { path: "/terms", label: "Terms of Service", icon: FileText },
-                  { path: "/privacy", label: "Privacy Policy", icon: Shield },
-                  { path: "/cookies", label: "Cookie Policy", icon: Cookie },
+                  { path: "/terms-of-service", label: "Terms of Service", icon: FileText },
+                  { path: "/privacy-policy", label: "Privacy Policy", icon: Shield },
+                  { path: "/cookie-policy", label: "Cookie Policy", icon: Cookie },
                 ].map((item) => {
                   const isActive = location.pathname === item.path;
                   return (

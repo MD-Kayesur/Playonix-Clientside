@@ -585,11 +585,11 @@ const App: React.FC = () => {
           />
           <label htmlFor="agreeToTerms" className="text-xs dark:text-white text-gray-800 md:text-sm text-gray-300 dark:text-gray-300 leading-relaxed cursor-pointer">
             I agree to the{" "}
-            <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline transition-colors hover:text-blue-300">
+            <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline transition-colors hover:text-blue-300">
               Terms of Service
             </a>
             {" "}and have read the{" "}
-            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline transition-colors hover:text-blue-300">
+            <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline transition-colors hover:text-blue-300">
               Privacy Policy
             </a>
             .
@@ -757,12 +757,12 @@ const App: React.FC = () => {
                 </h5>
                 <ul className="space-y-4 text-sm font-semibold">
                   <li>
-                    <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                    <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                       Privacy Policy
                     </a>
                   </li>
                   <li>
-                    <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                    <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                       Terms of Service
                     </a>
                   </li>
@@ -787,9 +787,9 @@ const App: React.FC = () => {
           </div>
 
           <p className="mt-8 text-center text-sm text-slate-600 dark:text-gray-400">
-            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+            <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
               Privacy Policy
-            </a> |   <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+            </a> |   <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
               Terms of Service
             </a>  |  © {new Date().getFullYear()} ProntoCorso.
           </p>

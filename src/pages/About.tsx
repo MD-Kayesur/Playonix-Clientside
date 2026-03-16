@@ -1,4 +1,4 @@
-import { Info, Briefcase, Users, ShieldCheck } from "lucide-react";
+import { Info, Briefcase, ShieldCheck } from "lucide-react";
 
 const About = () => {
   return (

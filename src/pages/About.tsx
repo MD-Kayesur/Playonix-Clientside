@@ -13,31 +13,27 @@ const About = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="flex flex-col gap-6">
         <div className="rounded-xl border border-border shadow-lg bg-card overflow-hidden">
           <div className="p-6 pb-2">
             <h3 className="text-xl font-bold flex items-center gap-2 text-foreground">
               <Briefcase className="w-5 h-5 text-[#FACC15]" />
-              Company Information
+              Ownership
             </h3>
           </div>
-          <div className="p-6 pt-0 text-muted-foreground space-y-4">
-            <p>
-              OCReels is a premier digital media platform dedicated to the gaming and casino industry. We serve as a high-performance bridge between international gaming operators and selective enthusiasts, providing curated access to the best offers in the market.
-            </p>
-            <p>htsi</p>
-            <div className="space-y-2">
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="font-semibold text-foreground">Registered Name:</span>
-                <span>OCReels Media Group Ltd.</span>
+          <div className="p-6 pt-0 text-muted-foreground space-y-4 text-sm md:text-base">
+            <p>OCReels.com is owned and operated by:</p>
+            <div className="space-y-4">
+              <div className="border-b border-border pb-4">
+                <span className="font-semibold text-foreground text-lg block">Lonepath Holdings LLC</span>
+                <span className="block mt-1">Registration number: L 24160</span>
               </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="font-semibold text-foreground">Headquarters:</span>
-                <span>London, United Kingdom</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold text-foreground">Founded:</span>
-                <span>January 2024</span>
+              <div className="pt-1">
+                <span className="font-semibold text-foreground block mb-2">Registered address:</span>
+                <span className="block">Jessups Estate</span>
+                <span className="block">P.O. Box 590</span>
+                <span className="block">Nevis</span>
+                <span className="block">Saint Kitts and Nevis</span>
               </div>
             </div>
           </div>
@@ -46,41 +42,30 @@ const About = () => {
         <div className="rounded-xl border border-border shadow-lg bg-card overflow-hidden">
           <div className="p-6 pb-2">
             <h3 className="text-xl font-bold flex items-center gap-2 text-foreground">
-              <Users className="w-5 h-5 text-[#FACC15]" />
-              Ownership Details
+              <ShieldCheck className="w-5 h-5 text-[#FACC15]" />
+              Vision
             </h3>
           </div>
-          <div className="p-6 pt-0 text-muted-foreground space-y-4">
+          <div className="p-6 pt-0 text-muted-foreground space-y-4 text-sm md:text-base leading-relaxed">
             <p>
-              OCReels operates under a clear, compliant affiliate model. We are independently owned and operated, ensuring that our recommendations remain objective and focused on providing maximum value to our community.
+              Our vision was to create a short-video platform for listing and discovering online casinos that is as fair and honest as possible for players.
             </p>
-            <div className="space-y-2">
-              <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
-                <span className="font-semibold text-gray-900 dark:text-gray-200">Structure:</span>
-                <span>Private Limited Company</span>
-              </div>
-              <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
-                <span className="font-semibold text-gray-900 dark:text-gray-200">CEO:</span>
-                <span>John Doe</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold text-gray-900 dark:text-gray-200">Primary Investors:</span>
-                <span>Global Tech Ventures, Apex Capital</span>
-              </div>
+            <p>
+              On OCReels, players themselves can freely rate and review casinos based on their own real experiences, helping other users make better and safer choices.
+            </p>
+            <p>
+              We came to the conclusion that gambling itself should not be erased or denied. It has been part of human culture and history in different forms for thousands of years. However, we also recognize that some online casinos can behave unfairly or dishonestly toward players.
+            </p>
+            <p>
+              Because of this, we decided to build a platform that puts fairness, transparency, and community feedback first. Our goal is to make it easier for players to find trustworthy casinos and avoid dishonest operators.
+            </p>
+            <div className="pt-4 border-t border-border mt-4">
+              <p>
+                If you have any questions, feedback, or concerns, please contact us at:
+              </p>
+              <a href="mailto:hey@ocreels.com" className="text-[#FACC15] hover:underline mt-1 inline-block font-medium">hey@ocreels.com</a>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="rounded-xl border-none shadow-lg bg-primary/10 overflow-hidden">
-        <div className="p-6 pb-2">
-          <h3 className="text-xl font-bold flex items-center gap-2 text-foreground">
-            <ShieldCheck className="w-5 h-5 text-primary" />
-            Our Vision
-          </h3>
-        </div>
-        <div className="p-6 pt-0 text-foreground italic text-center text-lg py-6">
-          "To redefine the digital casino experience by creating the world's most transparent, engaging, and exclusive affiliate platform for the global gaming community."
         </div>
       </div>
     </div>

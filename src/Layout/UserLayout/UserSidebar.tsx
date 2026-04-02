@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 // import { useDispatch } from "react-redux";
 // import { logout } from "@/store/Slices/AuthSlice/authSlice";
 
-import logoLight from "@/assets/bgremovelogo.png";
-import logoDark from "@/assets/bgremovelogo.png";
-import logoIcon from "/12143.png";
+import logoLight from "@/assets/playonix/2b225ab4-5f8b-470d-88a4-cb8f3bc7501e.png";
+import logoDark from "@/assets/playonix/2b225ab4-5f8b-470d-88a4-cb8f3bc7501e.png";
+import logoIcon from "@/assets/playonix/icon-dark.png";
 import {
   LayoutDashboard,
   Video,
@@ -142,26 +142,22 @@ export const UserSidebar: React.FC<SidebarProps> = ({
 
       {/* Logo */}
       {sidebarOpen && (
-        <div className="md:px-3 pt-4 sm:pt-6">
+        <div className="md:px-3 pt-2 sm:pt-4">
           <a href="/user/all" className="block">
             <div
-              className={`flex items-center gap-3 transition-all duration-300 pb-4 ${isCollapsed ? "justify-center px-2" : "px-4 sm:px-6"
+              className={`flex items-center gap-3 transition-all duration-300 pb-2 ${isCollapsed ? "justify-center px-2" : "px-4 sm:px-6"
                 }`}
             >
               {isCollapsed ? (
-                <img src={logoIcon} alt="Rappio" className="w-10 h-10 rounded-full" />
+                <img src={logoIcon} alt="Playonix" className="w-10 h-10 rounded-full" />
               ) : (
                 <img
                   src={isDarkMode ? logoDark : logoLight}
-                  alt="Rappio"
-                  className="transition-all duration-300 rounded-full w-50"
+                  alt="Playonix"
+                  className="transition-all duration-300 w-full max-w-[180px] h-auto object-contain"
                 />
               )}
-              {!isCollapsed && (
-                <h1 className="font-bold text-[22px] text-foreground truncate">
-                  Rappio
-                </h1>
-              )}
+
             </div>
           </a>
           <SidebarSearch
@@ -201,7 +197,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
                         ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
                         : "text-foreground/70 hover:bg-muted hover:text-primary"
                     }
-                    ${isCollapsed ? "justify-center px-3 py-3" : "px-3 sm:px-4 py-2.5 sm:py-3"}
+                    ${isCollapsed ? "justify-center px-3 py-2" : "px-3 sm:px-4 py-1.5 sm:py-2"}
                   `}
                 >
                   <item.icon
@@ -235,7 +231,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
                     ? "bg-muted text-primary"
                     : "hover:bg-muted text-foreground/70"
                 }
-                ${isCollapsed ? "justify-center px-3 py-3" : "px-3 sm:px-4 py-2.5 sm:py-3"}
+                ${isCollapsed ? "justify-center px-3 py-2" : "px-3 sm:px-4 py-1.5 sm:py-2"}
               `}
             >
               <Info className={`flex-shrink-0 transition-transform duration-200 ${isCollapsed ? "w-6 h-6 sm:w-7 sm:h-7" : "w-5 h-5 sm:w-6 sm:h-6"} group-hover:scale-110`} />
@@ -294,6 +290,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
     </div>
   );
 };
+
 
 
 

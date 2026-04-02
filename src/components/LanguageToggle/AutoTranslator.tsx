@@ -147,3 +147,4 @@ const AutoTranslator: React.FC = () => {
 };
 
 export default AutoTranslator;
+

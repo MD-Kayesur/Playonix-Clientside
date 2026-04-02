@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import signupimage from "@/assets/prontocorso/PeopleWorking.png";
-import logoLight from "@/assets/prontocorso/ProntoCorsoLogoLight-removebg-preview.png";
-import logoDark from "@/assets/prontocorso/ProntoCorsoLogoDark-removebg-preview.png";
+import logoLight from "@/assets/playonix/2b225ab4-5f8b-470d-88a4-cb8f3bc7501e.png";
+import logoDark from "@/assets/playonix/2b225ab4-5f8b-470d-88a4-cb8f3bc7501e.png";
 import { useTheme } from "@/components/ThemeToggle/theme-provider";
 // --- Type Definitions ---
 interface FormData {
@@ -634,7 +634,7 @@ const App: React.FC = () => {
               <div className="grid gap-3 xs:gap-4 md:gap-6 text-center">
                 {/* Logo */}
                 <div className="flex justify-center mb-2">
-                  <img src={isDarkMode ? logoDark : logoLight} alt="Rappio Logo" className="h-12  md:h-16 " />
+                  <img src={isDarkMode ? logoDark : logoLight} alt="Playonix Logo" className="h-12  md:h-16 " />
 
                 </div>
 
@@ -705,7 +705,7 @@ const App: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-16 mb-16 text-left">
             <div>
               <Link to="/#home" state={{ from: "/" }} className="flex items-center gap-4">
-                <img src={isDarkMode ? logoDark : logoLight} alt="Rappio" className="w-50  mb-6 rounded-full" />
+                <img src={isDarkMode ? logoDark : logoLight} alt="Playonix" className="w-50  mb-6 rounded-full" />
 
               </Link>
               <p className="text-sm leading-relaxed mb-8 text-slate-600 dark:text-gray-400">
@@ -774,7 +774,7 @@ const App: React.FC = () => {
                 About
               </h5>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-gray-400 italic">
-                Rappio is the ultimate hub for high-stakes entertainment.
+                Playonix is the ultimate hub for high-stakes entertainment.
               </p>
             </div>
           </div>
@@ -782,7 +782,7 @@ const App: React.FC = () => {
           {/* Disclaimer Text */}
           <div className="mt-12 pt-8 border-t border-slate-200 dark:border-gray-700">
             <p className="text-sm leading-relaxed text-slate-500 dark:text-gray-300 text-center max-w-5xl mx-auto">
-              ProntoCorso is an independent educational tool. It accompanies your primary language education. We focus on preparation standards for exams including CILS, CELI, and PLIDA. We are not affiliated with these exam bodies. All content is original. It is not derived from official proprietary exam materials. We strictly adhere to the CEFR B1 Standard. This content is for practice purposes only. It does not guarantee a passing score. CILS is a trademark of the Università per Stranieri di Siena. CELI is a trademark of the Università per Stranieri di Perugia. PLIDA is a trademark of the Dante Alighieri Society. All other trademarks are the property of their respective owners.
+              Playonix is an independent media platform. We focus on providing high-quality reviews and entertainment content. All content is original. We strictly adhere to industry standards. This content is for informational purposes only. All trademarks are the property of their respective owners.
             </p>
           </div>
 
@@ -791,7 +791,7 @@ const App: React.FC = () => {
               Privacy Policy
             </a> |   <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
               Terms of Service
-            </a>  |  © {new Date().getFullYear()} ProntoCorso.
+            </a>  |  © {new Date().getFullYear()} Playonix.
           </p>
         </div>
       </footer>
@@ -801,6 +801,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
 
 

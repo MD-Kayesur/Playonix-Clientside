@@ -330,3 +330,4 @@ const MediaCard: React.FC<MediaCardProps> = ({
 };
 
 export default MediaCard;
+

@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, Rocket, Sparkles, CheckCircle, Zap, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import React, { useState, useMemo, useEffect } from 'react';
 import loginimage from "@/assets/prontocorso/Loginwithguy.png";
-import logo from "@/assets/prontocorso/ProntoCorsoLogoLight-removebg-preview.png";
-import img from "@/assets/prontocorso/ProntoCorsoLogoDark-removebg-preview.png";
+import logo from "@/assets/playonix/2b225ab4-5f8b-470d-88a4-cb8f3bc7501e.png";
+import img from "@/assets/playonix/2b225ab4-5f8b-470d-88a4-cb8f3bc7501e.png";
 import { useTheme } from "@/components/ThemeToggle/theme-provider";
 // OR import toast from "react-hot-toast"; if using react-hot-toast
 
@@ -315,9 +315,8 @@ const Login = () => {
                 Login
               </h1> */}
                 <p className="text-balance text-gray-300 text-xs dark:text-gray-800 text-left font-bold xs:text-sm md:text-2xl leading-relaxed animate-fade-in">
-                  <span className="dark:text-white text-gray-800">Welcome back! Ready to continue your Italian practice?
+                  <span className="dark:text-white text-gray-800">Welcome back! Access your account and continue your journey with us.
                   </span>
-                  {/* <span className="dark:text-white text-gray-800">Access your account and continue your creative journey with us.</span> */}
                 </p>
               </div>
 
@@ -360,12 +359,12 @@ const Login = () => {
 
               <h3 className="text-3xl font-bold text-black mb-4 flex items-center gap-3">
                 <Sparkles className="h-8 w-8 text-[#10B981]" />
-                Achieve Your Italian Fluency Goals.
+                Experience High-Stakes Entertainment.
               </h3>
 
 
               <p className="text-black   text-base leading-relaxed">
-                Pick up exactly where you left off. Your next lesson is waiting for you.
+                Pick up exactly where you left off. Your next experience is waiting for you.
               </p>
             </div>
           </div>
@@ -380,7 +379,7 @@ const Login = () => {
           <div className="grid md:grid-cols-3 gap-16 mb-16 text-left">
             <div>
               <Link to="/#home" state={{ from: "/" }} className="flex items-center gap-4">
-                <img src={isDarkMode ? img : logo} alt="ProntoCorso" className="w-50  mb-6 rounded-full" />
+                <img src={isDarkMode ? img : logo} alt="Playonix" className="w-50  mb-6 rounded-full" />
               </Link>
               <p className="text-sm leading-relaxed mb-8 text-slate-600 dark:text-gray-400">
                 Empowering citizenship applicants with the specific tactical
@@ -447,16 +446,15 @@ const Login = () => {
                 About
               </h5>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-gray-400 italic">
-                ProntoCorso is an independent tool built to accompany your
-                primary language education. Focused on CILS, CELI, and PLIDA
-                preparation.
+                Playonix is an independent tool built to accompany your
+                entertainment experience.
               </p>
             </div>
           </div>
 
           <div className="mt-12 pt-8 border-t border-slate-200 dark:border-gray-700">
             <p className="text-sm leading-relaxed text-slate-500 dark:text-gray-300 text-center max-w-5xl mx-auto">
-              ProntoCorso is an independent educational tool. It accompanies your primary language education. We focus on preparation standards for exams including CILS, CELI, and PLIDA. We are not affiliated with these exam bodies. All content is original. It is not derived from official proprietary exam materials. We strictly adhere to the CEFR B1 Standard. This content is for practice purposes only. It does not guarantee a passing score. CILS is a trademark of the Università per Stranieri di Siena. CELI is a trademark of the Università per Stranieri di Perugia. PLIDA is a trademark of the Dante Alighieri Society. All other trademarks are the property of their respective owners.
+              Playonix is an independent media platform. We focus on providing high-quality reviews and entertainment content. All content is original. We strictly adhere to industry standards. This content is for informational purposes only. All trademarks are the property of their respective owners.
             </p>
           </div>
 
@@ -465,7 +463,7 @@ const Login = () => {
               Privacy Policy
             </a> |   <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors">
               Terms of Service
-            </a>  |  © {new Date().getFullYear()} ProntoCorso.
+            </a>  |  © {new Date().getFullYear()} Playonix.
           </p>
         </div>
       </footer>
@@ -474,3 +472,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -304,3 +304,4 @@ export const SidebarSearch: React.FC<SidebarSearchProps> = ({
         </>
     );
 };
+

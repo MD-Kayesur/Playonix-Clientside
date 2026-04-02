@@ -57,3 +57,4 @@ export const generateZodSchema = (fields: FieldConfig[]) => {
 
   return z.object(shape);
 };
+

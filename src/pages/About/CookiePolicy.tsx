@@ -37,9 +37,9 @@ const CookiePolicy = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">1. Introduction</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>This Cookie Policy explains how OCReels.com ("OCReels", "we", "us", or "our") uses cookies and similar technologies when you access or use the OCReels.com website and related services (the "Service").</p>
-                            <p>OCReels is an independent platform that provides casino comparisons, ratings, reviews, short-form video content, and community interactions.</p>
-                            <p>This policy should be read together with the OCReels Privacy Policy and Terms of Service.</p>
+                            <p>This Cookie Policy explains how Playonix.com ("Playonix", "we", "us", or "our") uses cookies and similar technologies when you access or use the Playonix.com website and related services (the "Service").</p>
+                            <p>Playonix is an independent platform that provides casino comparisons, ratings, reviews, short-form video content, and community interactions.</p>
+                            <p>This policy should be read together with the Playonix Privacy Policy and Terms of Service.</p>
                         </div>
                     </section>
 
@@ -56,7 +56,7 @@ const CookiePolicy = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">3. Device-Based Identification (No User Accounts)</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>OCReels does not create traditional user accounts.</p>
+                            <p>Playonix does not create traditional user accounts.</p>
                             <p>Instead, the platform may associate activity with a device-based identifier generated using signals such as IP address, browser characteristics, and device information.</p>
                             <p>This allows users to interact with the platform, post ratings or comments, and participate in community activity without registering personal accounts.</p>
                             <p>Depending on jurisdiction, certain device identifiers may still be considered personal data under applicable data protection laws.</p>
@@ -66,7 +66,7 @@ const CookiePolicy = () => {
                     {/* Section 4 */}
                     <section className="space-y-4">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">4. Types of Cookies We Use</h2>
-                        <p className="text-sm leading-relaxed">OCReels may use the following categories of cookies.</p>
+                        <p className="text-sm leading-relaxed">Playonix may use the following categories of cookies.</p>
 
                         <div className="space-y-4">
                             {[
@@ -84,7 +84,7 @@ const CookiePolicy = () => {
                                 },
                                 {
                                     title: "4.4 Affiliate Tracking Cookies",
-                                    body: "OCReels may contain affiliate links to third party websites including online casino operators. When you click such links, third party partners may place cookies on your device to track referrals. These cookies are controlled by the third party operator and not by OCReels.",
+                                    body: "Playonix may contain affiliate links to third party websites including online casino operators. When you click such links, third party partners may place cookies on your device to track referrals. These cookies are controlled by the third party operator and not by Playonix.",
                                 },
                             ].map((item, i) => (
                                 <div key={i} className="pl-3 border-l-2 border-border space-y-1">
@@ -98,7 +98,7 @@ const CookiePolicy = () => {
                     {/* Section 5 */}
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">5. Cookies We Do Not Use</h2>
-                        <p className="text-sm leading-relaxed">OCReels does not intentionally use the following technologies:</p>
+                        <p className="text-sm leading-relaxed">Playonix does not intentionally use the following technologies:</p>
                         <ul className="space-y-1.5 pl-4 text-sm">
                             {[
                                 'behavioral retargeting advertising cookies',
@@ -140,7 +140,7 @@ const CookiePolicy = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">7. Cookie Consent Banner</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>Where required by law, OCReels may display a cookie consent banner informing users that cookies are used and linking to this Cookie Policy.</p>
+                            <p>Where required by law, Playonix may display a cookie consent banner informing users that cookies are used and linking to this Cookie Policy.</p>
                             <p>Users may accept or manage cookie preferences where applicable. Strictly necessary cookies remain active at all times because they are required for platform functionality.</p>
                         </div>
                     </section>
@@ -181,7 +181,7 @@ const CookiePolicy = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">10. International Users</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>OCReels is accessible worldwide. Depending on your location different privacy regulations may apply including GDPR, UK GDPR, CCPA, and other regional laws.</p>
+                            <p>Playonix is accessible worldwide. Depending on your location different privacy regulations may apply including GDPR, UK GDPR, CCPA, and other regional laws.</p>
                             <p>By using the platform you acknowledge that data processing may occur in jurisdictions outside your country of residence.</p>
                         </div>
                     </section>
@@ -195,7 +195,7 @@ const CookiePolicy = () => {
                     {/* Section 12 */}
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">12. Contact</h2>
-                        <p className="text-sm leading-relaxed">If you have questions about this Cookie Policy you may contact: <a href="mailto:legal@ocreels.com" className="text-[#FACC15] hover:underline">legal@ocreels.com</a></p>
+                        <p className="text-sm leading-relaxed">If you have questions about this Cookie Policy you may contact: <a href="mailto:legal@Playonix.com" className="text-[#FACC15] hover:underline">legal@Playonix.com</a></p>
                     </section>
 
                     <p className="text-xs font-medium mt-10 italic border-t border-border pt-4">

@@ -51,3 +51,4 @@ const EmailSentView = ({ email, onReset, onClose }: Props) => {
 };
 
 export default EmailSentView;
+

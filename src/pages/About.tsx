@@ -6,7 +6,7 @@ const About = () => {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-3">
           <Info className="w-8 h-8 text-[#FACC15]" />
-          About OCReels
+          About Playonix
         </h1>
         <p className="text-lg text-muted-foreground">
           The ultimate hub for high-stakes entertainment. We connect the world's most passionate players with elite casino offers, exclusive rewards, and a premium community experience.
@@ -22,7 +22,7 @@ const About = () => {
             </h3>
           </div>
           <div className="p-6 pt-0 text-muted-foreground space-y-4 text-sm md:text-base">
-            <p>OCReels.com is owned and operated by:</p>
+            <p>Playonix.com is owned and operated by:</p>
             <div className="space-y-4">
               <div className="border-b border-border pb-4">
                 <span className="font-semibold text-foreground text-lg block">Lonepath Holdings LLC</span>
@@ -51,7 +51,7 @@ const About = () => {
               Our vision was to create a short-video platform for listing and discovering online casinos that is as fair and honest as possible for players.
             </p>
             <p>
-              On OCReels, players themselves can freely rate and review casinos based on their own real experiences, helping other users make better and safer choices.
+              On Playonix, players themselves can freely rate and review casinos based on their own real experiences, helping other users make better and safer choices.
             </p>
             <p>
               We came to the conclusion that gambling itself should not be erased or denied. It has been part of human culture and history in different forms for thousands of years. However, we also recognize that some online casinos can behave unfairly or dishonestly toward players.
@@ -63,7 +63,7 @@ const About = () => {
               <p>
                 If you have any questions, feedback, or concerns, please contact us at:
               </p>
-              <a href="mailto:hey@ocreels.com" className="text-[#FACC15] hover:underline mt-1 inline-block font-medium">hey@ocreels.com</a>
+              <a href="mailto:hey@Playonix.com" className="text-[#FACC15] hover:underline mt-1 inline-block font-medium">hey@Playonix.com</a>
             </div>
           </div>
         </div>
@@ -73,3 +73,4 @@ const About = () => {
 };
 
 export default About;
+

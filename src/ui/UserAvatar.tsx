@@ -14,3 +14,4 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ userName }) => {
 };
 
 export default UserAvatar;
+

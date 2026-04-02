@@ -29,7 +29,7 @@ const TermsOfService = () => {
                     <p><span className="font-semibold text-white">Effective Date:</span> March 14, 2026</p>
                     <p><span className="font-semibold text-white">Last Modified:</span> March 14, 2026</p>
                     <p className="text-xs mt-2 italic">
-                        This document sets out the legally binding terms governing access to and use of the OCReels.com website, platform, content, community features, affiliate links, reviews, and related services.
+                        This document sets out the legally binding terms governing access to and use of the Playonix.com website, platform, content, community features, affiliate links, reviews, and related services.
                     </p>
                 </div>
 
@@ -42,7 +42,7 @@ const TermsOfService = () => {
                         <div className="space-y-2">
                             <h3 className="font-semibold text-white text-sm">Agreement</h3>
                             <p className="text-sm leading-relaxed">
-                                These Terms of Service ("Terms") govern your access to and use of the OCReels.com website, platform, and related services (collectively, the "Service"). By accessing, browsing, viewing, posting on, or otherwise using the Service, or by clicking an "Accept" or similar button when presented with these Terms, you confirm that you have read, understood, and agree to be bound by these Terms as a legally binding agreement between you and OCReels.com ("OCReels," "we," "us," or "our").
+                                These Terms of Service ("Terms") govern your access to and use of the Playonix.com website, platform, and related services (collectively, the "Service"). By accessing, browsing, viewing, posting on, or otherwise using the Service, or by clicking an "Accept" or similar button when presented with these Terms, you confirm that you have read, understood, and agree to be bound by these Terms as a legally binding agreement between you and Playonix.com ("Playonix," "we," "us," or "our").
                             </p>
                             <p className="text-sm leading-relaxed font-medium text-white/80">
                                 If you do not agree to these Terms, you must not access or use the Service.
@@ -70,12 +70,12 @@ const TermsOfService = () => {
                         <p className="text-sm leading-relaxed">For purposes of these Terms:</p>
                         <ul className="space-y-2 text-sm leading-relaxed list-none">
                             {[
-                                ['"OCReels", "we", "us", or "our"', 'means the OCReels.com platform and its owner/operator.'],
+                                ['"Playonix", "we", "us", or "our"', 'means the Playonix.com platform and its owner/operator.'],
                                 ['"User" or "you"', 'means any individual or entity who accesses or uses the Service in any capacity, including visitors, reviewers, commenters, creators, affiliates, and viewers.'],
                                 ['"Content"', 'means any information, text, ratings, reviews, comments, messages, graphics, photos, videos, images, nicknames, device or technical identifiers, links, or other material made available on or through the Service.'],
                                 ['"User Content"', 'means any Content submitted, uploaded, posted, transmitted, or otherwise made available by a User.'],
-                                ['"Affiliate Link"', 'means a link that may generate compensation, commission, referral income, revenue share, CPA, hybrid compensation, or similar commercial benefit to OCReels if a User clicks, registers, deposits, purchases, or otherwise interacts with the linked third-party service.'],
-                                ['"Third-Party Service"', 'means any service, website, app, platform, network, operator, provider, or contractor not owned or controlled by OCReels, including casino operators, affiliate partners, advertisers, analytics providers, payment processors, hosting providers, verification providers, and social media services.'],
+                                ['"Affiliate Link"', 'means a link that may generate compensation, commission, referral income, revenue share, CPA, hybrid compensation, or similar commercial benefit to Playonix if a User clicks, registers, deposits, purchases, or otherwise interacts with the linked third-party service.'],
+                                ['"Third-Party Service"', 'means any service, website, app, platform, network, operator, provider, or contractor not owned or controlled by Playonix, including casino operators, affiliate partners, advertisers, analytics providers, payment processors, hosting providers, verification providers, and social media services.'],
                                 ['"Applicable Law"', 'means all laws, regulations, directives, codes, rules, and legal requirements applicable to you, to us, or to the Service, including the laws of your own jurisdiction.'],
                             ].map(([term, def], i) => (
                                 <li key={i} className="pl-3 border-l-2 border-border">
@@ -89,11 +89,11 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">3. Scope of the Service</h2>
                         <div className="space-y-3 text-sm leading-relaxed">
-                            <p>OCReels.com is an online platform that may display, organize, feature, rank, review, discuss, promote, compare, or otherwise present online casinos, gambling brands, bonuses, promotions, user opinions, ratings, videos, short-form media, and related information or entertainment content.</p>
-                            <p>OCReels is an informational, promotional, media, and community platform. OCReels is not a gambling operator. We do not offer casino games ourselves, do not accept bets, do not hold player balances, do not process gambling withdrawals, and do not operate as a licensed casino unless expressly stated otherwise in writing on the Service.</p>
+                            <p>Playonix.com is an online platform that may display, organize, feature, rank, review, discuss, promote, compare, or otherwise present online casinos, gambling brands, bonuses, promotions, user opinions, ratings, videos, short-form media, and related information or entertainment content.</p>
+                            <p>Playonix is an informational, promotional, media, and community platform. Playonix is not a gambling operator. We do not offer casino games ourselves, do not accept bets, do not hold player balances, do not process gambling withdrawals, and do not operate as a licensed casino unless expressly stated otherwise in writing on the Service.</p>
                             <p>The Service may include user-generated reviews, comments, ratings, reactions, and uploaded media. We do not guarantee the truthfulness, completeness, reliability, legality, or accuracy of any User Content. Users remain solely responsible for the Content they post.</p>
                             <p>You understand that Content on the Service may include commercial promotions, subjective opinions, and user statements that may be incomplete, inaccurate, biased, offensive, outdated, or unlawful. You use the Service at your own risk.</p>
-                            <p>Nothing in these Terms creates any partnership, joint venture, employment, agency, or fiduciary relationship between OCReels and any User, affiliate, partner, reviewer, moderator, or third party.</p>
+                            <p>Nothing in these Terms creates any partnership, joint venture, employment, agency, or fiduciary relationship between Playonix and any User, affiliate, partner, reviewer, moderator, or third party.</p>
                         </div>
                     </section>
 
@@ -103,11 +103,11 @@ const TermsOfService = () => {
                         <div className="space-y-4 text-sm leading-relaxed">
                             <div className="space-y-1">
                                 <h3 className="font-semibold text-white">Affiliate Links May Be Present</h3>
-                                <p>OCReels may include Affiliate Links. This means that some links, buttons, promotions, call-to-actions, listings, videos, banners, or other clickable elements on the Service may direct you to third-party websites through tracking links, and we may receive compensation if you click those links or take actions such as registering, making a deposit, becoming an active user, or otherwise interacting with the third-party service.</p>
+                                <p>Playonix may include Affiliate Links. This means that some links, buttons, promotions, call-to-actions, listings, videos, banners, or other clickable elements on the Service may direct you to third-party websites through tracking links, and we may receive compensation if you click those links or take actions such as registering, making a deposit, becoming an active user, or otherwise interacting with the third-party service.</p>
                             </div>
                             <div className="space-y-1">
                                 <h3 className="font-semibold text-white">Compensation Does Not Guarantee Endorsement</h3>
-                                <p>The fact that OCReels may receive compensation does not mean that any third-party service is safe, legal, suitable, or appropriate for you. You remain solely responsible for evaluating whether any third-party service is lawful, suitable, and acceptable for your own use.</p>
+                                <p>The fact that Playonix may receive compensation does not mean that any third-party service is safe, legal, suitable, or appropriate for you. You remain solely responsible for evaluating whether any third-party service is lawful, suitable, and acceptable for your own use.</p>
                             </div>
                             <div className="space-y-1">
                                 <h3 className="font-semibold text-white">Third-Party Terms Apply</h3>
@@ -115,7 +115,7 @@ const TermsOfService = () => {
                             </div>
                             <div className="space-y-1">
                                 <h3 className="font-semibold text-white">No Guarantees</h3>
-                                <p>OCReels does not guarantee winnings, outcomes, bonus availability, payment speed, fairness, legality, licensing status, or user experience with any third-party service. Bonus terms, wagering requirements, eligibility rules, withdrawal conditions, and local restrictions may apply and may change at any time.</p>
+                                <p>Playonix does not guarantee winnings, outcomes, bonus availability, payment speed, fairness, legality, licensing status, or user experience with any third-party service. Bonus terms, wagering requirements, eligibility rules, withdrawal conditions, and local restrictions may apply and may change at any time.</p>
                             </div>
                         </div>
                     </section>
@@ -126,11 +126,11 @@ const TermsOfService = () => {
                         <div className="space-y-4 text-sm leading-relaxed">
                             <div className="space-y-1">
                                 <h3 className="font-semibold text-white">Adults Only</h3>
-                                <p>The Service is intended only for adults. You must be at least eighteen (18) years old, or the age of legal majority or other higher minimum age required by the laws of your jurisdiction for accessing this type of service, whichever is higher, to use OCReels. By using the Service, you represent and warrant that you satisfy this requirement.</p>
+                                <p>The Service is intended only for adults. You must be at least eighteen (18) years old, or the age of legal majority or other higher minimum age required by the laws of your jurisdiction for accessing this type of service, whichever is higher, to use Playonix. By using the Service, you represent and warrant that you satisfy this requirement.</p>
                             </div>
                             <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-md">
                                 <h3 className="font-semibold text-yellow-500 text-sm">18+ | Higher Local Age Requirement</h3>
-                                <p className="text-sm mt-1">OCReels is strictly 18+ only, or such higher age as may be required in your country, state, region, or local jurisdiction for gambling-related promotional, review, affiliate, or casino-comparison content. If your local law requires a higher minimum age, that higher age requirement applies to you. If you do not meet the required minimum age, you must not use the Service.</p>
+                                <p className="text-sm mt-1">Playonix is strictly 18+ only, or such higher age as may be required in your country, state, region, or local jurisdiction for gambling-related promotional, review, affiliate, or casino-comparison content. If your local law requires a higher minimum age, that higher age requirement applies to you. If you do not meet the required minimum age, you must not use the Service.</p>
                             </div>
                             <div className="space-y-1">
                                 <h3 className="font-semibold text-white">User Responsibility</h3>
@@ -143,7 +143,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">6. User Responsibility for Legal Compliance</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>OCReels operates internationally and does not guarantee that the Service, or any third-party links, brands, reviews, bonus references, or gambling-related materials shown on the Service, are lawful in every jurisdiction.</p>
+                            <p>Playonix operates internationally and does not guarantee that the Service, or any third-party links, brands, reviews, bonus references, or gambling-related materials shown on the Service, are lawful in every jurisdiction.</p>
                             <p>You are solely responsible for determining whether:</p>
                             <ul className="space-y-1.5 pl-4">
                                 {[
@@ -166,9 +166,9 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">7. Access Identifier and Security</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>To access certain interactive features, you may be assigned or associated with a technical identifier linked to your device, browser, network information, IP address, cookies, or similar technical means used to operate the Service. OCReels does not require traditional user account registration for normal use of the Service.</p>
+                            <p>To access certain interactive features, you may be assigned or associated with a technical identifier linked to your device, browser, network information, IP address, cookies, or similar technical means used to operate the Service. Playonix does not require traditional user account registration for normal use of the Service.</p>
                             <p>Where the Service allows nicknames, comments, ratings, reviews, uploads, reactions, or similar activity, those actions may be associated with the device-based or IP-linked technical identifier used on the device accessing the Service.</p>
-                            <p>You are solely responsible for activity carried out through your device or technical identifier when using the Service. You must immediately notify us at <span className="text-white font-medium">hey@ocreels.com</span> if you suspect unauthorized use, impersonation, abuse, or misuse connected with your device-based access to the Service.</p>
+                            <p>You are solely responsible for activity carried out through your device or technical identifier when using the Service. You must immediately notify us at <span className="text-white font-medium">hey@Playonix.com</span> if you suspect unauthorized use, impersonation, abuse, or misuse connected with your device-based access to the Service.</p>
                             <p>You may not:</p>
                             <ul className="space-y-1.5 pl-4">
                                 {[
@@ -242,7 +242,7 @@ const TermsOfService = () => {
                         <div className="text-sm leading-relaxed space-y-4">
                             <div className="space-y-2">
                                 <h3 className="font-semibold text-white">Sole Moderation Discretion</h3>
-                                <p>OCReels reserves the absolute right, at its sole and unilateral discretion, to determine whether any review, rating, comment, image, video, nickname, identifier-linked activity, post, or other User Content violates these Terms, our policies, platform standards, or the intended integrity of the Service.</p>
+                                <p>Playonix reserves the absolute right, at its sole and unilateral discretion, to determine whether any review, rating, comment, image, video, nickname, identifier-linked activity, post, or other User Content violates these Terms, our policies, platform standards, or the intended integrity of the Service.</p>
                                 <p>This includes, without limitation, content that we consider to be: spam or deliberate spam-like behavior; repetitive or disruptive posting; fake, fabricated, bad-faith, or manipulative reviews; unsupported or invented allegations; abusive or inappropriate criticism; bullying, harassment, or insults toward other users, brands, moderators, or third parties; misleading or low-quality comments intended to manipulate rankings, trust, or brand reputation; or inappropriate, offensive, or irrelevant images or uploads.</p>
                             </div>
                             <div className="space-y-1">
@@ -251,7 +251,7 @@ const TermsOfService = () => {
                             </div>
                             <div className="space-y-1">
                                 <h3 className="font-semibold text-white">Moderation Decisions</h3>
-                                <p>You acknowledge and agree that moderation decisions may be made by OCReels administrators, moderators, or automated systems on the basis of platform integrity, safety, legal risk, quality control, anti-spam enforcement, brand protection, community standards, or user experience. Such decisions may be made even where the violation is not objectively provable to your satisfaction. Nothing in these Terms obligates OCReels to host, display, or continue displaying any specific review, comment, or user submission.</p>
+                                <p>You acknowledge and agree that moderation decisions may be made by Playonix administrators, moderators, or automated systems on the basis of platform integrity, safety, legal risk, quality control, anti-spam enforcement, brand protection, community standards, or user experience. Such decisions may be made even where the violation is not objectively provable to your satisfaction. Nothing in these Terms obligates Playonix to host, display, or continue displaying any specific review, comment, or user submission.</p>
                             </div>
                         </div>
                     </section>
@@ -288,9 +288,9 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">11. Intellectual Property</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>All platform software, branding, logos, design, layout, graphics, interface elements, text, databases, and other materials made available by OCReels, excluding User Content and third-party property, are owned by or licensed to OCReels and are protected by applicable intellectual property laws.</p>
+                            <p>All platform software, branding, logos, design, layout, graphics, interface elements, text, databases, and other materials made available by Playonix, excluding User Content and third-party property, are owned by or licensed to Playonix and are protected by applicable intellectual property laws.</p>
                             <p>You may not copy, reproduce, republish, distribute, modify, frame, scrape, sell, license, or exploit any portion of the Service without our prior written consent, except as permitted by law.</p>
-                            <p>By submitting User Content to the Service, you grant OCReels a worldwide, non-exclusive, royalty-free, transferable, sublicensable license to host, store, reproduce, display, distribute, publish, adapt, moderate, format, and otherwise use that User Content for purposes of operating, promoting, improving, securing, and administering the Service. You represent that you have all rights necessary to grant this license.</p>
+                            <p>By submitting User Content to the Service, you grant Playonix a worldwide, non-exclusive, royalty-free, transferable, sublicensable license to host, store, reproduce, display, distribute, publish, adapt, moderate, format, and otherwise use that User Content for purposes of operating, promoting, improving, securing, and administering the Service. You represent that you have all rights necessary to grant this license.</p>
                         </div>
                     </section>
 
@@ -321,7 +321,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">13. No Gambling Advice or Professional Advice</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>Content on OCReels is for general informational, promotional, media, comparison, entertainment, and community purposes only. Nothing on the Service constitutes legal advice, financial advice, tax advice, investment advice, addiction counseling, or professional regulatory advice.</p>
+                            <p>Content on Playonix is for general informational, promotional, media, comparison, entertainment, and community purposes only. Nothing on the Service constitutes legal advice, financial advice, tax advice, investment advice, addiction counseling, or professional regulatory advice.</p>
                             <p>We do not advise you to gamble. We do not guarantee that gambling is suitable, safe, profitable, legal, or risk-free. Gambling involves risk and may lead to financial loss, addiction, and other harms.</p>
                             <p>If you choose to gamble or use any third-party service referenced on the platform, you do so entirely at your own risk and responsibility.</p>
                         </div>
@@ -331,7 +331,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">14. Disclaimer of Warranties</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>The Service is provided on an "as is" and "as available" basis. To the fullest extent permitted by law, OCReels disclaims all warranties, express or implied, including any implied warranties of merchantability, fitness for a particular purpose, non-infringement, title, availability, accuracy, reliability, or uninterrupted operation.</p>
+                            <p>The Service is provided on an "as is" and "as available" basis. To the fullest extent permitted by law, Playonix disclaims all warranties, express or implied, including any implied warranties of merchantability, fitness for a particular purpose, non-infringement, title, availability, accuracy, reliability, or uninterrupted operation.</p>
                             <p>We do not warrant that:</p>
                             <ul className="space-y-1.5 pl-4">
                                 {[
@@ -354,7 +354,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">15. Limitation of Liability</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>To the fullest extent permitted by law, OCReels, its owners, operators, affiliates, officers, employees, moderators, contractors, licensors, and partners shall not be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or for any loss of profits, revenue, goodwill, data, business opportunity, reputation, or expected savings arising out of or related to:</p>
+                            <p>To the fullest extent permitted by law, Playonix, its owners, operators, affiliates, officers, employees, moderators, contractors, licensors, and partners shall not be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or for any loss of profits, revenue, goodwill, data, business opportunity, reputation, or expected savings arising out of or related to:</p>
                             <ul className="space-y-1.5 pl-4">
                                 {[
                                     'your use of or inability to use the Service;',
@@ -370,7 +370,7 @@ const TermsOfService = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <p>To the maximum extent permitted by law, if OCReels is found liable for any claim, our total aggregate liability shall not exceed the greater of: (a) the amount you paid us directly, if any, in the twelve (12) months preceding the event giving rise to the claim, or (b) one hundred euros (EUR 100).</p>
+                            <p>To the maximum extent permitted by law, if Playonix is found liable for any claim, our total aggregate liability shall not exceed the greater of: (a) the amount you paid us directly, if any, in the twelve (12) months preceding the event giving rise to the claim, or (b) one hundred euros (EUR 100).</p>
                         </div>
                     </section>
 
@@ -378,7 +378,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">16. Indemnification</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>You agree to defend, indemnify, and hold harmless OCReels and its owners, operators, affiliates, officers, employees, contractors, moderators, partners, and service providers from and against any claims, demands, liabilities, losses, damages, judgments, costs, and expenses, including reasonable legal fees, arising out of or related to:</p>
+                            <p>You agree to defend, indemnify, and hold harmless Playonix and its owners, operators, affiliates, officers, employees, contractors, moderators, partners, and service providers from and against any claims, demands, liabilities, losses, damages, judgments, costs, and expenses, including reasonable legal fees, arising out of or related to:</p>
                             <ul className="space-y-1.5 pl-4">
                                 {[
                                     'your use of the Service;',
@@ -443,7 +443,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">20. Governing Law and Disputes</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>These Terms shall be governed by and construed in accordance with the laws determined by OCReels in its legal notices or operating entity documentation, without regard to conflict of law rules, unless mandatory law requires otherwise.</p>
+                            <p>These Terms shall be governed by and construed in accordance with the laws determined by Playonix in its legal notices or operating entity documentation, without regard to conflict of law rules, unless mandatory law requires otherwise.</p>
                             <p>You agree that any dispute, claim, or controversy arising out of or relating to these Terms or the Service shall be resolved in the competent court or forum determined under applicable law, unless another dispute resolution method is expressly required by law or separately agreed.</p>
                         </div>
                     </section>
@@ -453,7 +453,7 @@ const TermsOfService = () => {
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">21. Contact Information</h2>
                         <div className="text-sm leading-relaxed space-y-2">
                             <h3 className="font-semibold text-white">General Contact</h3>
-                            <p>E-mail: <a href="mailto:hey@ocreels.com" className="text-[#FACC15] hover:underline">hey@ocreels.com</a></p>
+                            <p>E-mail: <a href="mailto:hey@Playonix.com" className="text-[#FACC15] hover:underline">hey@Playonix.com</a></p>
                             <p>If you believe that content on the Service violates these Terms, infringes your rights, or should be reviewed by our moderation team, you may contact us at the address above.</p>
                         </div>
                     </section>
@@ -462,7 +462,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">22. Final Acknowledgment</h2>
                         <p className="text-sm leading-relaxed font-medium text-white/80">
-                            By using OCReels.com, you acknowledge that you have read, understood, and agreed to these Terms of Service.
+                            By using Playonix.com, you acknowledge that you have read, understood, and agreed to these Terms of Service.
                         </p>
                     </section>
 
@@ -484,7 +484,7 @@ const TermsOfService = () => {
                                 ))}
                             </ul>
                             <p>If you believe that gambling may be causing harm to you or someone close to you, we strongly encourage seeking help from professional support organizations that specialize in gambling addiction.</p>
-                            <p>OCReels does not provide gambling services and cannot control the behavior of third-party operators or users. If you choose to engage in gambling activities through any third-party service linked from the platform, you do so entirely at your own risk.</p>
+                            <p>Playonix does not provide gambling services and cannot control the behavior of third-party operators or users. If you choose to engage in gambling activities through any third-party service linked from the platform, you do so entirely at your own risk.</p>
                         </div>
                     </section>
 
@@ -492,7 +492,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">24. Copyright and Intellectual Property Complaints (DMCA / Copyright)</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>OCReels respects intellectual property rights. If you believe that any content available on the Service infringes your copyright, trademark, or other intellectual property rights, you may submit a notice requesting removal of the content.</p>
+                            <p>Playonix respects intellectual property rights. If you believe that any content available on the Service infringes your copyright, trademark, or other intellectual property rights, you may submit a notice requesting removal of the content.</p>
                             <p>Your notice should include:</p>
                             <ul className="space-y-1.5 pl-4">
                                 {[
@@ -508,8 +508,8 @@ const TermsOfService = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <p>Notices may be sent to: <a href="mailto:hey@ocreels.com" className="text-[#FACC15] hover:underline">hey@ocreels.com</a></p>
-                            <p>OCReels may remove or disable access to allegedly infringing content and may terminate or block repeat violators from further use of the Service.</p>
+                            <p>Notices may be sent to: <a href="mailto:hey@Playonix.com" className="text-[#FACC15] hover:underline">hey@Playonix.com</a></p>
+                            <p>Playonix may remove or disable access to allegedly infringing content and may terminate or block repeat violators from further use of the Service.</p>
                         </div>
                     </section>
 
@@ -517,7 +517,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">25. Advertising and Sponsored Content Transparency</h2>
                         <div className="text-sm leading-relaxed space-y-3">
-                            <p>OCReels may display:</p>
+                            <p>Playonix may display:</p>
                             <ul className="space-y-1.5 pl-4">
                                 {['advertisements;', 'sponsored listings;', 'promoted content;', 'affiliate promotions;', 'paid partnerships.'].map((item, i) => (
                                     <li key={i} className="flex items-start gap-2">
@@ -526,7 +526,7 @@ const TermsOfService = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <p>Some rankings, listings, or featured placements may include commercial relationships with partners. While OCReels aims to provide honest reviews and information, users should understand that commercial relationships may influence visibility, placement, and promotional exposure.</p>
+                            <p>Some rankings, listings, or featured placements may include commercial relationships with partners. While Playonix aims to provide honest reviews and information, users should understand that commercial relationships may influence visibility, placement, and promotional exposure.</p>
                             <p>We encourage users to always conduct their own independent research before interacting with any third-party service featured on the platform.</p>
                         </div>
                     </section>
@@ -541,7 +541,7 @@ const TermsOfService = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-semibold text-white border-b border-border pb-2">27. Entire Agreement</h2>
                         <div className="text-sm leading-relaxed space-y-2">
-                            <p>These Terms, together with any referenced policies, constitute the entire agreement between you and OCReels regarding the use of the Service.</p>
+                            <p>These Terms, together with any referenced policies, constitute the entire agreement between you and Playonix regarding the use of the Service.</p>
                             <p>They replace any prior agreements, understandings, or communications relating to the Service.</p>
                         </div>
                     </section>

@@ -2,9 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
-import logoLight from "@/assets/bgremovelogo.png";
-import logoDark from "@/assets/bgremovelogo.png";
-import logoIcon from "/12143.png";
+import logoLight from "@/assets/playonix/2b225ab4-5f8b-470d-88a4-cb8f3bc7501e.png";
+import logoDark from "@/assets/playonix/2b225ab4-5f8b-470d-88a4-cb8f3bc7501e.png";
+import logoIcon from "@/assets/playonix/icon-dark.png";
 import {
   LayoutDashboard,
   ListOrdered,
@@ -96,19 +96,15 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
                 }`}
             >
               {isCollapsed ? (
-                <img src={logoIcon} alt="Rappio" className="w-10 h-10 rounded-full" />
+                <img src={logoIcon} alt="Playonix" className="w-10 h-10 rounded-full" />
               ) : (
                 <img
                   src={isDarkMode ? logoDark : logoLight}
-                  alt="Rappio"
-                  className="transition-all duration-300 rounded-full w-50"
+                  alt="Playonix"
+                  className="transition-all duration-300 w-full max-w-[180px] h-auto object-contain"
                 />
               )}
-              {!isCollapsed && (
-                <h1 className="font-bold text-[22px] text-foreground truncate">
-                  Rappio
-                </h1>
-              )}
+
             </div>
           </a>
           {/* <SidebarSearch isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} /> */}
@@ -244,3 +240,4 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
     </div>
   );
 };
+

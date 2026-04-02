@@ -28,3 +28,4 @@ export function useScrollDirection(): ScrollDirection {
 
   return scrollDirection;
 }
+

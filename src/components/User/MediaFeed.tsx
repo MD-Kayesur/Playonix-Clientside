@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PageLoader from '@/Layout/PageLoader';
-import logo from "../../assets/bgremovelogo.png";
+import logo from "@/assets/playonix/icon-light.png";
 import CommentsSidebar from './CommentsSidebar';
 import ShareModal from './ShareModal';
 import MediaCard from './MediaCard';
@@ -800,7 +800,7 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
                 showShareModal={showShareModal}
                 setShowShareModal={setShowShareModal}
                 url={`${window.location.origin}${location.pathname}?v=${offers[currentIndex]?.id}`}
-                title={`${offers[currentIndex]?.title} - OCReels`}
+                title={`${offers[currentIndex]?.title} - Playonix`}
             />
 
             {showNameSetup && (
@@ -875,3 +875,4 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
 };
 
 export default MediaFeed;
+

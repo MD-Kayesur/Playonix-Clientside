@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonWrapper from "@/common/CommonWrapper";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "@/assets/bgremovelogo.png";
+import logo from "@/assets/playonix/icon-light.png";
 import bgImage from "@/assets/home.jpg";
 
 const Home = () => {
@@ -48,6 +48,7 @@ const Home = () => {
 };
 
 export default Home;
+
 
 
 

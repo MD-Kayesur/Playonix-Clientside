@@ -54,3 +54,4 @@ const FireworkCelebration = ({ isVisible }: FireworkCelebrationProps) => {
 };
 
 export default FireworkCelebration;
+

@@ -154,7 +154,7 @@ export const UserSidebar: React.FC<SidebarProps> = ({
                 <img
                   src={isDarkMode ? logoDark : logoLight}
                   alt="Playonix"
-                  className="transition-all duration-300 w-full max-w-[180px] h-auto object-contain"
+                  className="transition-all duration-300 w-full mt-10 scale-400  max-w-[180px] h-[40px] object-contain"
                 />
               )}
 

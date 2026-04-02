@@ -92,7 +92,7 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
         <div className="md:px-3 pt-4 sm:pt-6">
           <a href="/user/all" className="block">
             <div
-              className={`flex items-center gap-3 transition-all duration-300 pb-4 ${isCollapsed ? "justify-center px-2" : "px-4 sm:px-6"
+              className={`flex items-center gap-3 transition-all duration-300   ${isCollapsed ? "justify-center px-2" : "px-4 sm:px-6"
                 }`}
             >
               {isCollapsed ? (
@@ -101,7 +101,7 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
                 <img
                   src={isDarkMode ? logoDark : logoLight}
                   alt="Playonix"
-                  className="transition-all duration-300 w-full max-w-[180px] h-auto object-contain"
+                  className="transition-all duration-300 w-full mt-10 scale-400  max-w-[180px] h-[40px] object-contain"
                 />
               )}
 

@@ -12,17 +12,40 @@
 - **Modern UI/UX**: Dark/Light mode support with a premium design aesthetic using Tailwind CSS and Radix UI.
 - **Responsive Design**: Optimized for mobile, tablet, and desktop environments.
 
-## 🛠️ Technical Stack
+## 🛠️ Built With (What I'm Using)
 
-- **Framework**: [React](https://reactjs.org/) (with TypeScript)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Components**: [Radix UI](https://www.radix-ui.com/) & [Lucide React](https://lucide.dev/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Charts**: [Recharts](https://recharts.org/)
-- **Navigation**: [React Router DOM v7](https://reactrouter.com/)
-- **Internationalization**: [i18next](https://www.i18next.com/)
+This project leverages a modern, industrial-standard tech stack for scalability and performance:
+
+### Core Framework & Build Tools
+- **Framework**: [React 18](https://reactjs.org/) (with TypeScript)
+- **Runtime Environment**: [Node.js](https://nodejs.org/)
+- **Build Tool**: [Vite 6](https://vitejs.dev/) - Next-generation frontend tooling.
+
+### Branding & UI Styling
+- **Styling Engine**: [Tailwind CSS 4](https://tailwindcss.com/) - Utility-first CSS framework for rapid UI development.
+- **Components Library**: [Radix UI](https://www.radix-ui.com/) - Unstyled, accessible components.
+- **Icons**: [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
+- **Theme Transitions**: [Theme Toggles](https://theme-toggles.js.org/) - Beautiful dark/light mode toggling.
+
+### Application Logic & State
+- **Global State**: [Redux Toolkit](https://redux-toolkit.js.org/) - Predictable state container for centralized logic.
+- **Data Fetching**: [Axios](https://axios-http.com/) - Promise-based HTTP client for APIs.
+- **Navigation**: [React Router v7](https://reactrouter.com/) - Standard routing for React apps.
+- **Localization**: [i18next](https://www.i18next.com/) & [react-i18next](https://react.i18next.com/) - Professional translation framework.
+
+### Interactive Elements & Visuals
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) - Powerful animation library for React.
+- **Scroll Effects**: [AOS (Animate On Scroll)](https://michalsnik.github.io/aos/) - High-performance scroll animations.
+- **Data Visualization**: [Recharts](https://recharts.org/) - D3-based charting library for React.
+
+### Forms & Validation
+- **Form Handling**: [React Hook Form](https://react-hook-form.com/) - Performance-focused, flexible form management.
+- **Schema Validation**: [Zod](https://zod.dev/) - TypeScript-first schema declaration and validation.
+
+### UI Feedbacks & Helpers
+- **Popups/Modals**: [SweetAlert2](https://sweetalert2.github.io/) - Beautiful, responsive popups.
+- **Toasts**: [Sonner](https://sonner.emilkowal.ski/) & [React Hot Toast](https://react-hot-toast.com/) - Lightweight, notification libraries.
+- **Persistent Storage**: [js-cookie](https://github.com/js-cookie/js-cookie) - Simple API for handling browser cookies.
 
 ## 📂 Project Structure
 
@@ -45,12 +68,10 @@ src/
 ## ⚙️ Getting Started
 
 ### Prerequisites
-
-- Node.js (v18 or higher)
-- npm or yarn
+- **Node.js**: v18.x or higher
+- **Package Manager**: npm (v9.x or higher) or yarn
 
 ### Installation
-
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
@@ -66,15 +87,11 @@ src/
    ```bash
    npm run dev
    ```
-   The application will be available at `http://localhost:5173`.
 
 ### Building for Production
-
-To create an optimized production build:
 ```bash
 npm run build
 ```
-The build artifacts will be stored in the `dist/` directory.
 
 ## 📄 License
 

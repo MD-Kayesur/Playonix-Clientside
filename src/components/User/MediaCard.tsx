@@ -50,11 +50,12 @@ const MediaCard: React.FC<MediaCardProps> = ({
     onRatingClick
 }) => {
     const { t } = useTranslation();
+    const isFlipped = flippedCardId === offer.id;
     return (
         <motion.div
             animate={{
-                rotateY: flippedCardId === offer.id ? 180 : 0,
-                scale: flippedCardId === offer.id ? 0.95 : 1,
+                rotateY: isFlipped ? 180 : 0,
+                scale: isFlipped ? 0.95 : 1,
             }}
             transition={{
                 type: "spring",
@@ -68,10 +69,16 @@ const MediaCard: React.FC<MediaCardProps> = ({
             {/* Front Side */}
             <div
                 className="absolute inset-0 w-full h-full overflow-hidden bg-black sm:rounded-[1rem]  "
-                style={{ backfaceVisibility: "hidden" }}
+                style={{
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    opacity: isFlipped ? 0 : 1,
+                    visibility: isFlipped ? "hidden" : "visible",
+                    transition: "opacity 0.3s ease, visibility 0.3s ease"
+                }}
                 onClick={() => {
                     if (index === currentIndex && window.innerWidth < 640) {
-                        setFlippedCardId(flippedCardId === offer.id ? null : offer.id);
+                        setFlippedCardId(isFlipped ? null : offer.id);
                     }
                 }}
             >
@@ -122,7 +129,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
                     </div>
 
 
-                    <div className="relative group/cta_container animate-glow-bloom pointer-events-auto">
+                    <div className={`relative group/cta_container pointer-events-auto rounded-2xl ${isFlipped ? '' : 'animate-glow-bloom'}`}>
                         {/* Drifting Sparkles */}
                         <div className="absolute -inset-4 pointer-events-none overflow-hidden rounded-3xl opacity-0 group-hover/cta_container:opacity-100 transition-opacity duration-700">
                             <div className="absolute top-1/4 left-10 w-1 h-1 bg-white rounded-full animate-sparkle [--tw-translate-x:-20px] [--tw-translate-y:-30px]"></div>
@@ -137,11 +144,11 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                 if (offer.website_url) window.open(offer.website_url, '_blank');
                             }}
                             type="button"
-                            className="w-full px-6 py-4 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.05] active:scale-95 border-none shadow-2xl text-[16px] tracking-wider relative overflow-hidden group/cta animate-pulse-gentle bg-transparent"
+                            className={`w-full px-6 py-4 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.05] active:scale-95 border-none shadow-2xl text-[16px] tracking-wider relative overflow-hidden group/cta bg-transparent ${isFlipped ? '' : 'animate-pulse-gentle'}`}
                         >
                             {/* Colorful Falling/Rotating Border */}
                             <div className="absolute -inset-[3px] rounded-2xl overflow-hidden pointer-events-none z-0">
-                                <div className="absolute inset-[-200%] animate-spin-slow group-hover/cta:duration-[1.5s] bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)]" />
+                                <div className={`absolute inset-[-200%] group-hover/cta:duration-[1.5s] bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)] ${isFlipped ? '' : 'animate-spin-slow'}`} />
                             </div>
 
                             {/* Main Button Surface (Metallic Gold) */}
@@ -180,7 +187,14 @@ const MediaCard: React.FC<MediaCardProps> = ({
             {/* Back Side */}
             <div
                 className="absolute inset-0 w-full h-full bg-[#0D0D0D] sm:rounded-[1rem] overflow-hidden p-6 sm:p-8 flex flex-col gap-6 custom-scrollbar overflow-y-auto transition-colors duration-300 shadow-inner"
-                style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                style={{
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                    opacity: isFlipped ? 1 : 0,
+                    visibility: isFlipped ? "visible" : "hidden",
+                    transition: "opacity 0.3s ease, visibility 0.3s ease"
+                }}
             >
                 <div className="flex justify-between items-start gap-4">
                     <div className="min-w-0">
@@ -280,7 +294,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
 
                 <div className="space-y-4 pt-6 mt-auto border-t border-white/10">
 
-                    <div className="relative group/cta_back_container animate-glow-bloom pointer-events-auto">
+                    <div className={`relative group/cta_back_container pointer-events-auto rounded-2xl ${isFlipped ? 'animate-glow-bloom' : ''}`}>
                         {/* Drifting Sparkles */}
                         <div className="absolute -inset-4 pointer-events-none overflow-hidden rounded-3xl opacity-0 group-hover/cta_back_container:opacity-100 transition-opacity duration-700">
                             <div className="absolute top-1/4 left-10 w-1 h-1 bg-white rounded-full animate-sparkle [--tw-translate-x:-20px] [--tw-translate-y:-25px]"></div>
@@ -293,11 +307,11 @@ const MediaCard: React.FC<MediaCardProps> = ({
                                 e.stopPropagation();
                                 if (offer.website_url) window.open(offer.website_url, '_blank');
                             }}
-                            className="w-full px-6 py-5 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.05] active:scale-95 border-none shadow-2xl text-[16px] tracking-wider relative overflow-hidden group/cta_back animate-pulse-gentle bg-transparent"
+                            className={`w-full px-6 py-5 font-bold rounded-2xl text-black transition-all duration-300 ease-in-out hover:scale-[1.05] active:scale-95 border-none shadow-2xl text-[16px] tracking-wider relative overflow-hidden group/cta_back bg-transparent ${isFlipped ? 'animate-pulse-gentle' : ''}`}
                         >
                             {/* Colorful Falling/Rotating Border */}
                             <div className="absolute -inset-[3px] rounded-2xl overflow-hidden pointer-events-none z-0">
-                                <div className="absolute inset-[-200%] animate-spin-slow group-hover/cta_back:duration-[1.5s] bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)]" />
+                                <div className={`absolute inset-[-200%] group-hover/cta_back:duration-[1.5s] bg-[conic-gradient(from_0deg,#FACC15,#FF3AC6,#A056FF,#34D399,#FACC15)] ${isFlipped ? 'animate-spin-slow' : ''}`} />
                             </div>
 
                             {/* Main Button Surface (Metallic Gold) */}

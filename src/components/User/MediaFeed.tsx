@@ -25,6 +25,7 @@ import logo from "@/assets/playonix/icon-light.png";
 import CommentsSidebar from './CommentsSidebar';
 import ShareModal from './ShareModal';
 import MediaCard from './MediaCard';
+import { useSubmitRatingMutation } from '@/redux/features/rating/ratingApi';
 
 export interface Comment {
     id: number;
@@ -67,6 +68,7 @@ interface MediaFeedProps {
 
 const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFeedType }) => {
     const { t } = useTranslation();
+    const [submitRating] = useSubmitRatingMutation();
     const isMobile = typeof window !== 'undefined' ? window.innerWidth < 1024 : false;
     const iconStroke = isMobile ? 3 : 2;
     const location = useLocation();
@@ -400,6 +402,17 @@ const MediaFeed: React.FC<MediaFeedProps> = ({ type: propType, feedType: propFee
             localStorage.setItem('user_ratings', JSON.stringify(newRatings));
             return newRatings;
         });
+
+        // Submit rating to the backend
+        try {
+            await submitRating({
+                mediaId: offerId,
+                rating: rating,
+                comment: comment?.trim() || undefined
+            }).unwrap();
+        } catch (error) {
+            console.error("Failed to submit rating to server:", error);
+        }
 
         // Update the current offer's count if it's the first time rating
         if (!alreadyRated) {
